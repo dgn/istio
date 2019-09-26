@@ -17,7 +17,10 @@ package pilot
 import (
 	"context"
 	"errors"
+	"fmt"
+	"io/ioutil"
 	"net"
+	"net/http"
 	"sync"
 	"time"
 
@@ -32,6 +35,8 @@ import (
 
 type client struct {
 	discoveryAddr *net.TCPAddr
+	httpAddr      *net.TCPAddr
+	httpClient    *http.Client
 	conn          *grpc.ClientConn
 	stream        adsapi.AggregatedDiscoveryService_StreamAggregatedResourcesClient
 	lastRequest   *xdsapi.DiscoveryRequest
@@ -39,7 +44,7 @@ type client struct {
 	wg sync.WaitGroup
 }
 
-func newClient(discoveryAddr *net.TCPAddr) (*client, error) {
+func newClient(discoveryAddr, httpAddr *net.TCPAddr) (*client, error) {
 	conn, err := grpc.Dial(discoveryAddr.String(), grpc.WithInsecure())
 	if err != nil {
 		return nil, err
@@ -55,6 +60,10 @@ func newClient(discoveryAddr *net.TCPAddr) (*client, error) {
 		conn:          conn,
 		stream:        stream,
 		discoveryAddr: discoveryAddr,
+		httpAddr:      httpAddr,
+		httpClient: &http.Client{
+			Timeout: 5 * time.Second,
+		},
 	}, nil
 }
 
@@ -156,4 +165,22 @@ func (c *client) Close() (err error) {
 	c.wg.Wait()
 
 	return
+}
+
+func (c *client) GetConfigDump(proxyID string) (string, error) {
+	path := "/debug/config_dump"
+	url := fmt.Sprintf("http://%v/%v?proxyID=%s", c.httpAddr, path, proxyID)
+	resp, err := c.httpClient.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	respBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	if resp.StatusCode > 399 && resp.StatusCode != 404 {
+		return "", fmt.Errorf("received unsuccessful status code %v: %v", resp.StatusCode, string(respBody))
+	}
+	return string(respBody), nil
 }

@@ -131,7 +131,10 @@ func newNative(ctx resource.Context, cfg Config) (Instance, error) {
 	}
 
 	time.Sleep(1 * time.Second)
-	if instance.client, err = newClient(instance.server.GRPCListeningAddr.(*net.TCPAddr)); err != nil {
+	if instance.client, err = newClient(
+		instance.server.GRPCListeningAddr.(*net.TCPAddr),
+		instance.server.HTTPListeningAddr.(*net.TCPAddr),
+	); err != nil {
 		return nil, err
 	}
 

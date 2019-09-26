@@ -30,6 +30,7 @@ import (
 const (
 	pilotService = "istio-pilot"
 	grpcPortName = "grpc-xds"
+	httpPortName = "http"
 )
 
 var (
@@ -57,7 +58,7 @@ func newKube(ctx resource.Context, _ Config) (Instance, error) {
 	}
 	pod := pods[0]
 
-	port, err := getGrpcPort(env, ns)
+	ports, err := getPorts(env, ns)
 	if err != nil {
 		return nil, err
 	}
@@ -69,21 +70,32 @@ func newKube(ctx resource.Context, _ Config) (Instance, error) {
 	}()
 
 	// Start port-forwarding for pilot.
-	c.forwarder, err = env.NewPortForwarder(pod, 0, port)
+	c.grpcForwarder, err = env.NewPortForwarder(pod, 0, ports[grpcPortName])
 	if err != nil {
 		return nil, err
 	}
-	if err = c.forwarder.Start(); err != nil {
+	if err = c.grpcForwarder.Start(); err != nil {
+		return nil, err
+	}
+	c.httpForwarder, err = env.NewPortForwarder(pod, 0, ports[httpPortName])
+	if err != nil {
+		return nil, err
+	}
+	if err = c.httpForwarder.Start(); err != nil {
 		return nil, err
 	}
 
-	var addr *net.TCPAddr
-	addr, err = net.ResolveTCPAddr("tcp", c.forwarder.Address())
+	var grpcAddr, httpAddr *net.TCPAddr
+	grpcAddr, err = net.ResolveTCPAddr("tcp", c.grpcForwarder.Address())
+	if err != nil {
+		return nil, err
+	}
+	httpAddr, err = net.ResolveTCPAddr("tcp", c.httpForwarder.Address())
 	if err != nil {
 		return nil, err
 	}
 
-	c.client, err = newClient(addr)
+	c.client, err = newClient(grpcAddr, httpAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +108,8 @@ type kubeComponent struct {
 
 	*client
 
-	forwarder testKube.PortForwarder
+	grpcForwarder testKube.PortForwarder
+	httpForwarder testKube.PortForwarder
 }
 
 func (c *kubeComponent) ID() resource.ID {
@@ -115,22 +128,28 @@ func (c *kubeComponent) Close() (err error) {
 		c.client = nil
 	}
 
-	if c.forwarder != nil {
-		err = multierror.Append(err, c.forwarder.Close()).ErrorOrNil()
-		c.forwarder = nil
+	if c.grpcForwarder != nil {
+		err = multierror.Append(err, c.grpcForwarder.Close()).ErrorOrNil()
+		c.grpcForwarder = nil
+	}
+	if c.httpForwarder != nil {
+		err = multierror.Append(err, c.httpForwarder.Close()).ErrorOrNil()
+		c.httpForwarder = nil
 	}
 	return
 }
 
-func getGrpcPort(e *kube.Environment, ns string) (uint16, error) {
+func getPorts(e *kube.Environment, ns string) (map[string]uint16, error) {
 	svc, err := e.Accessor.GetService(ns, pilotService)
 	if err != nil {
-		return 0, fmt.Errorf("failed to retrieve service %s: %v", pilotService, err)
+		return nil, fmt.Errorf("failed to retrieve service %s: %v", pilotService, err)
 	}
+	ret := make(map[string]uint16)
 	for _, portInfo := range svc.Spec.Ports {
-		if portInfo.Name == grpcPortName {
-			return uint16(portInfo.TargetPort.IntValue()), nil
-		}
+		ret[portInfo.Name] = uint16(portInfo.TargetPort.IntValue())
 	}
-	return 0, fmt.Errorf("failed to get target port in service %s", pilotService)
+	if len(ret) == 0 {
+		return nil, fmt.Errorf("no ports defined in service %s", pilotService)
+	}
+	return ret, nil
 }

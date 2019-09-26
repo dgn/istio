@@ -50,6 +50,8 @@ type Instance interface {
 	StartDiscoveryOrFail(t test.Failer, req *xdsapi.DiscoveryRequest)
 	WatchDiscovery(duration time.Duration, accept func(*xdsapi.DiscoveryResponse) (bool, error)) error
 	WatchDiscoveryOrFail(t test.Failer, duration time.Duration, accept func(*xdsapi.DiscoveryResponse) (bool, error))
+
+	GetConfigDump(proxyID string) (string, error)
 }
 
 // Structured config for the Pilot component
