@@ -28,7 +28,6 @@ import (
 	securityv1 "github.com/openshift/api/security/v1"
 	"google.golang.org/protobuf/testing/protocmp"
 	"google.golang.org/protobuf/types/known/durationpb"
-	"google.golang.org/protobuf/types/known/structpb"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -1406,11 +1405,10 @@ func Test_updateClusterEnvs(t *testing.T) {
 
 func TestProxyImage(t *testing.T) {
 	val := func(hub string, tag any) *opconfig.Values {
-		t, _ := structpb.NewValue(tag)
 		return &opconfig.Values{
-			Global: &opconfig.GlobalConfig{
+			Global: &opconfig.GlobalValues{
 				Hub: hub,
-				Tag: t,
+				Tag: tag,
 			},
 		}
 	}

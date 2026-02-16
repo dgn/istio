@@ -1,0 +1,1614 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$defs": {
+    "values": {
+      "type": "object",
+      "properties": {
+        "_internal_defaults_do_not_set": {
+          "type": "object"
+        },
+        "base": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "enableCRDTemplates": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "enableIstioConfigCRDs": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "excludedCRDs": {
+              "type": [
+                "null",
+                "array"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "validationCABundle": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "validationURL": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "compatibilityVersion": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "defaultRevision": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "enabled": {
+          "type": [
+            "null",
+            "boolean"
+          ]
+        },
+        "experimental": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "stableValidationPolicy": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            }
+          }
+        },
+        "global": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "arch": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "amd64": {
+                  "type": [
+                    "null",
+                    "integer"
+                  ]
+                },
+                "ppc64le": {
+                  "type": [
+                    "null",
+                    "integer"
+                  ]
+                },
+                "s390x": {
+                  "type": [
+                    "null",
+                    "integer"
+                  ]
+                },
+                "arm64": {
+                  "type": [
+                    "null",
+                    "integer"
+                  ]
+                }
+              }
+            },
+            "caAddress": {
+              "type": "string"
+            },
+            "caName": {
+              "type": "string"
+            },
+            "certSigners": {
+              "type": [
+                "null",
+                "array"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "configCluster": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "configValidation": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "defaultNodeSelector": {
+              "type": "object"
+            },
+            "defaultPodDisruptionBudget": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                }
+              }
+            },
+            "defaultResources": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "requests": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "cpu": {
+                      "type": "string"
+                    },
+                    "memory": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "defaultTolerations": {
+              "type": [
+                "null",
+                "array"
+              ],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "effect": {
+                    "type": "string"
+                  },
+                  "tolerationSeconds": {
+                    "type": [
+                      "null",
+                      "integer"
+                    ]
+                  }
+                }
+              }
+            },
+            "externalIstiod": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "hub": {
+              "type": "string"
+            },
+            "imagePullPolicy": {
+              "type": "string",
+              "enum": [
+                "",
+                "Always",
+                "IfNotPresent",
+                "Never"
+              ]
+            },
+            "imagePullSecrets": {
+              "type": [
+                "null",
+                "array"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "istioNamespace": {
+              "type": "string"
+            },
+            "istiod": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "enableAnalysis": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                }
+              }
+            },
+            "logAsJson": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "logging": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "level": {
+                  "type": "string"
+                }
+              }
+            },
+            "meshID": {
+              "type": "string"
+            },
+            "meshNetworks": {
+              "type": "object"
+            },
+            "mountMtlsCerts": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "multiCluster": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                },
+                "clusterName": {
+                  "type": "string"
+                },
+                "globalDomainSuffix": {
+                  "type": "string"
+                },
+                "includeEnvoyFilter": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                }
+              }
+            },
+            "nativeNftables": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "network": {
+              "type": "string"
+            },
+            "networkPolicy": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "enabled": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                }
+              }
+            },
+            "omitSidecarInjectorConfigMap": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "operatorManageWebhooks": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "pilotCertProvider": {
+              "type": "string"
+            },
+            "priorityClassName": {
+              "type": "string"
+            },
+            "proxy": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "autoInject": {
+                  "type": "string"
+                },
+                "clusterDomain": {
+                  "type": "string"
+                },
+                "componentLogLevel": {
+                  "type": "string"
+                },
+                "enableCoreDump": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                },
+                "excludeInboundPorts": {
+                  "type": "string"
+                },
+                "excludeIPRanges": {
+                  "type": "string"
+                },
+                "excludeOutboundPorts": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "includeIPRanges": {
+                  "type": "string"
+                },
+                "includeInboundPorts": {
+                  "type": "string"
+                },
+                "includeOutboundPorts": {
+                  "type": "string"
+                },
+                "lifecycle": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "postStart": {
+                      "type": [
+                        "null",
+                        "object"
+                      ],
+                      "properties": {
+                        "exec": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "command": {
+                              "type": [
+                                "null",
+                                "array"
+                              ],
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "httpGet": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "port": {
+                              "type": "object",
+                              "properties": {
+                                "Type": {
+                                  "type": "integer"
+                                },
+                                "IntVal": {
+                                  "type": "integer",
+                                  "minimum": -2147483648,
+                                  "maximum": 2147483647
+                                },
+                                "StrVal": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "host": {
+                              "type": "string"
+                            },
+                            "scheme": {
+                              "type": "string"
+                            },
+                            "httpHeaders": {
+                              "type": [
+                                "null",
+                                "array"
+                              ],
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "tcpSocket": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "port": {
+                              "type": "object",
+                              "properties": {
+                                "Type": {
+                                  "type": "integer"
+                                },
+                                "IntVal": {
+                                  "type": "integer",
+                                  "minimum": -2147483648,
+                                  "maximum": 2147483647
+                                },
+                                "StrVal": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "host": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "sleep": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "seconds": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "preStop": {
+                      "type": [
+                        "null",
+                        "object"
+                      ],
+                      "properties": {
+                        "exec": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "command": {
+                              "type": [
+                                "null",
+                                "array"
+                              ],
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "httpGet": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "path": {
+                              "type": "string"
+                            },
+                            "port": {
+                              "type": "object",
+                              "properties": {
+                                "Type": {
+                                  "type": "integer"
+                                },
+                                "IntVal": {
+                                  "type": "integer",
+                                  "minimum": -2147483648,
+                                  "maximum": 2147483647
+                                },
+                                "StrVal": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "host": {
+                              "type": "string"
+                            },
+                            "scheme": {
+                              "type": "string"
+                            },
+                            "httpHeaders": {
+                              "type": [
+                                "null",
+                                "array"
+                              ],
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "tcpSocket": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "port": {
+                              "type": "object",
+                              "properties": {
+                                "Type": {
+                                  "type": "integer"
+                                },
+                                "IntVal": {
+                                  "type": "integer",
+                                  "minimum": -2147483648,
+                                  "maximum": 2147483647
+                                },
+                                "StrVal": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "host": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "sleep": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "seconds": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "stopSignal": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    }
+                  }
+                },
+                "logLevel": {
+                  "type": "string"
+                },
+                "outlierLogPath": {
+                  "type": "string"
+                },
+                "privileged": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                },
+                "readinessInitialDelaySeconds": {
+                  "type": "integer"
+                },
+                "readinessPeriodSeconds": {
+                  "type": "integer"
+                },
+                "readinessFailureThreshold": {
+                  "type": "integer"
+                },
+                "resources": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "limits": {
+                      "type": "object"
+                    },
+                    "requests": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "seccompProfile": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "localhostProfile": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    }
+                  }
+                },
+                "startupProbe": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "enabled": {
+                      "type": [
+                        "null",
+                        "boolean"
+                      ]
+                    },
+                    "failureThreshold": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "statusPort": {
+                  "type": "integer"
+                },
+                "tracer": {
+                  "type": "string"
+                },
+                "holdApplicationUntilProxyStarts": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                }
+              }
+            },
+            "proxy_init": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "image": {
+                  "type": "string"
+                },
+                "resources": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "limits": {
+                      "type": "object"
+                    },
+                    "requests": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "forceApplyIptables": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                }
+              }
+            },
+            "remotePilotAddress": {
+              "type": "string"
+            },
+            "resourceScope": {
+              "type": "string",
+              "enum": [
+                "all",
+                "cluster",
+                "namespace"
+              ]
+            },
+            "sds": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "token": {
+                  "type": "object"
+                }
+              }
+            },
+            "sts": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "servicePort": {
+                  "type": "integer"
+                }
+              }
+            },
+            "tag": true,
+            "variant": {
+              "type": "string"
+            },
+            "waypoint": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "resources": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "limits": {
+                      "type": "object"
+                    },
+                    "requests": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "affinity": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "nodeAffinity": {
+                      "type": [
+                        "null",
+                        "object"
+                      ],
+                      "properties": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                          "type": [
+                            "null",
+                            "object"
+                          ],
+                          "properties": {
+                            "nodeSelectorTerms": {
+                              "type": [
+                                "null",
+                                "array"
+                              ],
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "matchFields": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "preferredDuringSchedulingIgnoredDuringExecution": {
+                          "type": [
+                            "null",
+                            "array"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "weight": {
+                                "type": "integer",
+                                "minimum": -2147483648,
+                                "maximum": 2147483647
+                              },
+                              "preference": {
+                                "type": "object",
+                                "properties": {
+                                  "matchExpressions": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "matchFields": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "podAffinity": {
+                      "type": [
+                        "null",
+                        "object"
+                      ],
+                      "properties": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                          "type": [
+                            "null",
+                            "array"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "labelSelector": {
+                                "type": [
+                                  "null",
+                                  "object"
+                                ],
+                                "properties": {
+                                  "matchLabels": {
+                                    "type": "object"
+                                  },
+                                  "matchExpressions": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "namespaces": {
+                                "type": [
+                                  "null",
+                                  "array"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "topologyKey": {
+                                "type": "string"
+                              },
+                              "namespaceSelector": {
+                                "type": [
+                                  "null",
+                                  "object"
+                                ],
+                                "properties": {
+                                  "matchLabels": {
+                                    "type": "object"
+                                  },
+                                  "matchExpressions": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "matchLabelKeys": {
+                                "type": [
+                                  "null",
+                                  "array"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "mismatchLabelKeys": {
+                                "type": [
+                                  "null",
+                                  "array"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "preferredDuringSchedulingIgnoredDuringExecution": {
+                          "type": [
+                            "null",
+                            "array"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "weight": {
+                                "type": "integer",
+                                "minimum": -2147483648,
+                                "maximum": 2147483647
+                              },
+                              "podAffinityTerm": {
+                                "type": "object",
+                                "properties": {
+                                  "labelSelector": {
+                                    "type": [
+                                      "null",
+                                      "object"
+                                    ],
+                                    "properties": {
+                                      "matchLabels": {
+                                        "type": "object"
+                                      },
+                                      "matchExpressions": {
+                                        "type": [
+                                          "null",
+                                          "array"
+                                        ],
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": [
+                                                "null",
+                                                "array"
+                                              ],
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "namespaces": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "topologyKey": {
+                                    "type": "string"
+                                  },
+                                  "namespaceSelector": {
+                                    "type": [
+                                      "null",
+                                      "object"
+                                    ],
+                                    "properties": {
+                                      "matchLabels": {
+                                        "type": "object"
+                                      },
+                                      "matchExpressions": {
+                                        "type": [
+                                          "null",
+                                          "array"
+                                        ],
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": [
+                                                "null",
+                                                "array"
+                                              ],
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "matchLabelKeys": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "mismatchLabelKeys": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "podAntiAffinity": {
+                      "type": [
+                        "null",
+                        "object"
+                      ],
+                      "properties": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                          "type": [
+                            "null",
+                            "array"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "labelSelector": {
+                                "type": [
+                                  "null",
+                                  "object"
+                                ],
+                                "properties": {
+                                  "matchLabels": {
+                                    "type": "object"
+                                  },
+                                  "matchExpressions": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "namespaces": {
+                                "type": [
+                                  "null",
+                                  "array"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "topologyKey": {
+                                "type": "string"
+                              },
+                              "namespaceSelector": {
+                                "type": [
+                                  "null",
+                                  "object"
+                                ],
+                                "properties": {
+                                  "matchLabels": {
+                                    "type": "object"
+                                  },
+                                  "matchExpressions": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        },
+                                        "values": {
+                                          "type": [
+                                            "null",
+                                            "array"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "matchLabelKeys": {
+                                "type": [
+                                  "null",
+                                  "array"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "mismatchLabelKeys": {
+                                "type": [
+                                  "null",
+                                  "array"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "preferredDuringSchedulingIgnoredDuringExecution": {
+                          "type": [
+                            "null",
+                            "array"
+                          ],
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "weight": {
+                                "type": "integer",
+                                "minimum": -2147483648,
+                                "maximum": 2147483647
+                              },
+                              "podAffinityTerm": {
+                                "type": "object",
+                                "properties": {
+                                  "labelSelector": {
+                                    "type": [
+                                      "null",
+                                      "object"
+                                    ],
+                                    "properties": {
+                                      "matchLabels": {
+                                        "type": "object"
+                                      },
+                                      "matchExpressions": {
+                                        "type": [
+                                          "null",
+                                          "array"
+                                        ],
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": [
+                                                "null",
+                                                "array"
+                                              ],
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "namespaces": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "topologyKey": {
+                                    "type": "string"
+                                  },
+                                  "namespaceSelector": {
+                                    "type": [
+                                      "null",
+                                      "object"
+                                    ],
+                                    "properties": {
+                                      "matchLabels": {
+                                        "type": "object"
+                                      },
+                                      "matchExpressions": {
+                                        "type": [
+                                          "null",
+                                          "array"
+                                        ],
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "key": {
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "type": [
+                                                "null",
+                                                "array"
+                                              ],
+                                              "items": {
+                                                "type": "string"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "matchLabelKeys": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "mismatchLabelKeys": {
+                                    "type": [
+                                      "null",
+                                      "array"
+                                    ],
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "topologySpreadConstraints": {
+                  "type": [
+                    "null",
+                    "array"
+                  ],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "maxSkew": {
+                        "type": "integer",
+                        "minimum": -2147483648,
+                        "maximum": 2147483647
+                      },
+                      "topologyKey": {
+                        "type": "string"
+                      },
+                      "whenUnsatisfiable": {
+                        "type": "string"
+                      },
+                      "labelSelector": {
+                        "type": [
+                          "null",
+                          "object"
+                        ],
+                        "properties": {
+                          "matchLabels": {
+                            "type": "object"
+                          },
+                          "matchExpressions": {
+                            "type": [
+                              "null",
+                              "array"
+                            ],
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "operator": {
+                                  "type": "string"
+                                },
+                                "values": {
+                                  "type": [
+                                    "null",
+                                    "array"
+                                  ],
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "minDomains": {
+                        "type": [
+                          "null",
+                          "integer"
+                        ],
+                        "minimum": -2147483648,
+                        "maximum": 2147483647
+                      },
+                      "nodeAffinityPolicy": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "nodeTaintsPolicy": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "matchLabelKeys": {
+                        "type": [
+                          "null",
+                          "array"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "nodeSelector": {
+                  "type": "object"
+                },
+                "tolerations": {
+                  "type": [
+                    "null",
+                    "array"
+                  ],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string"
+                      },
+                      "operator": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "effect": {
+                        "type": "string"
+                      },
+                      "tolerationSeconds": {
+                        "type": [
+                          "null",
+                          "integer"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "platform": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "profile": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "revision": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      }
+    }
+  },
+  "defaults": {
+    "$ref": "#/$defs/values"
+  },
+  "$ref": "#/$defs/values"
+}

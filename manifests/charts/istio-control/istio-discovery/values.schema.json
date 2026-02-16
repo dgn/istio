@@ -7,1260 +7,6 @@
         "_internal_defaults_do_not_set": {
           "type": "object"
         },
-        "additionalContainers": {
-          "type": [
-            "null",
-            "array"
-          ],
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "image": {
-                "type": "string"
-              },
-              "command": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "string"
-                }
-              },
-              "args": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "string"
-                }
-              },
-              "workingDir": {
-                "type": "string"
-              },
-              "ports": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "hostPort": {
-                      "type": "integer",
-                      "minimum": -2147483648,
-                      "maximum": 2147483647
-                    },
-                    "containerPort": {
-                      "type": "integer",
-                      "minimum": -2147483648,
-                      "maximum": 2147483647
-                    },
-                    "protocol": {
-                      "type": "string"
-                    },
-                    "hostIP": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "envFrom": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "prefix": {
-                      "type": "string"
-                    },
-                    "configMapRef": {
-                      "type": [
-                        "null",
-                        "object"
-                      ],
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "optional": {
-                          "type": [
-                            "null",
-                            "boolean"
-                          ]
-                        }
-                      }
-                    },
-                    "secretRef": {
-                      "type": [
-                        "null",
-                        "object"
-                      ],
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "optional": {
-                          "type": [
-                            "null",
-                            "boolean"
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "env": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "value": {
-                      "type": "string"
-                    },
-                    "valueFrom": {
-                      "type": [
-                        "null",
-                        "object"
-                      ],
-                      "properties": {
-                        "fieldRef": {
-                          "type": [
-                            "null",
-                            "object"
-                          ],
-                          "properties": {
-                            "apiVersion": {
-                              "type": "string"
-                            },
-                            "fieldPath": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "resourceFieldRef": {
-                          "type": [
-                            "null",
-                            "object"
-                          ],
-                          "properties": {
-                            "containerName": {
-                              "type": "string"
-                            },
-                            "resource": {
-                              "type": "string"
-                            },
-                            "divisor": {
-                              "type": "object",
-                              "properties": {}
-                            }
-                          }
-                        },
-                        "configMapKeyRef": {
-                          "type": [
-                            "null",
-                            "object"
-                          ],
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            },
-                            "key": {
-                              "type": "string"
-                            },
-                            "optional": {
-                              "type": [
-                                "null",
-                                "boolean"
-                              ]
-                            }
-                          }
-                        },
-                        "secretKeyRef": {
-                          "type": [
-                            "null",
-                            "object"
-                          ],
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            },
-                            "key": {
-                              "type": "string"
-                            },
-                            "optional": {
-                              "type": [
-                                "null",
-                                "boolean"
-                              ]
-                            }
-                          }
-                        },
-                        "fileKeyRef": {
-                          "type": [
-                            "null",
-                            "object"
-                          ],
-                          "properties": {
-                            "volumeName": {
-                              "type": "string"
-                            },
-                            "path": {
-                              "type": "string"
-                            },
-                            "key": {
-                              "type": "string"
-                            },
-                            "optional": {
-                              "type": [
-                                "null",
-                                "boolean"
-                              ]
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "resources": {
-                "type": "object",
-                "properties": {
-                  "limits": {
-                    "type": "object"
-                  },
-                  "requests": {
-                    "type": "object"
-                  },
-                  "claims": {
-                    "type": [
-                      "null",
-                      "array"
-                    ],
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "request": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "resizePolicy": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "resourceName": {
-                      "type": "string"
-                    },
-                    "restartPolicy": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "restartPolicy": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "restartPolicyRules": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "action": {
-                      "type": "string"
-                    },
-                    "exitCodes": {
-                      "type": [
-                        "null",
-                        "object"
-                      ],
-                      "properties": {
-                        "operator": {
-                          "type": "string"
-                        },
-                        "values": {
-                          "type": [
-                            "null",
-                            "array"
-                          ],
-                          "items": {
-                            "type": "integer",
-                            "minimum": -2147483648,
-                            "maximum": 2147483647
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "volumeMounts": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "readOnly": {
-                      "type": "boolean"
-                    },
-                    "recursiveReadOnly": {
-                      "type": [
-                        "null",
-                        "string"
-                      ]
-                    },
-                    "mountPath": {
-                      "type": "string"
-                    },
-                    "subPath": {
-                      "type": "string"
-                    },
-                    "mountPropagation": {
-                      "type": [
-                        "null",
-                        "string"
-                      ]
-                    },
-                    "subPathExpr": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "volumeDevices": {
-                "type": [
-                  "null",
-                  "array"
-                ],
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "devicePath": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "livenessProbe": {
-                "type": [
-                  "null",
-                  "object"
-                ],
-                "properties": {
-                  "exec": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "command": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "httpGet": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "path": {
-                        "type": "string"
-                      },
-                      "port": {
-                        "type": "object",
-                        "properties": {
-                          "Type": {
-                            "type": "integer"
-                          },
-                          "IntVal": {
-                            "type": "integer",
-                            "minimum": -2147483648,
-                            "maximum": 2147483647
-                          },
-                          "StrVal": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "host": {
-                        "type": "string"
-                      },
-                      "scheme": {
-                        "type": "string"
-                      },
-                      "httpHeaders": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            },
-                            "value": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "tcpSocket": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "port": {
-                        "type": "object",
-                        "properties": {
-                          "Type": {
-                            "type": "integer"
-                          },
-                          "IntVal": {
-                            "type": "integer",
-                            "minimum": -2147483648,
-                            "maximum": 2147483647
-                          },
-                          "StrVal": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "host": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "grpc": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "port": {
-                        "type": "integer",
-                        "minimum": -2147483648,
-                        "maximum": 2147483647
-                      },
-                      "service": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      }
-                    }
-                  },
-                  "initialDelaySeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "timeoutSeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "periodSeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "successThreshold": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "failureThreshold": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "terminationGracePeriodSeconds": {
-                    "type": [
-                      "null",
-                      "integer"
-                    ]
-                  }
-                }
-              },
-              "readinessProbe": {
-                "type": [
-                  "null",
-                  "object"
-                ],
-                "properties": {
-                  "exec": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "command": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "httpGet": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "path": {
-                        "type": "string"
-                      },
-                      "port": {
-                        "type": "object",
-                        "properties": {
-                          "Type": {
-                            "type": "integer"
-                          },
-                          "IntVal": {
-                            "type": "integer",
-                            "minimum": -2147483648,
-                            "maximum": 2147483647
-                          },
-                          "StrVal": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "host": {
-                        "type": "string"
-                      },
-                      "scheme": {
-                        "type": "string"
-                      },
-                      "httpHeaders": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            },
-                            "value": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "tcpSocket": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "port": {
-                        "type": "object",
-                        "properties": {
-                          "Type": {
-                            "type": "integer"
-                          },
-                          "IntVal": {
-                            "type": "integer",
-                            "minimum": -2147483648,
-                            "maximum": 2147483647
-                          },
-                          "StrVal": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "host": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "grpc": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "port": {
-                        "type": "integer",
-                        "minimum": -2147483648,
-                        "maximum": 2147483647
-                      },
-                      "service": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      }
-                    }
-                  },
-                  "initialDelaySeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "timeoutSeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "periodSeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "successThreshold": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "failureThreshold": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "terminationGracePeriodSeconds": {
-                    "type": [
-                      "null",
-                      "integer"
-                    ]
-                  }
-                }
-              },
-              "startupProbe": {
-                "type": [
-                  "null",
-                  "object"
-                ],
-                "properties": {
-                  "exec": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "command": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "httpGet": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "path": {
-                        "type": "string"
-                      },
-                      "port": {
-                        "type": "object",
-                        "properties": {
-                          "Type": {
-                            "type": "integer"
-                          },
-                          "IntVal": {
-                            "type": "integer",
-                            "minimum": -2147483648,
-                            "maximum": 2147483647
-                          },
-                          "StrVal": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "host": {
-                        "type": "string"
-                      },
-                      "scheme": {
-                        "type": "string"
-                      },
-                      "httpHeaders": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string"
-                            },
-                            "value": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "tcpSocket": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "port": {
-                        "type": "object",
-                        "properties": {
-                          "Type": {
-                            "type": "integer"
-                          },
-                          "IntVal": {
-                            "type": "integer",
-                            "minimum": -2147483648,
-                            "maximum": 2147483647
-                          },
-                          "StrVal": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "host": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "grpc": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "port": {
-                        "type": "integer",
-                        "minimum": -2147483648,
-                        "maximum": 2147483647
-                      },
-                      "service": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      }
-                    }
-                  },
-                  "initialDelaySeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "timeoutSeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "periodSeconds": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "successThreshold": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "failureThreshold": {
-                    "type": "integer",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "terminationGracePeriodSeconds": {
-                    "type": [
-                      "null",
-                      "integer"
-                    ]
-                  }
-                }
-              },
-              "lifecycle": {
-                "type": [
-                  "null",
-                  "object"
-                ],
-                "properties": {
-                  "postStart": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "exec": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "command": {
-                            "type": [
-                              "null",
-                              "array"
-                            ],
-                            "items": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      },
-                      "httpGet": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "path": {
-                            "type": "string"
-                          },
-                          "port": {
-                            "type": "object",
-                            "properties": {
-                              "Type": {
-                                "type": "integer"
-                              },
-                              "IntVal": {
-                                "type": "integer",
-                                "minimum": -2147483648,
-                                "maximum": 2147483647
-                              },
-                              "StrVal": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "host": {
-                            "type": "string"
-                          },
-                          "scheme": {
-                            "type": "string"
-                          },
-                          "httpHeaders": {
-                            "type": [
-                              "null",
-                              "array"
-                            ],
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "name": {
-                                  "type": "string"
-                                },
-                                "value": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "tcpSocket": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "port": {
-                            "type": "object",
-                            "properties": {
-                              "Type": {
-                                "type": "integer"
-                              },
-                              "IntVal": {
-                                "type": "integer",
-                                "minimum": -2147483648,
-                                "maximum": 2147483647
-                              },
-                              "StrVal": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "host": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "sleep": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "seconds": {
-                            "type": "integer"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "preStop": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "exec": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "command": {
-                            "type": [
-                              "null",
-                              "array"
-                            ],
-                            "items": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      },
-                      "httpGet": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "path": {
-                            "type": "string"
-                          },
-                          "port": {
-                            "type": "object",
-                            "properties": {
-                              "Type": {
-                                "type": "integer"
-                              },
-                              "IntVal": {
-                                "type": "integer",
-                                "minimum": -2147483648,
-                                "maximum": 2147483647
-                              },
-                              "StrVal": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "host": {
-                            "type": "string"
-                          },
-                          "scheme": {
-                            "type": "string"
-                          },
-                          "httpHeaders": {
-                            "type": [
-                              "null",
-                              "array"
-                            ],
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "name": {
-                                  "type": "string"
-                                },
-                                "value": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "tcpSocket": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "port": {
-                            "type": "object",
-                            "properties": {
-                              "Type": {
-                                "type": "integer"
-                              },
-                              "IntVal": {
-                                "type": "integer",
-                                "minimum": -2147483648,
-                                "maximum": 2147483647
-                              },
-                              "StrVal": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "host": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "sleep": {
-                        "type": [
-                          "null",
-                          "object"
-                        ],
-                        "properties": {
-                          "seconds": {
-                            "type": "integer"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "stopSignal": {
-                    "type": [
-                      "null",
-                      "string"
-                    ]
-                  }
-                }
-              },
-              "terminationMessagePath": {
-                "type": "string"
-              },
-              "terminationMessagePolicy": {
-                "type": "string"
-              },
-              "imagePullPolicy": {
-                "type": "string"
-              },
-              "securityContext": {
-                "type": [
-                  "null",
-                  "object"
-                ],
-                "properties": {
-                  "capabilities": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "add": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "drop": {
-                        "type": [
-                          "null",
-                          "array"
-                        ],
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "privileged": {
-                    "type": [
-                      "null",
-                      "boolean"
-                    ]
-                  },
-                  "seLinuxOptions": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "user": {
-                        "type": "string"
-                      },
-                      "role": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "level": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "windowsOptions": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "gmsaCredentialSpecName": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      },
-                      "gmsaCredentialSpec": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      },
-                      "runAsUserName": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      },
-                      "hostProcess": {
-                        "type": [
-                          "null",
-                          "boolean"
-                        ]
-                      }
-                    }
-                  },
-                  "runAsUser": {
-                    "type": [
-                      "null",
-                      "integer"
-                    ]
-                  },
-                  "runAsGroup": {
-                    "type": [
-                      "null",
-                      "integer"
-                    ]
-                  },
-                  "runAsNonRoot": {
-                    "type": [
-                      "null",
-                      "boolean"
-                    ]
-                  },
-                  "readOnlyRootFilesystem": {
-                    "type": [
-                      "null",
-                      "boolean"
-                    ]
-                  },
-                  "allowPrivilegeEscalation": {
-                    "type": [
-                      "null",
-                      "boolean"
-                    ]
-                  },
-                  "procMount": {
-                    "type": [
-                      "null",
-                      "string"
-                    ]
-                  },
-                  "seccompProfile": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "type": {
-                        "type": "string"
-                      },
-                      "localhostProfile": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      }
-                    }
-                  },
-                  "appArmorProfile": {
-                    "type": [
-                      "null",
-                      "object"
-                    ],
-                    "properties": {
-                      "type": {
-                        "type": "string"
-                      },
-                      "localhostProfile": {
-                        "type": [
-                          "null",
-                          "string"
-                        ]
-                      }
-                    }
-                  }
-                }
-              },
-              "stdin": {
-                "type": "boolean"
-              },
-              "stdinOnce": {
-                "type": "boolean"
-              },
-              "tty": {
-                "type": "boolean"
-              }
-            }
-          }
-        },
         "affinity": {
           "type": [
             "null",
@@ -1917,10 +663,42 @@
             }
           }
         },
-        "annotations": {
+        "autoscaleBehavior": {
           "type": "object"
         },
-        "autoscaling": {
+        "autoscaleEnabled": {
+          "type": [
+            "null",
+            "boolean"
+          ]
+        },
+        "autoscaleMax": {
+          "type": [
+            "null",
+            "integer"
+          ]
+        },
+        "autoscaleMin": {
+          "type": [
+            "null",
+            "integer"
+          ]
+        },
+        "base": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "enableIstioConfigCRDs": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            }
+          }
+        },
+        "cni": {
           "type": [
             "null",
             "object"
@@ -1932,22 +710,10 @@
                 "boolean"
               ]
             },
-            "maxReplicas": {
+            "provider": {
               "type": [
                 "null",
-                "integer"
-              ]
-            },
-            "minReplicas": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            },
-            "targetCPUUtilizationPercentage": {
-              "type": [
-                "null",
-                "integer"
+                "string"
               ]
             }
           }
@@ -1958,165 +724,23 @@
             "string"
           ]
         },
-        "containerSecurityContext": {
+        "configMap": {
+          "type": [
+            "null",
+            "boolean"
+          ]
+        },
+        "cpu": {
           "type": [
             "null",
             "object"
           ],
           "properties": {
-            "capabilities": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "add": {
-                  "type": [
-                    "null",
-                    "array"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "drop": {
-                  "type": [
-                    "null",
-                    "array"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "privileged": {
-              "type": [
-                "null",
-                "boolean"
-              ]
-            },
-            "seLinuxOptions": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "user": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "level": {
-                  "type": "string"
-                }
-              }
-            },
-            "windowsOptions": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "gmsaCredentialSpecName": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "gmsaCredentialSpec": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "runAsUserName": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "hostProcess": {
-                  "type": [
-                    "null",
-                    "boolean"
-                  ]
-                }
-              }
-            },
-            "runAsUser": {
+            "targetAverageUtilization": {
               "type": [
                 "null",
                 "integer"
               ]
-            },
-            "runAsGroup": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            },
-            "runAsNonRoot": {
-              "type": [
-                "null",
-                "boolean"
-              ]
-            },
-            "readOnlyRootFilesystem": {
-              "type": [
-                "null",
-                "boolean"
-              ]
-            },
-            "allowPrivilegeEscalation": {
-              "type": [
-                "null",
-                "boolean"
-              ]
-            },
-            "procMount": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "seccompProfile": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "type": {
-                  "type": "string"
-                },
-                "localhostProfile": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                }
-              }
-            },
-            "appArmorProfile": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "type": {
-                  "type": "string"
-                },
-                "localhostProfile": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                }
-              }
             }
           }
         },
@@ -2126,11 +750,11 @@
             "string"
           ]
         },
-        "enabled": {
-          "type": [
-            "null",
-            "boolean"
-          ]
+        "deploymentAnnotations": {
+          "type": "object"
+        },
+        "deploymentLabels": {
+          "type": "object"
         },
         "env": {
           "type": "object"
@@ -2151,6 +775,219 @@
               },
               "valueFrom": {
                 "type": "object"
+              }
+            }
+          }
+        },
+        "experimental": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "stableValidationPolicy": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            }
+          }
+        },
+        "extraContainerArgs": {
+          "type": [
+            "null",
+            "array"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "gatewayClasses": {
+          "type": "object"
+        },
+        "gateways": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "seccompProfile": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "localhostProfile": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                }
+              }
+            },
+            "securityContext": {
+              "type": [
+                "null",
+                "object"
+              ],
+              "properties": {
+                "seLinuxOptions": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "user": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "level": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "windowsOptions": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "gmsaCredentialSpecName": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "gmsaCredentialSpec": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "runAsUserName": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "hostProcess": {
+                      "type": [
+                        "null",
+                        "boolean"
+                      ]
+                    }
+                  }
+                },
+                "runAsUser": {
+                  "type": [
+                    "null",
+                    "integer"
+                  ]
+                },
+                "runAsGroup": {
+                  "type": [
+                    "null",
+                    "integer"
+                  ]
+                },
+                "runAsNonRoot": {
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                },
+                "supplementalGroups": {
+                  "type": [
+                    "null",
+                    "array"
+                  ],
+                  "items": {
+                    "type": "integer"
+                  }
+                },
+                "supplementalGroupsPolicy": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "fsGroup": {
+                  "type": [
+                    "null",
+                    "integer"
+                  ]
+                },
+                "sysctls": {
+                  "type": [
+                    "null",
+                    "array"
+                  ],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "fsGroupChangePolicy": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "seccompProfile": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "localhostProfile": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    }
+                  }
+                },
+                "appArmorProfile": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "localhostProfile": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    }
+                  }
+                },
+                "seLinuxChangePolicy": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                }
               }
             }
           }
@@ -3661,34 +2498,17 @@
             }
           }
         },
-        "imagePullPolicy": {
+        "hub": {
           "type": [
             "null",
             "string"
-          ],
-          "enum": [
-            "",
-            "Always",
-            "IfNotPresent",
-            "Never"
           ]
         },
-        "imagePullSecrets": {
+        "image": {
           "type": [
             "null",
-            "array"
-          ],
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              }
-            }
-          }
+            "string"
+          ]
         },
         "initContainers": {
           "type": [
@@ -4944,96 +3764,109 @@
             }
           }
         },
-        "kind": {
+        "ipFamilies": {
+          "type": [
+            "null",
+            "array"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "ipFamilyPolicy": {
           "type": [
             "null",
             "string"
-          ],
-          "enum": [
-            "DaemonSet",
-            "Deployment"
           ]
         },
-        "labels": {
-          "type": "object"
-        },
-        "lifecycle": {
+        "istiodRemote": {
           "type": [
             "null",
             "object"
           ],
           "properties": {
-            "postStart": {
-              "type": "object"
+            "enabled": {
+              "type": [
+                "null",
+                "boolean"
+              ]
             },
-            "preStop": {
-              "type": "object"
+            "enabledLocalInjectorIstiod": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "injectionCABundle": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "injectionPath": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "injectionURL": {
+              "type": [
+                "null",
+                "string"
+              ]
             }
           }
         },
-        "minReadySeconds": {
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "name": {
+        "jwksResolverExtraRootCA": {
           "type": [
             "null",
             "string"
           ]
         },
-        "networkGateway": {
+        "keepaliveMaxServerConnectionAge": {
           "type": [
             "null",
             "string"
           ]
+        },
+        "memory": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "targetAverageUtilization": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            }
+          }
+        },
+        "meshConfig": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "enablePrometheusMerge": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            }
+          }
         },
         "nodeSelector": {
           "type": "object"
         },
-        "pilot": {
-          "type": "object"
-        },
-        "platform": {
+        "ownerName": {
           "type": [
             "null",
             "string"
           ]
         },
-        "podAnnotations": {
-          "type": [
-            "null",
-            "object"
-          ],
-          "properties": {
-            "inject.istio.io/templates": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "prometheus.io/path": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "prometheus.io/port": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "prometheus.io/scrape": {
-              "type": [
-                "null",
-                "string"
-              ]
-            }
-          }
-        },
-        "podDisruptionBudget": {
+        "pdb": {
           "type": [
             "null",
             "object"
@@ -5057,192 +3890,27 @@
               "type": [
                 "null",
                 "string"
-              ],
-              "enum": [
-                "",
-                "AlwaysAllow",
-                "IfHealthyBudget"
               ]
             }
           }
         },
-        "priorityClassName": {
+        "platform": {
           "type": [
             "null",
             "string"
           ]
+        },
+        "podAnnotations": {
+          "type": "object"
+        },
+        "podLabels": {
+          "type": "object"
         },
         "profile": {
           "type": [
             "null",
             "string"
           ]
-        },
-        "rbac": {
-          "type": [
-            "null",
-            "object"
-          ],
-          "properties": {
-            "enabled": {
-              "type": [
-                "null",
-                "boolean"
-              ]
-            }
-          }
-        },
-        "readinessProbe": {
-          "type": [
-            "null",
-            "object"
-          ],
-          "properties": {
-            "exec": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "command": {
-                  "type": [
-                    "null",
-                    "array"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "httpGet": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "path": {
-                  "type": "string"
-                },
-                "port": {
-                  "type": "object",
-                  "properties": {
-                    "Type": {
-                      "type": "integer"
-                    },
-                    "IntVal": {
-                      "type": "integer",
-                      "minimum": -2147483648,
-                      "maximum": 2147483647
-                    },
-                    "StrVal": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "host": {
-                  "type": "string"
-                },
-                "scheme": {
-                  "type": "string"
-                },
-                "httpHeaders": {
-                  "type": [
-                    "null",
-                    "array"
-                  ],
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "tcpSocket": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "port": {
-                  "type": "object",
-                  "properties": {
-                    "Type": {
-                      "type": "integer"
-                    },
-                    "IntVal": {
-                      "type": "integer",
-                      "minimum": -2147483648,
-                      "maximum": 2147483647
-                    },
-                    "StrVal": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "host": {
-                  "type": "string"
-                }
-              }
-            },
-            "grpc": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "port": {
-                  "type": "integer",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "service": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                }
-              }
-            },
-            "initialDelaySeconds": {
-              "type": "integer",
-              "minimum": -2147483648,
-              "maximum": 2147483647
-            },
-            "timeoutSeconds": {
-              "type": "integer",
-              "minimum": -2147483648,
-              "maximum": 2147483647
-            },
-            "periodSeconds": {
-              "type": "integer",
-              "minimum": -2147483648,
-              "maximum": 2147483647
-            },
-            "successThreshold": {
-              "type": "integer",
-              "minimum": -2147483648,
-              "maximum": 2147483647
-            },
-            "failureThreshold": {
-              "type": "integer",
-              "minimum": -2147483648,
-              "maximum": 2147483647
-            },
-            "terminationGracePeriodSeconds": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            }
-          }
         },
         "replicaCount": {
           "type": [
@@ -5304,302 +3972,181 @@
             "string"
           ]
         },
-        "runAsRoot": {
+        "revisionTags": {
           "type": [
             "null",
-            "boolean"
+            "array"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "rollingMaxSurge": {
+          "type": [
+            "null",
+            "integer",
+            "string"
           ]
         },
-        "securityContext": {
+        "rollingMaxUnavailable": {
+          "type": [
+            "null",
+            "integer",
+            "string"
+          ]
+        },
+        "seccompProfile": {
           "type": [
             "null",
             "object"
           ],
           "properties": {
-            "seLinuxOptions": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "user": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "level": {
-                  "type": "string"
-                }
-              }
+            "type": {
+              "type": "string"
             },
-            "windowsOptions": {
+            "localhostProfile": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "serviceAccountAnnotations": {
+          "type": "object"
+        },
+        "serviceAnnotations": {
+          "type": "object"
+        },
+        "sidecarInjectorWebhook": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "alwaysInjectSelector": {
+              "type": [
+                "null",
+                "array"
+              ]
+            },
+            "defaultTemplates": {
+              "type": [
+                "null",
+                "array"
+              ]
+            },
+            "enableNamespacesByDefault": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "injectedAnnotations": {
+              "type": "object"
+            },
+            "neverInjectSelector": {
+              "type": [
+                "null",
+                "array"
+              ]
+            },
+            "reinvocationPolicy": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "rewriteAppHTTPProbe": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "templates": {
+              "type": "object"
+            }
+          }
+        },
+        "sidecarInjectorWebhookAnnotations": {
+          "type": "object"
+        },
+        "tag": true,
+        "taint": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "enabled": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "namespace": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "telemetry": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "enabled": {
+              "type": [
+                "null",
+                "boolean"
+              ]
+            },
+            "v2": {
               "type": [
                 "null",
                 "object"
               ],
               "properties": {
-                "gmsaCredentialSpecName": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "gmsaCredentialSpec": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "runAsUserName": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                },
-                "hostProcess": {
+                "enabled": {
                   "type": [
                     "null",
                     "boolean"
                   ]
-                }
-              }
-            },
-            "runAsUser": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            },
-            "runAsGroup": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            },
-            "runAsNonRoot": {
-              "type": [
-                "null",
-                "boolean"
-              ]
-            },
-            "supplementalGroups": {
-              "type": [
-                "null",
-                "array"
-              ],
-              "items": {
-                "type": "integer"
-              }
-            },
-            "supplementalGroupsPolicy": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "fsGroup": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            },
-            "sysctls": {
-              "type": [
-                "null",
-                "array"
-              ],
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "value": {
-                    "type": "string"
+                },
+                "prometheus": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "enabled": {
+                      "type": [
+                        "null",
+                        "boolean"
+                      ]
+                    }
+                  }
+                },
+                "stackdriver": {
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "enabled": {
+                      "type": [
+                        "null",
+                        "boolean"
+                      ]
+                    }
                   }
                 }
               }
-            },
-            "fsGroupChangePolicy": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "seccompProfile": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "type": {
-                  "type": "string"
-                },
-                "localhostProfile": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                }
-              }
-            },
-            "appArmorProfile": {
-              "type": [
-                "null",
-                "object"
-              ],
-              "properties": {
-                "type": {
-                  "type": "string"
-                },
-                "localhostProfile": {
-                  "type": [
-                    "null",
-                    "string"
-                  ]
-                }
-              }
-            },
-            "seLinuxChangePolicy": {
-              "type": [
-                "null",
-                "string"
-              ]
             }
           }
-        },
-        "service": {
-          "type": [
-            "null",
-            "object"
-          ],
-          "properties": {
-            "annotations": {
-              "type": "object"
-            },
-            "externalTrafficPolicy": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "ipFamilies": {
-              "type": [
-                "null",
-                "array"
-              ],
-              "items": {
-                "type": "string"
-              }
-            },
-            "ipFamilyPolicy": {
-              "type": [
-                "null",
-                "string"
-              ],
-              "enum": [
-                "",
-                "SingleStack",
-                "PreferDualStack",
-                "RequireDualStack"
-              ]
-            },
-            "loadBalancerIP": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "loadBalancerSourceRanges": {
-              "type": [
-                "null",
-                "array"
-              ],
-              "items": {
-                "type": "string"
-              }
-            },
-            "ports": {
-              "type": [
-                "null",
-                "array"
-              ],
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": [
-                      "null",
-                      "string"
-                    ]
-                  },
-                  "port": {
-                    "type": [
-                      "null",
-                      "integer"
-                    ]
-                  },
-                  "protocol": {
-                    "type": [
-                      "null",
-                      "string"
-                    ]
-                  },
-                  "targetPort": {
-                    "type": [
-                      "null",
-                      "integer"
-                    ]
-                  }
-                }
-              }
-            },
-            "selectorLabels": {
-              "type": "object"
-            },
-            "type": {
-              "type": [
-                "null",
-                "string"
-              ]
-            }
-          }
-        },
-        "serviceAccount": {
-          "type": [
-            "null",
-            "object"
-          ],
-          "properties": {
-            "annotations": {
-              "type": "object"
-            },
-            "create": {
-              "type": [
-                "null",
-                "boolean"
-              ]
-            },
-            "name": {
-              "type": [
-                "null",
-                "string"
-              ]
-            }
-          }
-        },
-        "strategy": {
-          "type": "object"
-        },
-        "terminationGracePeriodSeconds": {
-          "type": [
-            "null",
-            "number"
-          ]
         },
         "tolerations": {
           "type": [
@@ -5718,14 +4265,29 @@
             }
           }
         },
-        "unprivilegedPort": {
+        "traceSampling": {
           "type": [
             "null",
-            "object"
-          ],
-          "properties": {
-            "Value": true
-          }
+            "number"
+          ]
+        },
+        "trustedZtunnelName": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "trustedZtunnelNamespace": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "variant": {
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "volumeMounts": {
           "type": [

@@ -51,16 +51,18 @@ All other charts, however, are exposed by `istioctl` and need to follow the step
 
 ### Step 3. Update istioctl schema
 
-Istioctl uses a protobuf schema to allow for type-checking of all fields used in the charts.
-If you're adding new fields to values, make sure to update the [values_types.proto](../../operator/pkg/apis/values_types.proto) file!
-Any changes to the schema must be added here, otherwise istioctl users will see errors.
-Once the schema file is updated, run:
+Istioctl uses Go structs to define the allowed fields for each chart's values. The JSON Schema
+files (`values.schema.json`) are generated from these Go structs, not the other way around.
+
+If you're adding new fields to values:
+1. Edit the Go structs in `operator/pkg/apis/values/<chart>/values.go`
+2. Run `make values-jsonschema` to regenerate the JSON Schema files
 
 ```bash
-$ make operator-proto
+$ make values-jsonschema
 ```
 
-This will regenerate the Go structs used for schema validation.
+This will regenerate the JSON Schema files from the Go structs.
 
 ### Step 4. Update the generated manifests
 

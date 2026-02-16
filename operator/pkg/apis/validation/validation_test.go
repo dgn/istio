@@ -349,7 +349,7 @@ global:
   proxy:
     foo: "bar"
 `,
-			wantErrs: makeErrors([]string{`could not unmarshal: error unmarshaling JSON: while decoding JSON: unknown field "foo" in istio.operator.v1alpha1.ProxyConfig`}),
+			wantErrs: makeErrors([]string{`could not unmarshal: error unmarshaling JSON: while decoding JSON: json: unknown field "foo"`}),
 		},
 		{
 			desc: "unknown cni field",
@@ -357,7 +357,7 @@ global:
 cni:
   foo: "bar"
 `,
-			wantErrs: makeErrors([]string{`could not unmarshal: error unmarshaling JSON: while decoding JSON: unknown field "foo" in istio.operator.v1alpha1.CNIConfig`}),
+			wantErrs: makeErrors([]string{`could not unmarshal: error unmarshaling JSON: while decoding JSON: json: unknown field "foo"`}),
 		},
 	}
 

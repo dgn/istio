@@ -60,7 +60,6 @@ import (
 	"istio.io/istio/pkg/log"
 	"istio.io/istio/pkg/platform"
 	"istio.io/istio/pkg/slices"
-	"istio.io/istio/pkg/util/protomarshal"
 	"istio.io/istio/pkg/util/sets"
 )
 
@@ -372,7 +371,7 @@ func (v ValuesConfig) Map() map[string]any {
 func NewValuesConfig(v string) (ValuesConfig, error) {
 	c := ValuesConfig{raw: v}
 	valuesStruct := &opconfig.Values{}
-	if err := protomarshal.ApplyYAML(v, valuesStruct); err != nil {
+	if err := yaml.Unmarshal([]byte(v), valuesStruct); err != nil {
 		return c, fmt.Errorf("could not parse configuration values: %v", err)
 	}
 	c.asStruct = valuesStruct
@@ -791,7 +790,7 @@ func reorderPod(pod *corev1.Pod, req InjectionParameters) error {
 
 	// nolint: staticcheck
 	holdPod := mc.GetDefaultConfig().GetHoldApplicationUntilProxyStarts().GetValue() ||
-		req.valuesConfig.asStruct.GetGlobal().GetProxy().GetHoldApplicationUntilProxyStarts().GetValue()
+		req.valuesConfig.asStruct.GetGlobal().GetProxy().GetHoldApplicationUntilProxyStarts()
 
 	proxyLocation := MoveLast
 	// If HoldApplicationUntilProxyStarts is set, reorder the proxy location
@@ -829,7 +828,7 @@ func applyRewrite(pod *corev1.Pod, req InjectionParameters) error {
 		return nil
 	}
 
-	rewrite := ShouldRewriteAppHTTPProbers(pod.Annotations, req.valuesConfig.asStruct.GetSidecarInjectorWebhook().GetRewriteAppHTTPProbe().GetValue())
+	rewrite := ShouldRewriteAppHTTPProbers(pod.Annotations, req.valuesConfig.asStruct.GetSidecarInjectorWebhook().GetRewriteAppHTTPProbe())
 	// We don't have to escape json encoding here when using golang libraries.
 	if rewrite {
 		if prober := DumpAppProbers(pod, req.meshConfig.GetDefaultConfig().GetStatusPort()); prober != "" {

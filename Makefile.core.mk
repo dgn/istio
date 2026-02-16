@@ -311,6 +311,9 @@ update-golden: refresh-goldens
 gen-addons:
 	manifests/addons/gen.sh
 
+values-jsonschema:
+	go run ./operator/cmd/values-schema-gen
+
 gen: \
 	mod-download-go \
 	go-gen \
@@ -318,6 +321,7 @@ gen: \
 	format \
 	update-crds \
 	proto \
+	values-jsonschema \
 	copy-templates \
 	gen-addons \
 	update-golden ## Update all generated code.

@@ -322,7 +322,7 @@ func ProxyImage(values *opconfig.Values, image *proxyConfig.ProxyImage, annotati
 
 	tag := ""
 	if global.GetTag() != nil { // Tag is an interface but we need the string form.
-		tag = fmt.Sprintf("%v", global.GetTag().AsInterface())
+		tag = fmt.Sprintf("%v", global.GetTag())
 	}
 
 	imageType := global.GetVariant()
@@ -348,7 +348,7 @@ func AgentgatewayImage(values *opconfig.Values, image *proxyConfig.ProxyImage, a
 
 	tag := ""
 	if global.GetTag() != nil { // Tag is an interface but we need the string form.
-		tag = fmt.Sprintf("%v", global.GetTag().AsInterface())
+		tag = fmt.Sprintf("%v", global.GetTag())
 	}
 
 	// Agentgateway does not use variants, but we still publish them for consistency so use it
