@@ -1,0 +1,9 @@
+apiVersion: release-notes/v2
+kind: bug-fix
+area: traffic-management
+
+releaseNotes:
+- |
+  **Fixed** an issue where istiod repeatedly serialized the same authorization
+  policies on every push to ztunnels. Policies are now serialized once when
+  they change and the result is reused.

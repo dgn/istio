@@ -39,26 +39,25 @@ const (
 )
 
 func (a *index) Policies(requested sets.Set[model.ConfigKey]) []model.WorkloadAuthorization {
-	// TODO: use many Gets instead of List?
-	cfgs := a.authorizationPolicies.List()
-	l := len(cfgs)
 	if len(requested) > 0 {
-		l = len(requested)
+		// Scoped update: look up only the requested policies by key, instead of
+		// listing all policies and filtering.
+		res := make([]model.WorkloadAuthorization, 0, len(requested))
+		for k := range requested {
+			cfg := a.authorizationPolicies.GetKey(k.Namespace + "/" + k.Name)
+			if cfg == nil || cfg.Authorization == nil {
+				continue
+			}
+			res = append(res, *cfg)
+		}
+		return res
 	}
-	res := make([]model.WorkloadAuthorization, 0, l)
+	cfgs := a.authorizationPolicies.List()
+	res := make([]model.WorkloadAuthorization, 0, len(cfgs))
 	for _, cfg := range cfgs {
 		// a nil Authorization means the WorkloadAuthorization contains an error condition which needs to be written but
 		// is otherwise an invalid policy and will be ignored
 		if cfg.Authorization == nil {
-			continue
-		}
-		k := model.ConfigKey{
-			Kind:      kind.AuthorizationPolicy,
-			Name:      cfg.Authorization.Name,
-			Namespace: cfg.Authorization.Namespace,
-		}
-
-		if len(requested) > 0 && !requested.Contains(k) {
 			continue
 		}
 		res = append(res, cfg)

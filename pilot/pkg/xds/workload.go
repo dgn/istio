@@ -233,9 +233,13 @@ func (e WorkloadRBACGenerator) GenerateDeltas(
 	for _, p := range policies {
 		n := p.ResourceName()
 		expected.Delete(n) // delete the generated policy name, left the removed ones
+		proto := p.Marshaled
+		if proto == nil {
+			proto = protoconv.MessageToAny(p.Authorization)
+		}
 		resources = append(resources, &discovery.Resource{
 			Name:     n,
-			Resource: protoconv.MessageToAny(p.Authorization),
+			Resource: proto,
 		})
 	}
 

@@ -24,12 +24,16 @@ import (
 	authpb "istio.io/api/security/v1beta1"
 	selectorpb "istio.io/api/type/v1beta1"
 	"istio.io/istio/pilot/pkg/serviceregistry/provider"
+	"istio.io/istio/pilot/pkg/util/protoconv"
 	"istio.io/istio/pkg/config"
 	"istio.io/istio/pkg/config/labels"
 	"istio.io/istio/pkg/config/mesh/meshwatcher"
 	"istio.io/istio/pkg/config/schema/collection"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/schema/kind"
 	"istio.io/istio/pkg/util/protomarshal"
+	"istio.io/istio/pkg/workloadapi/security"
+	"k8s.io/apimachinery/pkg/types"
 )
 
 func TestAuthorizationPolicies_ListAuthorizationPolicies(t *testing.T) {
@@ -562,4 +566,88 @@ func (fs *authzFakeStore) Update(config.Config) (string, error) {
 
 func (fs *authzFakeStore) UpdateStatus(config.Config) (string, error) {
 	return "not implemented", nil
+}
+
+func TestWorkloadAuthorizationEquals(t *testing.T) {
+	base := &security.Authorization{Name: "policy", Namespace: "default"}
+	marshaledBase := protoconv.MessageToAny(base)
+	different := &security.Authorization{Name: "other", Namespace: "default"}
+	marshaledDifferent := protoconv.MessageToAny(different)
+
+	sameSource := TypedObject{
+		NamespacedName: types.NamespacedName{Namespace: "default", Name: "policy"},
+		Kind:           kind.AuthorizationPolicy,
+	}
+	otherSource := TypedObject{
+		NamespacedName: types.NamespacedName{Namespace: "default", Name: "other"},
+		Kind:           kind.AuthorizationPolicy,
+	}
+	sameBinding := PolicyBindingStatus{Bound: true}
+	otherBinding := PolicyBindingStatus{Bound: false}
+
+	cases := []struct {
+		name     string
+		a, b     WorkloadAuthorization
+		shouldEq bool
+	}{
+		{
+			name:     "identical, both pre-marshaled",
+			a:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: sameBinding},
+			b:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: sameBinding},
+			shouldEq: true,
+		},
+		{
+			name:     "different policy, both pre-marshaled",
+			a:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: sameBinding},
+			b:        WorkloadAuthorization{Authorization: different, Marshaled: marshaledDifferent, Source: sameSource, Binding: sameBinding},
+			shouldEq: false,
+		},
+		{
+			name:     "fallback: one side not pre-marshaled, same policy",
+			a:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: sameBinding},
+			b:        WorkloadAuthorization{Authorization: base, Source: sameSource, Binding: sameBinding},
+			shouldEq: true,
+		},
+		{
+			name:     "fallback: one side not pre-marshaled, different policy",
+			a:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: sameBinding},
+			b:        WorkloadAuthorization{Authorization: different, Source: sameSource, Binding: sameBinding},
+			shouldEq: false,
+		},
+		{
+			name:     "status-only entries (nil policy, nil marshaled)",
+			a:        WorkloadAuthorization{Binding: PolicyBindingStatus{Status: &StatusMessage{Reason: "invalid"}}},
+			b:        WorkloadAuthorization{Binding: PolicyBindingStatus{Status: &StatusMessage{Reason: "invalid"}}},
+			shouldEq: true,
+		},
+		{
+			name:     "different labels",
+			a:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Labels: labels.Instance{"app": "a"}, Source: sameSource, Binding: sameBinding},
+			b:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Labels: labels.Instance{"app": "b"}, Source: sameSource, Binding: sameBinding},
+			shouldEq: false,
+		},
+		{
+			name:     "different source",
+			a:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: sameBinding},
+			b:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: otherSource, Binding: sameBinding},
+			shouldEq: false,
+		},
+		{
+			name:     "different binding",
+			a:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: sameBinding},
+			b:        WorkloadAuthorization{Authorization: base, Marshaled: marshaledBase, Source: sameSource, Binding: otherBinding},
+			shouldEq: false,
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := tc.a.Equals(tc.b); got != tc.shouldEq {
+				t.Errorf("Equals() = %v, want %v", got, tc.shouldEq)
+			}
+			if got := tc.b.Equals(tc.a); got != tc.shouldEq {
+				t.Errorf("reversed Equals() = %v, want %v", got, tc.shouldEq)
+			}
+		})
+	}
 }

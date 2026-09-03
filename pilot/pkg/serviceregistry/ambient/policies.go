@@ -22,9 +22,11 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
+	"google.golang.org/protobuf/types/known/anypb"
 	networkingclient "istio.io/client-go/pkg/apis/networking/v1"
 	securityclient "istio.io/client-go/pkg/apis/security/v1"
 	"istio.io/istio/pilot/pkg/model"
+	"istio.io/istio/pilot/pkg/util/protoconv"
 	"istio.io/istio/pkg/config/constants"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/kube/krt"
@@ -173,8 +175,13 @@ func PolicyCollections(
 			return nil
 		}
 
+		var marshaled *anypb.Any
+		if pol != nil {
+			marshaled = protoconv.MessageToAny(pol)
+		}
 		return &model.WorkloadAuthorization{
 			Authorization: pol,
+			Marshaled:     marshaled,
 			LabelSelector: model.NewSelector(i.Spec.GetSelector().GetMatchLabels()),
 			Source:        MakeSource(i),
 			Binding: model.PolicyBindingStatus{
@@ -244,6 +251,7 @@ func PolicyCollections(
 		}
 		return &model.WorkloadAuthorization{
 			Authorization: pol,
+			Marshaled:     protoconv.MessageToAny(pol),
 			LabelSelector: model.NewSelector(i.Spec.GetSelector().GetMatchLabels()),
 		}
 	}, opts.WithName("PeerAuthDerivedPolicies")...)
@@ -258,23 +266,20 @@ func PolicyCollections(
 		}
 		meshCfg := krt.FetchOne(ctx, meshConfig.AsCollection())
 		// If there are any PeerAuthentications in our cache, send our static STRICT policy
-		return &model.WorkloadAuthorization{
-			LabelSelector: model.LabelSelector{},
-			Authorization: &security.Authorization{
-				Name:      staticStrictPolicyName,
-				Namespace: meshCfg.GetRootNamespace(),
-				Scope:     security.Scope_WORKLOAD_SELECTOR,
-				Action:    security.Action_DENY,
-				Groups: []*security.Group{
-					{
-						Rules: []*security.Rules{
-							{
-								Matches: []*security.Match{
-									{
-										NotPrincipals: []*security.StringMatch{
-											{
-												MatchType: &security.StringMatch_Presence{},
-											},
+		pol := &security.Authorization{
+			Name:      staticStrictPolicyName,
+			Namespace: meshCfg.GetRootNamespace(),
+			Scope:     security.Scope_WORKLOAD_SELECTOR,
+			Action:    security.Action_DENY,
+			Groups: []*security.Group{
+				{
+					Rules: []*security.Rules{
+						{
+							Matches: []*security.Match{
+								{
+									NotPrincipals: []*security.StringMatch{
+										{
+											MatchType: &security.StringMatch_Presence{},
 										},
 									},
 								},
@@ -283,6 +288,11 @@ func PolicyCollections(
 					},
 				},
 			},
+		}
+		return &model.WorkloadAuthorization{
+			LabelSelector: model.LabelSelector{},
+			Authorization: pol,
+			Marshaled:     protoconv.MessageToAny(pol),
 		}
 	}, opts.WithName("DefaultPolicy")...)
 
@@ -315,29 +325,31 @@ func implicitWaypointPolicy(
 		return nil
 	}
 	meshCfg := krt.FetchOne(ctx, MeshConfig.AsCollection())
-	return &model.WorkloadAuthorization{
-		Authorization: &security.Authorization{
-			Name:      implicitWaypointPolicyName(flags, &waypoint),
-			Namespace: waypoint.Namespace,
-			// note: we don't actually use label selection; the names have an internally well-known format
-			// workload generation will append a reference to this
-			Scope:  security.Scope_WORKLOAD_SELECTOR,
-			Action: security.Action_ALLOW,
-			Groups: []*security.Group{{
-				Rules: []*security.Rules{
-					{
-						Matches: []*security.Match{
-							{
-								Principals: slices.Map(waypoint.ServiceAccounts, func(sa string) *security.StringMatch {
-									return &security.StringMatch{MatchType: &security.StringMatch_Exact{
-										Exact: strings.TrimPrefix(spiffe.MustGenSpiffeURI(meshCfg.MeshConfig, waypoint.Namespace, sa), spiffe.URIPrefix),
-									}}
-								}),
-							},
+	pol := &security.Authorization{
+		Name:      implicitWaypointPolicyName(flags, &waypoint),
+		Namespace: waypoint.Namespace,
+		// note: we don't actually use label selection; the names have an internally well-known format
+		// workload generation will append a reference to this
+		Scope:  security.Scope_WORKLOAD_SELECTOR,
+		Action: security.Action_ALLOW,
+		Groups: []*security.Group{{
+			Rules: []*security.Rules{
+				{
+					Matches: []*security.Match{
+						{
+							Principals: slices.Map(waypoint.ServiceAccounts, func(sa string) *security.StringMatch {
+								return &security.StringMatch{MatchType: &security.StringMatch_Exact{
+									Exact: strings.TrimPrefix(spiffe.MustGenSpiffeURI(meshCfg.MeshConfig, waypoint.Namespace, sa), spiffe.URIPrefix),
+								}}
+							}),
 						},
 					},
 				},
-			}},
-		},
+			},
+		}},
+	}
+	return &model.WorkloadAuthorization{
+		Authorization: pol,
+		Marshaled:     protoconv.MessageToAny(pol),
 	}
 }

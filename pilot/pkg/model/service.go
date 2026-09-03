@@ -1706,6 +1706,9 @@ type WorkloadAuthorization struct {
 	// LabelSelectors for the workload. Note these are only used internally, not sent over XDS
 	LabelSelector
 	Authorization *security.Authorization
+	// Marshaled contains the pre-marshaled representation of Authorization, reused on
+	// every xDS push to avoid re-serializing unchanged policies.
+	Marshaled *anypb.Any
 
 	Source  TypedObject
 	Binding PolicyBindingStatus
@@ -1742,7 +1745,7 @@ func (i WorkloadAuthorization) GetConditions(_currentConditions map[string]Condi
 // end impl StatusWriter
 
 func (i WorkloadAuthorization) Equals(other WorkloadAuthorization) bool {
-	return protoconv.Equals(i.Authorization, other.Authorization) &&
+	return equalUsingPremarshaled(i.Authorization, i.Marshaled, other.Authorization, other.Marshaled) &&
 		maps.Equal(i.Labels, other.Labels) &&
 		i.Source == other.Source &&
 		i.Binding.Equals(other.Binding)

@@ -26,9 +26,11 @@ import (
 	"istio.io/istio/pilot/pkg/model"
 	"istio.io/istio/pilot/pkg/util/protoconv"
 	v3 "istio.io/istio/pilot/pkg/xds/v3"
+	"istio.io/istio/pkg/config/schema/kind"
 	"istio.io/istio/pkg/test/util/assert"
 	"istio.io/istio/pkg/util/sets"
 	"istio.io/istio/pkg/workloadapi"
+	"istio.io/istio/pkg/workloadapi/security"
 )
 
 func TestAppendAddressWorkloadMarshal(t *testing.T) {
@@ -49,6 +51,53 @@ func TestAppendAddressWorkloadMarshal(t *testing.T) {
 			assert.Equal(t, resources[0].Resource, marshaled)
 			if cached != nil && resources[0].Resource != cached {
 				t.Fatal("appendAddress did not reuse the pre-marshaled workload")
+			}
+		})
+	}
+}
+
+type testRBACStore struct {
+	model.NoopAmbientIndexes
+	policies []model.WorkloadAuthorization
+}
+
+func (s *testRBACStore) Policies(requested sets.Set[model.ConfigKey]) []model.WorkloadAuthorization {
+	return s.policies
+}
+
+func TestWorkloadRBACMarshal(t *testing.T) {
+	pol := &security.Authorization{Name: "policy", Namespace: "default"}
+	marshaled := protoconv.MessageToAny(pol)
+	for name, cached := range map[string]*anypb.Any{
+		"cached":   marshaled,
+		"fallback": nil,
+	} {
+		t.Run(name, func(t *testing.T) {
+			store := &testRBACStore{policies: []model.WorkloadAuthorization{{
+				Authorization: pol,
+				Marshaled:     cached,
+			}}}
+			server := &DiscoveryServer{
+				Env: &model.Environment{
+					AmbientIndexes: store,
+				},
+			}
+			resources, _, _, _, err := (&WorkloadRBACGenerator{Server: server}).GenerateDeltas(
+				nil,
+				&model.PushRequest{
+					ConfigsUpdated: sets.New(model.ConfigKey{
+						Kind:      kind.AuthorizationPolicy,
+						Name:      "policy",
+						Namespace: "default",
+					}),
+				},
+				nil,
+			)
+			assert.NoError(t, err)
+			assert.Equal(t, len(resources), 1)
+			assert.Equal(t, resources[0].Resource, marshaled)
+			if cached != nil && resources[0].Resource != cached {
+				t.Fatal("WorkloadRBACGenerator did not reuse the pre-marshaled policy")
 			}
 		})
 	}

@@ -48,6 +48,7 @@ import (
 	"istio.io/istio/pkg/config/mesh"
 	"istio.io/istio/pkg/config/mesh/meshwatcher"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/schema/kind"
 	"istio.io/istio/pkg/env"
 	istiolog "istio.io/istio/pkg/log"
 	"istio.io/istio/pkg/slices"
@@ -308,6 +309,47 @@ func TestWorkloadIncrementalGeneration(t *testing.T) {
 	testBenchmark(t, v3.WorkloadType, wdsIncrementalCases)
 }
 
+var wdsRBACCases = []ConfigInput{
+	{
+		Name:             "workloadauthorization",
+		Services:         100,
+		KubernetesClient: true,
+		PushRequest: &model.PushRequest{
+			Reason: model.NewReasonStats(model.ProxyRequest),
+			Forced: true,
+		},
+	},
+}
+
+func BenchmarkWorkloadAuthorizationFullGeneration(b *testing.B) {
+	runBenchmark(b, v3.WorkloadAuthorizationType, wdsRBACCases)
+}
+
+func TestWorkloadAuthorizationFullGeneration(t *testing.T) {
+	testBenchmark(t, v3.WorkloadAuthorizationType, wdsRBACCases)
+}
+
+var wdsRBACIncrementalCases = func() []ConfigInput {
+	cases := slices.Clone(wdsRBACCases)
+	// Request a single resource
+	cases[0].PushRequest = &model.PushRequest{
+		ConfigsUpdated: sets.New(model.ConfigKey{
+			Kind:      kind.AuthorizationPolicy,
+			Name:      "authn-0",
+			Namespace: "default",
+		}),
+	}
+	return cases
+}()
+
+func BenchmarkWorkloadAuthorizationIncrementalGeneration(b *testing.B) {
+	runBenchmark(b, v3.WorkloadAuthorizationType, wdsRBACIncrementalCases)
+}
+
+func TestWorkloadAuthorizationIncrementalGeneration(t *testing.T) {
+	testBenchmark(t, v3.WorkloadAuthorizationType, wdsRBACIncrementalCases)
+}
+
 func createGateways(n int) map[string]*meshconfig.Network {
 	out := make(map[string]*meshconfig.Network, n)
 	for i := 0; i < n; i++ {
@@ -439,6 +481,8 @@ func getWatchedResources(tpe string, tt ConfigInput, s *xds.FakeDiscoveryServer,
 		routeNames := xdstest.ExtractRoutesFromListeners(l)
 		return &model.WatchedResource{ResourceNames: sets.New(routeNames...)}
 	case v3.AddressType, v3.WorkloadType:
+		return &model.WatchedResource{TypeUrl: tpe, ResourceNames: sets.New[string](), Wildcard: true}
+	case v3.WorkloadAuthorizationType:
 		return &model.WatchedResource{TypeUrl: tpe, ResourceNames: sets.New[string](), Wildcard: true}
 	}
 	return nil

@@ -1,0 +1,17 @@
+# Set up .Services number of AuthorizationPolicies, which are converted into
+# WorkloadAuthorization resources and pushed over WDS (WorkloadAuthorizationType)
+{{- range $i := until .Services }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: authn-{{$i}}
+  namespace: default
+spec:
+  action: DENY
+  rules:
+    - from:
+        - source:
+            ipBlocks:
+              - 10.{{$i}}.0.0/16
+---
+{{- end }}
