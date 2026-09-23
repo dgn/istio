@@ -25,9 +25,23 @@ import (
 
 	securityv1 "github.com/openshift/api/security/v1"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 
+	"istio.io/istio/pkg/kube"
+	"istio.io/istio/pkg/kube/controllers"
+	"istio.io/istio/pkg/kube/kclient"
 	"istio.io/istio/pkg/log"
 )
+
+var sccGVR = schema.GroupVersionResource{
+	Group:    "security.openshift.io",
+	Version:  "v1",
+	Resource: "securitycontextconstraints",
+}
+
+const sccAnnotation = "openshift.io/scc"
 
 // getPreallocatedUIDRange retrieves the annotated value from the namespace, splits it to make
 // the min/max and formats the data into the necessary types for the strategy options.
@@ -109,6 +123,86 @@ func parseSupplementalGroupAnnotation(groups string) ([]Block, error) {
 		return nil, fmt.Errorf("no blocks parsed from annotation %s", groups)
 	}
 	return blocks, nil
+}
+
+type SCCClient struct {
+	informer kclient.Untyped
+}
+
+func NewSCCClient(c kube.Client) *SCCClient {
+	return &SCCClient{informer: kclient.NewDynamic(c, sccGVR, kclient.Filter{})}
+}
+
+func (s *SCCClient) Close()          { s.informer.ShutdownHandlers() }
+func (s *SCCClient) HasSynced() bool { return s.informer.HasSynced() }
+
+func (s *SCCClient) get(name string) (*securityv1.SecurityContextConstraints, bool) {
+	obj := s.informer.Get(name, "")
+	if controllers.IsNil(obj) {
+		return nil, false
+	}
+	return toSCC(obj)
+}
+
+func toSCC(obj controllers.Object) (*securityv1.SecurityContextConstraints, bool) {
+	u, ok := obj.(*unstructured.Unstructured)
+	if !ok {
+		return nil, false
+	}
+	var scc securityv1.SecurityContextConstraints
+	if err := runtime.DefaultUnstructuredConverter.FromUnstructured(u.Object, &scc); err != nil {
+		log.Warnf("failed to convert SecurityContextConstraints %q: %v", u.GetName(), err)
+		return nil, false
+	}
+	return &scc, true
+}
+
+// GetSCCProxyIDs resolves the proxy UID/GID from the SCC named in pod's sccAnnotation. If the
+// namespace's preallocated range is a strict subset of what the SCC allows, the SCC agrees with
+// the namespace and nil is returned so the caller falls back to the namespace-advertised value;
+// otherwise the SCC's own range is used directly, since it isn't simply mirroring the namespace.
+func GetSCCProxyIDs(sccs *SCCClient, ns *corev1.Namespace, pod *corev1.Pod) (uid, gid *int64) {
+	if sccs == nil {
+		return nil, nil
+	}
+	name := pod.Annotations[sccAnnotation]
+	if name == "" {
+		return nil, nil
+	}
+	scc, ok := sccs.get(name)
+	if !ok {
+		return nil, nil
+	}
+
+	// Only MustRunAsRange is handled: MustRunAs pins every container to one fixed UID, which would
+	// collide with the app container instead of giving the proxy a distinct one.
+	if sccMin, sccMax := scc.RunAsUser.UIDRangeMin, scc.RunAsUser.UIDRangeMax; scc.RunAsUser.Type == securityv1.RunAsUserStrategyMustRunAsRange {
+		// If the SCC doesn't declare its own range, it defers to the namespace, so the
+		// namespace's range is trivially a subset and there is nothing to override.
+		isSubset := sccMin == nil || sccMax == nil
+		if !isSubset && ns != nil {
+			if nsMin, nsMax, err := getPreallocatedUIDRange(ns); err == nil {
+				isSubset = *nsMin >= *sccMin && *nsMax <= *sccMax
+			}
+		}
+		if !isSubset {
+			uid = sccMax
+		}
+	}
+	if scc.SupplementalGroups.Type == securityv1.SupplementalGroupsStrategyMustRunAs && len(scc.SupplementalGroups.Ranges) > 0 {
+		sccRange := scc.SupplementalGroups.Ranges[0]
+		isSubset := false
+		if ns != nil {
+			if nsGroups, err := getPreallocatedSupplementalGroups(ns); err == nil && len(nsGroups) > 0 {
+				isSubset = nsGroups[0].Min >= sccRange.Min && nsGroups[0].Max <= sccRange.Max
+			}
+		}
+		if !isSubset {
+			maxGID := sccRange.Max
+			gid = &maxGID
+		}
+	}
+	return uid, gid
 }
 
 // Functions below were copied from
