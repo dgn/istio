@@ -1,0 +1,530 @@
+# API surface the proxy conformance suite deliberately does not cover, with the reason.
+# Checked by TestCoverage (go test ./tests/conformance/proxy/coverage/). Every reason must
+# be real: uncovered surface without an exemption is the backlog, which is derived (status "todo" in
+# coverage.yaml) and bounded by maxTodo in ratchets.yaml.
+#
+# - Entries ending in "*" exempt every entry with that prefix: "<Kind>.<path>.*" a whole subtree
+#   (e.g. sidecar-only MeshConfig sections), "annotation:<prefix>*" an annotation family.
+# - "key:<string>" entries exempt Istio-specific keys found in the Gateway API translators.
+# - Run TestCoverage with -update to drop stale or redundant (covered) entries.
+exempt:
+  DestinationRule.trafficPolicy.connectionPool.http.http2KeepAlive*: 'TODO: HTTP/2
+    PING keepalives have no effect echo can observe; needs a backend that reports
+    the PING frames it receives on an idle connection'
+  DestinationRule.trafficPolicy.connectionPool.http.idleTimeout: 'TODO: observable
+    through the gateway''s upstream cluster stats (scrape with the proxyStatsMatcher
+    annotation, as istioapi.gateway.server-name does): upstream_cx_idle_timeout after
+    an idle pause between requests'
+  DestinationRule.trafficPolicy.connectionPool.http.maxRequestsPerConnection: 'TODO:
+    observable through the gateway''s upstream cluster stats (scrape with the proxyStatsMatcher
+    annotation, as istioapi.gateway.server-name does): upstream_cx_max_requests after
+    more requests than the limit'
+  DestinationRule.trafficPolicy.connectionPool.http.maxRetries: 'TODO: observable
+    through the gateway''s upstream cluster stats (scrape with the proxyStatsMatcher
+    annotation, as istioapi.gateway.server-name does): upstream_rq_retry_overflow
+    with concurrent retries against a failing backend'
+  DestinationRule.trafficPolicy.connectionPool.tcp.idleTimeout: 'TODO: observable
+    through the gateway''s upstream cluster stats (scrape with the proxyStatsMatcher
+    annotation, as istioapi.gateway.server-name does): upstream_cx_idle_timeout after
+    an idle pause on a TCP connection'
+  DestinationRule.trafficPolicy.connectionPool.tcp.maxConnectionDuration: 'TODO: observable
+    through the gateway''s upstream cluster stats (scrape with the proxyStatsMatcher
+    annotation, as istioapi.gateway.server-name does): upstream_cx_max_duration_reached
+    on a connection held past the limit'
+  DestinationRule.trafficPolicy.connectionPool.tcp.tcpKeepalive*: 'TODO: tcpKeepalive
+    sets socket options (SO_KEEPALIVE, TCP_KEEPIDLE/INTVL/CNT) with no effect echo
+    can observe; needs a workload that holds an idle connection open and reports the
+    keepalive probes it receives'
+  DestinationRule.trafficPolicy.loadBalancer.backendUtilization*: 'TODO: needs a backend
+    that sends ORCA load reports; echo does not'
+  DestinationRule.trafficPolicy.loadBalancer.simple: 'TODO: the simple balancers all
+    spread sequential requests evenly, so black-box they are indistinguishable from
+    the default; needs distinguishing setups (e.g. a slow endpoint under concurrent
+    load for LEAST_REQUEST)'
+  DestinationRule.trafficPolicy.loadBalancer.simple=LEAST_REQUEST: 'TODO: distinguishable
+    from ROUND_ROBIN/RANDOM only under concurrent load with one slow endpoint, which
+    should then get fewer requests'
+  DestinationRule.trafficPolicy.loadBalancer.simple=RANDOM: 'TODO: a random spread
+    is not distinguishable black-box from the default balancer; would need a statistical
+    test against a strict per-connection alternation'
+  DestinationRule.trafficPolicy.loadBalancer.simple=ROUND_ROBIN: 'TODO: not reliably
+    distinguishable from the default; Envoy keeps per-worker LB state, so even round
+    robin does not strictly alternate'
+  DestinationRule.trafficPolicy.loadBalancer.warmup*: 'statistical: slow start ramps
+    the traffic share of a new endpoint over time; asserting the ramp needs many requests
+    and timing tolerances that make the test flaky'
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting.minClusterSize: 'TODO:
+    testable as a contrast to backend.destinationrule.zone-aware: a minClusterSize
+    above the endpoint count turns zone-aware routing off, spreading traffic across
+    zones'
+  DestinationRule.trafficPolicy.outlierDetection.failurePercentageThreshold: 'TODO:
+    Envoy applies failure-percentage ejection only with at least 5 hosts (failure_percentage_minimum_hosts);
+    needs a backend with 5 or more replicas'
+  DestinationRule.trafficPolicy.retryBudget*: 'TODO: observable through the gateway''s
+    upstream cluster stats (scrape with the proxyStatsMatcher annotation, as istioapi.gateway.server-name
+    does): upstream_rq_retry_overflow with concurrent retries against a failing backend'
+  DestinationRule.trafficPolicy.tunnel*: 'TODO: needs an HTTP CONNECT proxy workload
+    as the tunnel target'
+  EnvoyFilter.*: Envoy-specific extension API (raw Envoy config patches); not a conformance
+    requirement, see impl-specific.* features
+  Gateway.servers.defaultEndpoint: 'not implemented: the API marks it NOT IMPLEMENTED
+    (hidden from docs) and pilot never reads it (Sidecar.ingress.defaultEndpoint is
+    a different field)'
+  Gateway.servers.tls.tlsCertificates.caCertificates: 'TODO: pilot ignores the per-certificate
+    CA (ApplyToCommonTLSContext validates clients only against the top-level tls.caCertificates,
+    since Envoy cannot use a different client CA per server certificate); cover it
+    once pilot honors or rejects the field'
+  MeshConfig.ca.*: istiod/CA configuration; no per-proxy observable behavior
+  MeshConfig.configSources.*: istiod config ingestion; no per-proxy observable behavior
+  MeshConfig.defaultConfig.*: same fields as ProxyConfig.*, which is tracked directly
+  MeshConfig.defaultHttpRetryPolicy.backoff: 'TODO: testable with echo: count the
+    attempts per backend (or locality), or time them, like the VirtualService.http.retries.backoff
+    and retryIgnorePreviousHosts features do'
+  MeshConfig.defaultHttpRetryPolicy.retryIgnorePreviousHosts: 'TODO: testable with
+    echo: count the attempts per backend (or locality), or time them, like the VirtualService.http.retries.backoff
+    and retryIgnorePreviousHosts features do'
+  MeshConfig.defaultHttpRetryPolicy.retryRemoteLocalities: 'TODO: testable with echo:
+    count the attempts per backend (or locality), or time them, like the VirtualService.http.retries.backoff
+    and retryIgnorePreviousHosts features do'
+  MeshConfig.ingressClass: Kubernetes Ingress support; Kubernetes Ingress is out of
+    scope for the suite (Istio Gateway and Gateway API only)
+  MeshConfig.ingressControllerMode*: Kubernetes Ingress support; Kubernetes Ingress
+    is out of scope for the suite (Istio Gateway and Gateway API only)
+  MeshConfig.ingressSelector: Kubernetes Ingress support; Kubernetes Ingress is out
+    of scope for the suite (Istio Gateway and Gateway API only)
+  MeshConfig.ingressService: Kubernetes Ingress support; Kubernetes Ingress is out
+    of scope for the suite (Istio Gateway and Gateway API only)
+  MeshConfig.meshMTLS.ecdhCurves: 'unusable: validation rejects it ("mesh TLS does
+    not support ECDH curves configuration", pkg/config/validation/agent/validation.go)
+    and pilot never reads it'
+  MeshConfig.serviceScopeConfigs*: 'TODO: multicluster only (the setting decides which
+    clusters'' endpoints a service gets); a single-cluster suite cannot observe it.
+    Cover it in a multicluster test'
+  MeshConfig.serviceSettings*: 'TODO: multicluster only (the setting decides which
+    clusters'' endpoints a service gets); a single-cluster suite cannot observe it.
+    Cover it in a multicluster test'
+  MeshConfig.tcpKeepalive*: 'TODO: tcpKeepalive sets socket options (SO_KEEPALIVE,
+    TCP_KEEPIDLE/INTVL/CNT) with no effect echo can observe; needs a workload that
+    holds an idle connection open and reports the keepalive probes it receives'
+  MeshConfig.zoneAwareLbSetting.minClusterSize: 'TODO: testable as a contrast to backend.meshconfig.zone-aware:
+    a minClusterSize above the endpoint count turns zone-aware routing off, spreading
+    traffic across zones'
+  ProxyConfig.binaryPath: 'deployment internals: path of the proxy binary pilot-agent
+    starts'
+  ProxyConfig.concurrency: 'TODO: number of Envoy worker threads; no direct traffic
+    effect. Could be checked through per-worker stats or the listener connection balance'
+  ProxyConfig.configPath: 'deployment internals: directory for the generated proxy
+    bootstrap'
+  ProxyConfig.connectionSettings.httpRequestTimeout: bounds receiving the request
+    (client to proxy), not the backend response; needs a slow-uploading client, which
+    echo cannot do
+  ProxyConfig.controlPlaneAuthPolicy*: 'deployment internals: proxy-to-istiod connection
+    security (deprecated); not data plane behavior'
+  ProxyConfig.customConfigFile: 'Envoy-specific: custom Envoy bootstrap file'
+  ProxyConfig.discoveryAddress: 'deployment internals: address of the xDS server the
+    proxy connects to'
+  ProxyConfig.environmentVariables: 'deployment internals: environment of pilot-agent
+    (merged into proxyMetadata); behaviors it toggles are tracked by their own entries'
+  ProxyConfig.holdApplicationUntilProxyStarts: 'deployment internals: sidecar container
+    start order (injection); a gateway has no application container'
+  ProxyConfig.image*: 'deployment internals: proxy container image variant (injection)'
+  ProxyConfig.interceptionMode*: 'deployment internals: sidecar traffic capture (iptables
+    REDIRECT/TPROXY); gateways receive traffic directly'
+  ProxyConfig.meshId: 'deployment internals: bootstrap node metadata used for multi-mesh
+    identification; no client or backend observable behavior'
+  ProxyConfig.privateKeyProvider*: needs QAT or CryptoMB hardware acceleration in
+    the test environment; Envoy-specific private key offload
+  ProxyConfig.proxyAdminPort: 'Envoy-specific: local admin interface port'
+  ProxyConfig.proxyBootstrapTemplatePath: 'Envoy-specific: custom Envoy bootstrap
+    template'
+  ProxyConfig.proxyHeaders.forwardedClientCert: 'ignored on gateways by design: gateways
+    use gatewayTopology.forwardClientCertDetails and fixed client cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=ALWAYS_FORWARD_ONLY: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=APPEND_FORWARD: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=FORWARD_ONLY: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=SANITIZE: 'ignored on gateways by design:
+    gateways use gatewayTopology.forwardClientCertDetails and fixed client cert details
+    (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=SANITIZE_SET: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=UNDEFINED: 'ignored on gateways by
+    design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.preserveHttp1HeaderCase: 'not observable black-box: the
+    echo backend (Go net/http) canonicalizes header names'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails: 'ignored on gateways by design:
+    gateways use gatewayTopology.forwardClientCertDetails and fixed client cert details
+    (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.cert: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.chain: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.dns: 'ignored on gateways by
+    design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.subject: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.uri: 'ignored on gateways by
+    design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyMetadata: 'deployment internals: environment of pilot-agent and
+    bootstrap metadata; behaviors it toggles are tracked by their own entries'
+  ProxyConfig.readinessProbe.*: pod-level probe of the proxy container; not proxy
+    feature behavior
+  ProxyConfig.runtimeValues: 'Envoy-specific: Envoy runtime overrides'
+  ProxyConfig.serviceCluster: 'deployment internals: bootstrap node cluster name (deprecated
+    in favor of tracingServiceName); no client or backend observable behavior'
+  ProxyConfig.statNameLength: 'Envoy-specific: maximum length of Envoy stat names'
+  ProxyConfig.statsCompression: 'Envoy-specific: compression of the Envoy stats endpoint'
+  ProxyConfig.statusPort: pod-level health port of the proxy container; not proxy
+    feature behavior
+  ProxyConfig.tracingServiceName*: 'TODO: the service name is only visible in the
+    spans the proxy reports; needs a trace collector that records them (the tracing
+    features send spans to istiod, which refuses them)'
+  Sidecar.inboundConnectionPool.tcp.tcpKeepalive*: 'TODO: tcpKeepalive sets socket
+    options (SO_KEEPALIVE, TCP_KEEPIDLE/INTVL/CNT) with no effect echo can observe;
+    needs a workload that holds an idle connection open and reports the keepalive
+    probes it receives'
+  Sidecar.ingress.connectionPool.tcp.tcpKeepalive*: 'TODO: tcpKeepalive sets socket
+    options (SO_KEEPALIVE, TCP_KEEPIDLE/INTVL/CNT) with no effect echo can observe;
+    needs a workload that holds an idle connection open and reports the keepalive
+    probes it receives'
+  TrafficExtension.*: Envoy-specific extension API (Lua and Wasm filters inserted
+    into Envoy's filter chain); not a conformance requirement, see impl-specific.*
+    features
+  VirtualService.http.fault.abort.http2Error: 'not implemented: TranslateFault (pilot/pkg/networking/core/route/route.go)
+    supports only httpStatus and grpcStatus aborts and drops this one with a warning'
+  VirtualService.http.fault.delay.exponentialDelay: 'not implemented: TranslateFault
+    (pilot/pkg/networking/core/route/route.go) drops it ("Exponential faults are not
+    yet supported")'
+  VirtualService.http.match.name: metadata only (names the match in stats/debug output);
+    no traffic behavior
+  VirtualService.http.match.statPrefix: metadata only (stat name prefix); no traffic
+    behavior
+  VirtualService.http.name: metadata only (names routes in stats/debug output); no
+    traffic behavior
+  VirtualService.http.retries.retryRemoteLocalities: 'TODO: testable with echo: count
+    the attempts per backend (or locality), or time them, like the VirtualService.http.retries.backoff
+    and retryIgnorePreviousHosts features do'
+  WorkloadGroup.*: 'VM onboarding: used only by WorkloadEntry auto-registration and
+    health checking of VM agents; the suite has no VM role (WorkloadEntry itself is
+    tracked)'
+  annotation:ambient.istio.io/redirection: status written by istio-cni after ambient
+    enrollment ('should not be modified'); the intent is istio.io/dataplane-mode,
+    which is tracked
+  annotation:galley.istio.io/analyze-suppress: istioctl analyze configuration; no
+    effect on proxies
+  annotation:gateway.istio.io/controller-version: internal bookkeeping annotation
+    written by istiod onto Gateways; not user-facing behavior
+  annotation:inject.istio.io/templates: selects the sidecar injection template (istiod
+    injection webhook, installation); changes the pod spec, not proxy features
+  annotation:istio.io/autoRegistrationGroup: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:istio.io/connectedAt: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:istio.io/disconnectedAt: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:istio.io/rev: set automatically by injection to the connected control
+    plane revision; not user configuration
+  annotation:istio.io/workloadController: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:proxy.istio.io/overrides: 'internal: records user overrides of the proxy
+    container during injection'
+  annotation:readiness.status.sidecar.istio.io/*: pod-level readiness probe of the
+    proxy container (injection); not proxy feature behavior, like ProxyConfig.readinessProbe
+  annotation:sidecar.istio.io/agentLogLevel: diagnostic log verbosity of pilot-agent;
+    no dataplane behavior
+  annotation:sidecar.istio.io/bootstrapOverride: Envoy-specific (custom Envoy bootstrap
+    file); not a conformance requirement
+  annotation:sidecar.istio.io/componentLogLevel: diagnostic log verbosity of Envoy
+    components (Envoy-specific); no dataplane behavior
+  annotation:sidecar.istio.io/logLevel: diagnostic log verbosity of the proxy process;
+    no dataplane behavior
+  annotation:sidecar.istio.io/proxyCPU: proxy container resource request (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyCPULimit: proxy container resource limit (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyImage: proxy container image (injection, installation);
+    selects the implementation, not a feature
+  annotation:sidecar.istio.io/proxyImageType: proxy container image variant (debug/distroless;
+    injection, installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyMemory: proxy container resource request (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyMemoryLimit: proxy container resource limit (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/status: generated by the injection webhook to record
+    what it injected; not user configuration
+  annotation:sidecar.istio.io/userVolume: extra pod volumes (injection, installation);
+    no proxy feature behavior
+  annotation:sidecar.istio.io/userVolumeMount: extra proxy container volume mounts
+    (injection, installation); no proxy feature behavior
+  annotation:status.sidecar.istio.io/port: pod-level health port of the proxy container
+    (injection); not proxy feature behavior, like ProxyConfig.statusPort
+  annotation:topology.istio.io/controlPlaneClusters: istiod leader election for remote
+    clusters; control plane only
+  annotation:traffic.istio.io/nodeSelector: 'multicluster/multi-network: needs several
+    clusters or networks; the suite runs a single cluster and network'
+  flag:agent:CA_ADDR: 'agent plumbing: CA endpoint'
+  flag:agent:CA_PROVIDER: 'agent plumbing: CA selection'
+  flag:agent:CA_ROOT_CA: 'agent plumbing: CA connection trust'
+  flag:agent:CLOUD_PLATFORM: 'agent plumbing: platform metadata detection'
+  flag:agent:CREDENTIAL_FETCHER_TYPE: 'agent plumbing: CA credential source'
+  flag:agent:CREDENTIAL_IDENTITY_PROVIDER: 'agent plumbing: CA credential source'
+  flag:agent:DISABLE_ENVOY: 'agent plumbing: proxyless mode (no proxy)'
+  flag:agent:ENVOY_PROMETHEUS_PORT: 'agent plumbing: Envoy-specific admin/stats port'
+  flag:agent:ENVOY_SECURE_MERGED_METRICS_PORT: 'agent plumbing: Envoy-specific stats
+    port'
+  flag:agent:ENVOY_SECURE_METRICS_PORT: 'agent plumbing: Envoy-specific stats port'
+  flag:agent:ENVOY_SKIP_DEPRECATED_LOGS: 'agent plumbing: proxy log verbosity'
+  flag:agent:ENVOY_STATUS_PORT: 'agent plumbing: Envoy-specific admin/status port'
+  flag:agent:FILE_DEBOUNCE_DURATION: 'agent plumbing: file watch timing'
+  flag:agent:FILE_MOUNTED_CERTS: 'agent plumbing: certificate provisioning mode'
+  flag:agent:GCP_METADATA: 'agent plumbing: platform metadata'
+  flag:agent:GRPC_KEEPALIVE_INTERVAL: 'agent plumbing: agent to istiod connection'
+  flag:agent:GRPC_KEEPALIVE_TIMEOUT: 'agent plumbing: agent to istiod connection'
+  flag:agent:GRPC_XDS_BOOTSTRAP: 'agent plumbing: proxyless gRPC bootstrap'
+  flag:agent:INSTANCE_IP: 'agent plumbing: downward API value set by injection'
+  flag:agent:ISTIO_BOOTSTRAP: 'agent plumbing: Envoy-specific bootstrap template path'
+  flag:agent:ISTIO_BOOTSTRAP_OVERRIDE: 'agent plumbing: Envoy-specific bootstrap override'
+  flag:agent:ISTIO_CPU_LIMIT: 'agent plumbing: worker concurrency from resource limits
+    (performance)'
+  flag:agent:ISTIO_ENVOY_ENABLE_CORE_DUMP: 'agent plumbing: debugging'
+  flag:agent:ISTIO_META_CERT_SIGNER: 'agent plumbing: CA signer selection'
+  flag:agent:ISTIO_META_CLUSTER_ID: 'agent plumbing: installation identity of the
+    cluster'
+  flag:agent:ISTIOD_SAN: 'agent plumbing: istiod identity verification'
+  flag:agent:JWT_POLICY: 'agent plumbing: token type used to authenticate to the CA'
+  flag:agent:KUBERNETES_SERVICE_HOST: 'agent plumbing: Kubernetes API endpoint'
+  flag:agent:OUTPUT_CERTS: 'agent plumbing: debugging: writes certificates to disk'
+  flag:agent:PKCS8_KEY: 'agent plumbing: private key encoding'
+  flag:agent:POD_NAME: 'agent plumbing: downward API value set by injection'
+  flag:agent:POD_NAMESPACE: 'agent plumbing: downward API value set by injection'
+  flag:agent:PROV_CERT: 'agent plumbing: VM provisioning certificates'
+  flag:agent:SECRET_GRACE_PERIOD_RATIO: 'agent plumbing: certificate rotation timing'
+  flag:agent:SECRET_GRACE_PERIOD_RATIO_JITTER: 'agent plumbing: certificate rotation
+    timing'
+  flag:agent:SECRET_TTL: 'agent plumbing: workload certificate lifetime requested
+    from the CA'
+  flag:agent:SERVICE_ACCOUNT: 'agent plumbing: downward API value set by injection'
+  flag:agent:TOKEN_AUDIENCES: 'agent plumbing: token audience for CA authentication'
+  flag:agent:TRUST_DOMAIN: 'agent plumbing: set from mesh config by injection; MeshConfig.trustDomain
+    is tracked'
+  flag:agent:WORKLOAD_IDENTITY_SOCKET_FILE: 'agent plumbing: SDS socket location'
+  flag:agent:WORKLOAD_IDENTITY_SOCKET_TIMEOUT: 'agent plumbing: SDS socket timing'
+  flag:agent:XDS_AUTH_PLAINTEXT: 'agent plumbing: agent to istiod authentication'
+  flag:agent:XDS_AUTH_PROVIDER: 'agent plumbing: agent to istiod authentication'
+  flag:agent:XDS_ROOT_CA: 'agent plumbing: agent to istiod connection trust'
+  flag:istiod:AMBIENT_ENABLE_MULTI_NETWORK: 'multicluster/multi-network: needs several
+    clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:AMBIENT_ENABLE_MULTI_NETWORK_INGRESS: 'multicluster/multi-network: needs
+    several clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:AMBIENT_ENABLE_MULTI_NETWORK_WAYPOINT: 'multicluster/multi-network:
+    needs several clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:AMBIENT_ENABLE_STATUS: 'control plane only: writes ambient status conditions
+    on Kubernetes resources'
+  flag:istiod:AMBIENT_ENABLE_TLS_PROXY_HTTP_METRICS: 'multicluster/multi-network:
+    needs several clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:AMBIENT_SCOPED_ADDRESS_PUSHES: 'control plane only: push scoping optimization;
+    the config proxies converge on is unchanged'
+  flag:istiod:BLOCKED_CIDRS_IN_JWKS_URIS: 'control plane only: restricts istiod''s
+    own JWKS fetcher'
+  flag:istiod:DEBUG_ENDPOINT_AUTH_ALLOWED_NAMESPACES: 'control plane only: istiod
+    debug endpoint authorization'
+  flag:istiod:DISABLE_TRACK_REMAINING_CB_METRICS: 'Envoy-specific: circuit breaker
+    remaining-capacity stats'
+  flag:istiod:ENABLE_CLUSTER_TRUST_BUNDLE_API: 'control plane only: how istiod distributes
+    the root certificate (ClusterTrustBundle vs ConfigMap)'
+  flag:istiod:ENABLE_DEBUG_ENDPOINT_AUTH: 'control plane only: istiod debug endpoint
+    authorization'
+  flag:istiod:ENABLE_DEBUG_ON_HTTP: 'control plane only: istiod debug endpoints'
+  flag:istiod:ENABLE_LAZY_SIDECAR_EVALUATION: 'control plane only: when SidecarScopes
+    are computed, not their content'
+  flag:istiod:ENABLE_LEADER_ELECTION: 'control plane only: istiod leader election
+    (which replica writes status and runs controllers)'
+  flag:istiod:ENABLE_MCS_AUTO_EXPORT: 'multicluster/multi-network: needs several clusters
+    or networks; the suite runs a single cluster and network'
+  flag:istiod:ENABLE_MCS_CLUSTER_LOCAL: 'multicluster/multi-network: needs several
+    clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:ENABLE_MCS_HOST: 'multicluster/multi-network: needs several clusters
+    or networks; the suite runs a single cluster and network'
+  flag:istiod:ENABLE_MCS_SERVICE_DISCOVERY: 'multicluster/multi-network: needs several
+    clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:ENABLE_MULTICLUSTER_HEADLESS: 'multicluster/multi-network: needs several
+    clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:ENABLE_PROXY_FIND_POD_BY_IP: 'control plane only: fallback for istiod
+    to associate a proxy with its pod'
+  flag:istiod:ENABLE_VTPROTOBUF: 'control plane only: xDS serialization implementation;
+    output unchanged'
+  flag:istiod:ENABLE_XDS_API_GENERATOR_AUTH: 'control plane only: authorization of
+    MCP-over-xDS config readers, not of proxy config'
+  flag:istiod:EXTERNAL_ISTIOD: 'installation: external control plane deployment model'
+  flag:istiod:INJECTION_WEBHOOK_CONFIG_NAME: 'control plane only: name of the injector
+    webhook istiod patches (installation detail)'
+  flag:istiod:ISTIO_DELTA_XDS: 'control plane only: xDS transport variant (delta vs
+    state of the world); the config proxies converge on is unchanged'
+  flag:istiod:ISTIO_ENABLE_CONTROLLER_QUEUE_METRICS: 'control plane only: istiod metrics'
+  flag:istiod:ISTIO_GPRC_MAXRECVMSGSIZE: 'control plane only: istiod gRPC server limit'
+  flag:istiod:ISTIO_GPRC_MAXSTREAMS: 'control plane only: istiod gRPC server limit'
+  flag:istiod:ISTIO_KUBE_CLIENT_CONTENT_TYPE: 'control plane only: wire encoding of
+    istiod''s Kubernetes client'
+  flag:istiod:ISTIO_WATCH_NAMESPACE: 'control plane only: installation scoping of
+    istiod''s informers; the suite runs with the default'
+  flag:istiod:ISTIO_WORKLOAD_ENTRY_VALIDATE_IDENTITY: 'VM onboarding: used only by
+    WorkloadEntry auto-registration and health checking of VM agents; the suite has
+    no VM role (WorkloadEntry itself is tracked)'
+  flag:istiod:JWKS_RESOLVER_INSECURE_SKIP_VERIFY: 'control plane only: TLS verification
+    of istiod''s own JWKS fetcher'
+  flag:istiod:LOCAL_CLUSTER_SECRET_WATCHER: 'control plane only: where istiod watches
+    multicluster secrets (installation detail)'
+  flag:istiod:MAX_CONNECTIONS_PER_SOCKET_EVENT_LOOP: 'performance: Envoy accept loop
+    tuning'
+  flag:istiod:MCS_API_GROUP: 'multicluster/multi-network: needs several clusters or
+    networks; the suite runs a single cluster and network'
+  flag:istiod:MCS_API_VERSION: 'multicluster/multi-network: needs several clusters
+    or networks; the suite runs a single cluster and network'
+  flag:istiod:MUTEX_PROFILE_FRACTION: 'control plane only: istiod profiling'
+  flag:istiod:PILOT_AGENT_MERGE_ENVOY_STATS: 'Envoy-specific: merging Envoy stats
+    into the agent metrics endpoint'
+  flag:istiod:PILOT_CA_CERT_CONFIGMAP: 'control plane only: name of the root cert
+    ConfigMap istiod writes (installation detail)'
+  flag:istiod:PILOT_CONVERT_SIDECAR_SCOPE_CONCURRENCY: 'control plane only: istiod
+    computation concurrency'
+  flag:istiod:PILOT_CRL_CONFIGMAP: 'control plane only: name of the CRL ConfigMap
+    istiod writes (installation detail)'
+  flag:istiod:PILOT_DEBOUNCE_AFTER: 'control plane only: push debouncing (timing only)'
+  flag:istiod:PILOT_DEBOUNCE_MAX: 'control plane only: push debouncing (timing only)'
+  flag:istiod:PILOT_DNS_CARES_UDP_MAX_QUERIES: 'performance: Envoy c-ares resolver
+    tuning'
+  flag:istiod:PILOT_DNS_JITTER_DURATION: 'performance: jitter of periodic DNS re-resolution
+    (timing only)'
+  flag:istiod:PILOT_ENABLE_AGENTGATEWAY: 'installation: enables the istio-agentgateway
+    GatewayClass, a prerequisite of the agentgateway implementation'
+  flag:istiod:PILOT_ENABLE_ALPHA_GATEWAY_API: 'installation: enables watching alpha
+    Gateway API kinds; the kinds themselves are tracked'
+  flag:istiod:PILOT_ENABLE_AMBIENT: 'installation: prerequisite of ambient mode, which
+    the suite enables'
+  flag:istiod:PILOT_ENABLE_AMBIENT_WAYPOINTS: 'installation: prerequisite of waypoints,
+    which the suite enables'
+  flag:istiod:PILOT_ENABLE_ANALYSIS: 'control plane only: config analysis written
+    to status'
+  flag:istiod:PILOT_ENABLE_CA_CRL: 'TODO: needs istiod installed with a plugged-in
+    CA (cacerts secret with ca-crl.pem); the shared suite install uses the self-signed
+    CA, so there is no CRL to distribute'
+  flag:istiod:PILOT_ENABLE_CDS_CACHE: 'control plane only: istiod xDS cache; output
+    unchanged'
+  flag:istiod:PILOT_ENABLE_CROSS_CLUSTER_WORKLOAD_ENTRY: 'multicluster/multi-network:
+    needs several clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:PILOT_ENABLE_DELTA_RDS: 'control plane only: computes RDS pushes incrementally;
+    the route config proxies converge on is unchanged'
+  flag:istiod:PILOT_ENABLE_EDS_DEBOUNCE: 'control plane only: push debouncing (timing
+    only)'
+  flag:istiod:PILOT_ENABLE_GATEWAY_API: 'control plane only: switches Gateway API
+    support off entirely; the suite requires it on'
+  flag:istiod:PILOT_ENABLE_GATEWAY_API_COPY_LABELS_ANNOTATIONS: 'installation: gateway
+    deployment controller copies Gateway metadata onto the generated Deployment/Service'
+  flag:istiod:PILOT_ENABLE_GATEWAY_API_GATEWAYCLASS_CONTROLLER: 'installation: istiod
+    creates its default GatewayClasses'
+  flag:istiod:PILOT_ENABLE_GATEWAY_API_STATUS: 'control plane only: writes status
+    to Gateway API resources'
+  flag:istiod:PILOT_ENABLE_MONGO_FILTER: 'Envoy-specific: Envoy MongoDB protocol filter
+    (stats only); no portable equivalent'
+  flag:istiod:PILOT_ENABLE_MYSQL_FILTER: 'Envoy-specific: Envoy MySQL protocol filter
+    (stats only); no portable equivalent'
+  flag:istiod:PILOT_ENABLE_RDS_CACHE: 'control plane only: istiod xDS cache; output
+    unchanged'
+  flag:istiod:PILOT_ENABLE_REDIS_FILTER: 'Envoy-specific: Envoy Redis proxy filter
+    (Redis protocol routing); no portable equivalent'
+  flag:istiod:PILOT_ENABLE_REMOTE_CREDENTIALS_CONTROLLER: 'multicluster/multi-network:
+    needs several clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:PILOT_ENABLE_ROUTE_COLLAPSE_OPTIMIZATION: 'performance: merges identical
+    virtual hosts; routing is unchanged'
+  flag:istiod:PILOT_ENABLE_WDS_DEBOUNCE: 'control plane only: push debouncing (timing
+    only)'
+  flag:istiod:PILOT_ENABLE_WORKLOAD_ENTRY_AUTOREGISTRATION: 'VM onboarding: used only
+    by WorkloadEntry auto-registration and health checking of VM agents; the suite
+    has no VM role (WorkloadEntry itself is tracked)'
+  flag:istiod:PILOT_ENABLE_WORKLOAD_ENTRY_HEALTHCHECKS: 'VM onboarding: used only
+    by WorkloadEntry auto-registration and health checking of VM agents; the suite
+    has no VM role (WorkloadEntry itself is tracked)'
+  flag:istiod:PILOT_ENABLE_XDS_CACHE: 'control plane only: istiod xDS cache; output
+    unchanged'
+  flag:istiod:PILOT_ENABLE_XDS_IDENTITY_CHECK: 'control plane only: authorizes xDS
+    clients'' claimed identity'
+  flag:istiod:PILOT_ENVOY_FILTER_STATS: 'control plane only: istiod metrics about
+    EnvoyFilter application'
+  flag:istiod:PILOT_FILTER_GATEWAY_CLUSTER_CONFIG: 'performance: sends gateways only
+    referenced clusters; routing is unchanged'
+  flag:istiod:PILOT_GATEWAY_API_CONTROLLER_NAME: 'installation: Gateway API controller
+    name istiod reconciles'
+  flag:istiod:PILOT_GATEWAY_API_DEFAULT_GATEWAYCLASS_NAME: 'installation: name of
+    the default GatewayClass'
+  flag:istiod:PILOT_HBONE_INITIAL_CONNECTION_WINDOW_SIZE: 'performance: HTTP/2 flow
+    control window of HBONE upstreams'
+  flag:istiod:PILOT_HBONE_INITIAL_STREAM_WINDOW_SIZE: 'performance: HTTP/2 flow control
+    window of HBONE upstreams'
+  flag:istiod:PILOT_IGNORE_RESOURCES: 'control plane only: which resource types istiod
+    watches (installation scoping); the suite runs with the default'
+  flag:istiod:PILOT_INCLUDE_RESOURCES: 'control plane only: which resource types istiod
+    watches (installation scoping); the suite runs with the default'
+  flag:istiod:PILOT_INSECURE_MULTICLUSTER_KUBECONFIG_OPTIONS: 'control plane only:
+    how istiod reads remote cluster kubeconfigs'
+  flag:istiod:PILOT_JWT_PUB_KEY_REFRESH_INTERVAL: 'control plane only: refresh interval
+    of istiod''s own JWKS cache'
+  flag:istiod:PILOT_MAX_REQUESTS_PER_SECOND: 'control plane only: xDS connection rate
+    limit (timing only)'
+  flag:istiod:PILOT_MULTI_NETWORK_DISCOVER_GATEWAY_API: 'multicluster/multi-network:
+    needs several clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:PILOT_MULTICLUSTER_KUBECONFIG_PATH: 'control plane only: how istiod
+    reads remote cluster kubeconfigs'
+  flag:istiod:PILOT_PUSH_THROTTLE: 'control plane only: push concurrency (timing only)'
+  flag:istiod:PILOT_REMOTE_CLUSTER_TIMEOUT: 'control plane only: how long istiod waits
+    for remote cluster syncs before it is ready'
+  flag:istiod:PILOT_STATUS_MAX_WORKERS: 'control plane only: status writer concurrency'
+  flag:istiod:PILOT_UNIFIED_SIDECAR_SCOPE: 'internal: temporary backwards-compatibility
+    switch for SidecarScope construction'
+  flag:istiod:PILOT_WORKLOAD_ENTRY_GRACE_PERIOD: 'VM onboarding: used only by WorkloadEntry
+    auto-registration and health checking of VM agents; the suite has no VM role (WorkloadEntry
+    itself is tracked)'
+  flag:istiod:PILOT_XDS_CACHE_INDEX_CLEAR_INTERVAL: 'control plane only: istiod xDS
+    cache; output unchanged'
+  flag:istiod:PILOT_XDS_CACHE_SIZE: 'control plane only: istiod xDS cache; output
+    unchanged'
+  flag:istiod:PILOT_XDS_CACHE_STATS: 'control plane only: istiod xDS cache metrics'
+  flag:istiod:RESOLVE_HOSTNAME_GATEWAYS: 'multicluster/multi-network: needs several
+    clusters or networks; the suite runs a single cluster and network'
+  flag:istiod:UNSAFE_ENABLE_ADMIN_ENDPOINTS: 'control plane only: istiod admin endpoints'
+  flag:istiod:UNSAFE_PILOT_ENABLE_RUNTIME_ASSERTIONS: 'control plane only: istiod
+    internal assertions'
+  flag:istiod:XDS_AUTH: 'control plane only: authentication of xDS clients to istiod'
+  key:gateway.istio.io/controller-version: internal bookkeeping annotation written
+    by istiod onto Gateways; not user-facing behavior
+  label:gateway.istio.io/managed: set by the gateway deployment controller on generated
+    resources to mark ownership; not user configuration
+  label:gateway.networking.k8s.io/gateway-class-name: set by the gateway deployment
+    controller on generated resources; checked by infra.standard-labels on pods, not
+    proxy behavior
+  label:gateway.networking.k8s.io/gateway-name: set by the gateway deployment controller
+    on generated resources; checked by infra.standard-labels on pods, and used by
+    features to select gateway pods
+  label:istio.io/rev: selects the control plane revision that injects or programs
+    the resource (installation); not proxy behavior
+  label:networking.istio.io/gatewayPort: 'multicluster/multi-network: needs several
+    clusters or networks; the suite runs a single cluster and network'
+  label:operator.istio.io/*: installation bookkeeping on resources installed by the
+    operator/istioctl; no effect on proxies
+  label:sidecar.istio.io/inject: selects sidecar injection (istiod webhook, installation);
+    the sidecar role deploys injected workloads by construction
+  label:topology.istio.io/cluster: 'multicluster/multi-network: needs several clusters
+    or networks; the suite runs a single cluster and network'
+  label:topology.istio.io/network: 'multicluster/multi-network: needs several clusters
+    or networks; the suite runs a single cluster and network'

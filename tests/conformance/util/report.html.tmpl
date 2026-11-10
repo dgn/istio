@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Istio Proxy Conformance</title>
+<script>
+// Startup diagnostics. These live in the head so they still run when a preview truncates the file,
+// and only use function/var declarations so re-writing the page into the same document is safe.
+function pcsFail(msg) {
+  // Keep the first error, it is the cause of any later ones.
+  if (window.pcsReady || window.pcsFailed) return;
+  var m = document.getElementById("main");
+  if (!m) return;
+  window.pcsFailed = true;
+  var d = document.createElement("div");
+  d.className = "empty";
+  d.textContent = "The report failed to load: " + msg + ". Download the file and open it in a browser.";
+  m.replaceChildren(d);
+}
+window.pcsStarted = window.pcsReady = window.pcsFailed = false;
+window.addEventListener("error", function (e) { pcsFail(e.message); });
+window.addEventListener("unhandledrejection", function (e) { pcsFail((e.reason && e.reason.message) || e.reason); });
+window.addEventListener("load", function () {
+  if (window.pcsStarted) return;
+  var kb = Math.round(new Blob([document.documentElement.outerHTML]).size / 1024);
+  pcsFail("the page is incomplete, only about " + kb + " KB of it arrived, so the viewer probably truncated the file");
+});
+</script>
+<style>
+:root {
+  --bg: #fff; --fg: #1f2328; --muted: #656d76; --border: #d0d7de; --head: #f6f8fa; --accent: #466bb0;
+  --supported: #2da44e; --partial: #9be9a8; --fail: #cf222e; --failclosed: #fb8f44; --rejected: #bf8700;
+  --ignored: #e5534b; --unsupported: #8c959f; --unknown: #d8dee4; --missing: #f6f8fa;
+  --covered: #2da44e; --todo: #d4a72c; --exempt: #afb8c1; --gap: #cf222e; --oos: #f6f8fa;
+  --area-bg: #eaeef2; --hover: #f6f8fa; --details-bg: #fbfcfd; --code-bg: #eff1f3; --link: #0969da;
+  --on-light: #1f2328; --sec: #cf222e;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #8d96a0; --border: #30363d; --head: #161b22; --accent: #6e9ce0;
+    --unsupported: #6e7681; --unknown: #3d444d; --missing: #161b22; --exempt: #6e7681; --oos: #161b22;
+    --area-bg: #21262d; --hover: #161b22; --details-bg: #11161d; --code-bg: #262c36; --link: #4493f8;
+    --sec: #ff7b72;
+  }
+  .st.unknown, .st.exempt { color: var(--fg); }
+}
+* { box-sizing: border-box; }
+body { margin: 0; font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--fg); background: var(--bg); }
+header { padding: 12px 20px; background: #0f1729; border-bottom: 1px solid var(--border); color: #fff; display: flex; align-items: baseline; gap: 16px; }
+header h1 { margin: 0; font-size: 18px; }
+header span { color: #aab4c8; font-size: 12px; }
+nav { display: flex; gap: 2px; padding: 0 20px; background: var(--head); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 3; }
+nav button { border: 0; background: none; padding: 10px 14px; cursor: pointer; font-size: 14px; color: var(--muted); border-bottom: 2px solid transparent; }
+nav button.active { color: var(--fg); border-bottom-color: var(--accent); font-weight: 600; }
+nav button .count { font-size: 11px; background: var(--border); border-radius: 10px; padding: 0 6px; margin-left: 4px; color: var(--fg); }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 20px; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 41px; z-index: 2; }
+.toolbar input[type=search] { padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px; min-width: 260px; }
+.toolbar label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; }
+.toolbar select { padding: 4px 6px; border: 1px solid var(--border); border-radius: 6px; color: var(--fg); background: var(--head); }
+.toolbar button { padding: 4px 10px; border: 1px solid var(--border); background: var(--head); border-radius: 6px; cursor: pointer; }
+.chips { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.chip { border: 1px solid var(--border); border-radius: 12px; padding: 1px 8px; cursor: pointer; font-size: 12px; user-select: none; display: inline-flex; align-items: center; gap: 4px; }
+.chip b { font-weight: 600; }
+.shown { color: var(--muted); font-size: 12px; margin-left: auto; }
+.chip.off { opacity: .35; text-decoration: line-through; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,.15); }
+main { padding: 12px 20px 40px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border-bottom: 1px solid var(--border); padding: 4px 8px; text-align: left; vertical-align: top; }
+thead th { background: var(--head); position: sticky; top: var(--thead-top, 92px); z-index: 1; white-space: nowrap; }
+th.impl, td.cell { text-align: center; width: 1%; white-space: nowrap; }
+th.impl .ref { font-size: 10px; color: var(--muted); font-weight: normal; display: block; }
+tr.area th { background: var(--area-bg); cursor: pointer; user-select: none; font-size: 13px; }
+tr.area th .caret { display: inline-block; width: 14px; transition: transform .1s; }
+tr.area.collapsed th .caret { transform: rotate(-90deg); }
+tr.area th .stats { font-weight: normal; color: var(--muted); }
+tr.area th.impl { font-weight: normal; font-size: 12px; }
+tr.feature { cursor: pointer; }
+tr.feature:hover td { background: var(--hover); }
+td.id { white-space: nowrap; }
+td.id code { font-size: 12px; }
+td.id.wrap { white-space: normal; overflow-wrap: anywhere; }
+td.desc { color: var(--muted); font-size: 12px; }
+.badge { display: inline-block; font-size: 10px; border-radius: 4px; padding: 0 4px; margin-left: 4px; border: 1px solid var(--border); color: var(--muted); vertical-align: middle; }
+.badge.sec { border-color: var(--sec); color: var(--sec); }
+a { color: var(--link); }
+.toolbar input[type=search], .toolbar button { color: var(--fg); background: var(--head); }
+.st { display: inline-block; min-width: 72px; padding: 1px 6px; border-radius: 4px; font-size: 12px; color: #fff; }
+.st.supported { background: var(--supported); }
+.st.partial { background: var(--partial); color: var(--on-light); }
+.st.fail { background: var(--fail); }
+.st.fail-closed { background: var(--failclosed); }
+.st.rejected { background: var(--rejected); }
+.st.ignored { background: var(--ignored); }
+.st.unsupported { background: var(--unsupported); }
+.st.unknown { background: var(--unknown); color: var(--on-light); }
+.st.missing { background: var(--missing); color: var(--muted); border: 1px dashed var(--border); }
+.st.covered { background: var(--covered); }
+.st.todo { background: var(--todo); }
+.st.exempt { background: var(--exempt); color: var(--on-light); }
+.st.gap { background: var(--gap); }
+.st.oos { background: var(--oos); color: var(--muted); }
+.st.has-reason::after { content: " ⓘ"; }
+tr.details td { background: var(--details-bg); font-size: 12px; padding: 8px 16px 12px 32px; }
+tr.details dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; }
+tr.details dt { font-weight: 600; color: var(--muted); }
+tr.details dd { margin: 0; white-space: pre-wrap; word-break: break-word; }
+tr.details code { background: var(--code-bg); padding: 0 3px; border-radius: 3px; }
+.hidden { display: none !important; }
+.empty { padding: 30px; color: var(--muted); text-align: center; }
+.overview { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.card { border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.card h3 { margin: 0 0 8px; font-size: 15px; }
+.bar { display: flex; height: 14px; border-radius: 3px; overflow: hidden; margin: 2px 0 8px; background: var(--missing); }
+.bar span { display: block; height: 100%; }
+.card .impl { display: flex; justify-content: space-between; font-size: 12px; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<header><h1>Istio Proxy Conformance</h1><span id="gen"></span></header>
+<nav id="tabs"></nav>
+<div class="toolbar" id="toolbar">
+  <input type="search" id="q" placeholder="Filter by ID, description or API field…">
+  <label title="Hide features no proxy implements (unsupported, ignored, rejected, fail-closed, unknown) and exempt or untested API surface"><input type="checkbox" id="hideUnimpl"> Hide exempt / skipped / unimplemented</label>
+  <select id="api" title="Filter features by the API kinds they apply (recorded by the reference run)"></select>
+  <span class="chips" id="chips"></span>
+  <button id="expandAll">Expand all</button>
+  <button id="collapseAll">Collapse all</button>
+  <span id="shown" class="shown"></span>
+</div>
+<main id="main"><noscript><div class="empty">This page needs JavaScript. Download the file and open it in a browser.</div></noscript></main>
+<script id="data" type="application/json">{{.Data}}</script>
+<script>
+(async () => {
+  window.pcsStarted = true;
+  // The data element holds a JSON string: the base64-encoded, gzipped JSON written by pack in main.go.
+  const el = document.getElementById("data");
+  const bin = Uint8Array.from(atob(JSON.parse(el.textContent)), (c) => c.charCodeAt(0));
+  const p = await new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream("gzip"))).json();
+  window.pcsData = p.data;
+  const app = document.createElement("script");
+  app.textContent = p.app;
+  document.body.appendChild(app);
+})().catch((e) => pcsFail((e && e.message) || String(e)));
+</script>
+</body>
+</html>

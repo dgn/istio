@@ -1,0 +1,242 @@
+# Which roles must each cover which API surface with a feature of their own (TestCoverage).
+#
+# - default: the roles for entries that no roleScope key matches.
+# - roleScope keys match an entry and its fields/enum values; the longest matching key wins; a key
+#   ending in "*" matches by plain prefix. interactions.yaml adds implicit keys for interaction:<id>
+#   from each interaction's roles; an explicit key here wins.
+# - An exempt entry is out of scope for every role. The resulting per-role gaps are listed in
+#   coverage.yaml and bounded by maxRoleGaps in ratchets.yaml.
+default:
+- ingress
+roleScope:
+  AuthorizationPolicy:
+  - ingress
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.action:
+  - ingress
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.action=AUDIT:
+  - ingress
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.action=CUSTOM:
+  - ingress
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.ipBlocks:
+  - ingress
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.namespaces:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.notIpBlocks:
+  - ingress
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.notNamespaces:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.notPrincipals:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.principals:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.to.operation.notPorts:
+  - ingress
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.to.operation.ports:
+  - ingress
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.selector:
+  - ingress
+  - sidecar
+  AuthorizationPolicy.targetRef:
+  - ingress
+  - waypoint
+  AuthorizationPolicy.targetRefs:
+  - ingress
+  - waypoint
+  DestinationRule:
+  - ingress
+  - sidecar
+  - waypoint
+  DestinationRule.trafficPolicy.loadBalancer.simple=PASSTHROUGH:
+  - sidecar
+  - waypoint
+  DestinationRule.trafficPolicy.tls:
+  - egress
+  - ingress
+  - sidecar
+  - waypoint
+  Gateway.servers:
+  - egress
+  - ingress
+  MeshConfig.defaultInboundHttpRetryPolicy:
+  - sidecar
+  MeshConfig.inboundTrafficPolicy:
+  - sidecar
+  MeshConfig.meshMTLS:
+  - sidecar
+  - waypoint
+  MeshConfig.outboundTrafficPolicy:
+  - sidecar
+  MeshConfig.protocolDetectionTimeout:
+  - sidecar
+  MeshConfig.proxyInboundListenPort:
+  - sidecar
+  PeerAuthentication:
+  - node
+  - sidecar
+  RequestAuthentication:
+  - ingress
+  - sidecar
+  - waypoint
+  RequestAuthentication.targetRef:
+  - ingress
+  - waypoint
+  RequestAuthentication.targetRefs:
+  - ingress
+  - waypoint
+  ServiceEntry:
+  - egress
+  - ingress
+  - sidecar
+  - waypoint
+  ServiceEntry.addresses:
+  - sidecar
+  - waypoint
+  Sidecar:
+  - sidecar
+  Telemetry:
+  - ingress
+  - sidecar
+  - waypoint
+  VirtualService.http:
+  - ingress
+  - sidecar
+  - waypoint
+  VirtualService.tcp:
+  - egress
+  - ingress
+  VirtualService.tcp.match.destinationSubnets:
+  - sidecar
+  VirtualService.tcp.match.sourceLabels:
+  - sidecar
+  VirtualService.tcp.match.sourceNamespace:
+  - sidecar
+  VirtualService.tcp.match.sourceSubnet:
+  - sidecar
+  VirtualService.tls:
+  - egress
+  - ingress
+  VirtualService.tls.match.destinationSubnets:
+  - sidecar
+  VirtualService.tls.match.sourceLabels:
+  - sidecar
+  VirtualService.tls.match.sourceNamespace:
+  - sidecar
+  WasmPlugin:
+  - ingress
+  - sidecar
+  - waypoint
+  WorkloadEntry:
+  - ingress
+  - node
+  - sidecar
+  - waypoint
+  WorkloadGroup:
+  - ingress
+  - node
+  - sidecar
+  - waypoint
+  annotation:ambient.istio.io/*:
+  - node
+  - waypoint
+  annotation:istio.io/reroute-virtual-interfaces:
+  - node
+  - sidecar
+  annotation:istio.io/use-waypoint-canary-weight:
+  - node
+  - waypoint
+  annotation:networking.istio.io/exportTo:
+  - egress
+  - ingress
+  - sidecar
+  - waypoint
+  annotation:networking.istio.io/traffic-distribution:
+  - node
+  annotation:prometheus.istio.io/merge-metrics:
+  - sidecar
+  annotation:proxy.istio.io/config:
+  - egress
+  - ingress
+  - sidecar
+  - waypoint
+  annotation:sidecar.istio.io/*:
+  - sidecar
+  annotation:traffic.sidecar.istio.io/*:
+  - sidecar
+  flag:agent:*:
+  - egress
+  - ingress
+  - sidecar
+  - waypoint
+  flag:agent:ENABLE_PROBE_KEEPALIVE_CONNECTIONS:
+  - sidecar
+  flag:agent:ISTIO_ENABLE_HTTP2_PROBING:
+  - sidecar
+  flag:agent:REWRITE_PROBE_LEGACY_LOCALHOST_DESTINATION:
+  - sidecar
+  flag:cni:*:
+  - node
+  - sidecar
+  flag:iptables:*:
+  - node
+  - sidecar
+  flag:istiod:AMBIENT_ENABLE_DRY_RUN_AUTHORIZATION_POLICY:
+  - node
+  flag:istiod:ENABLE_LAYERED_WAYPOINT_AUTHORIZATION_POLICIES:
+  - waypoint
+  flag:istiod:ENABLE_NATIVE_SIDECARS:
+  - sidecar
+  flag:istiod:ENABLE_TLS_ON_SIDECAR_INGRESS:
+  - sidecar
+  flag:istiod:PILOT_ALLOW_ANY_DYNAMIC_DNS_MAX_HOSTS:
+  - sidecar
+  flag:istiod:PILOT_ALLOW_SIDECAR_SERVICE_INBOUND_LISTENER_MERGE:
+  - sidecar
+  flag:istiod:PILOT_ENABLE_ABSOLUTE_FQDN_VHOST_DOMAIN:
+  - sidecar
+  flag:istiod:PILOT_ENABLE_HEADLESS_FILTER_CHAIN_LISTENER:
+  - sidecar
+  flag:istiod:PILOT_ENABLE_SIDECAR_LISTENING_HBONE:
+  - sidecar
+  flag:istiod:PILOT_SIDECAR_USE_REMOTE_ADDRESS:
+  - sidecar
+  label:istio.io/dataplane-mode:
+  - node
+  - waypoint
+  label:istio.io/ingress-use-waypoint:
+  - ingress
+  - waypoint
+  label:istio.io/use-waypoint*:
+  - node
+  - waypoint
+  label:istio.io/waypoint-for:
+  - node
+  - waypoint

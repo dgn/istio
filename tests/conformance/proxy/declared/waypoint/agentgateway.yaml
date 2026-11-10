@@ -1,0 +1,698 @@
+# Declared support of agentgateway in the waypoint role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; issue optionally tracks the fix.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#   Its kinds (generated) list the API kinds the feature applied in the last reference run.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/conformance/proxy/ -run TestWaypointConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  backend.destinationrule.connection-pool.max-concurrent-streams:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-x-concurrent-streams-34adea:80/?delay=1s'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-x-concurrent-streams-34adea:80/?delay=1s
+      (using http): expected at least one response with status 503, got map[200:20]
+      (err: <nil>)'
+    status: ignored
+  backend.destinationrule.connection-pool.max-requests:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-on-pool-max-requests-bb01c3:80/?delay=1s'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-on-pool-max-requests-bb01c3:80/?delay=1s
+      (using http): expected at least one response with status 503, got map[200:20]
+      (err: <nil>)'
+    status: ignored
+  backend.destinationrule.connection-pool.pending-overflow:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ool-pending-overflow-9f2512:80/?delay=1s'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-ool-pending-overflow-9f2512:80/?delay=1s
+      (using http): expected at least one response with status 503, got map[200:20]
+      (err: <nil>)'
+    status: ignored
+  backend.destinationrule.consistent-hash:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rule-consistent-hash-1cb076:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-rule-consistent-hash-1cb076:80
+      (using http): expected all responses from one endpoint, got map[a-ent-hash-cookie-path-a9e8eb-app-v1-5d85476859...'
+    status: ignored
+  backend.destinationrule.consistent-hash-cookie:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-nsistent-hash-cookie-f13bd9:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-nsistent-hash-cookie-f13bd9:80
+      (using http): response[0]: expected response header "Set-Cookie" to contain
+      "pcs-affinity=", got ""'
+    status: ignored
+  backend.destinationrule.consistent-hash-cookie-attributes:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-sh-cookie-attributes-145125:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-sh-cookie-attributes-145125:80
+      (using http): response[0]: expected response header "Set-Cookie" to contain
+      "pcs-affinity=", got ""'
+    status: ignored
+  backend.destinationrule.consistent-hash-cookie-path:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ent-hash-cookie-path-a9e8eb:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ent-hash-cookie-path-a9e8eb:80
+      (using http): response[0]: expected response header "Set-Cookie" to contain
+      "pcs-affinity=", got ""'
+    status: ignored
+  backend.destinationrule.consistent-hash-maglev:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-nsistent-hash-maglev-35495:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-nsistent-hash-maglev-35495:80
+      (using http): expected all responses from one endpoint, got map[a-ent-hash-query-param-f6551d-app-v1-5b5cfdf7cc-r...'
+    status: ignored
+  backend.destinationrule.consistent-hash-query-param:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ent-hash-query-param-f6551d:80/?user=alice'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-ent-hash-query-param-f6551d:80/?user=alice
+      (using http): expected all responses from one endpoint, got map[a-ent-hash-cookie-path-...'
+    status: ignored
+  backend.destinationrule.consistent-hash-ring-hash:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-stent-hash-ring-hash-a62fa:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-stent-hash-ring-hash-a62fa:80
+      (using http): expected all responses from one endpoint, got map[a-ent-hash-query-param-f6551d-app-v1-b755bb5dc-jk...'
+    status: ignored
+  backend.destinationrule.consistent-hash-source-ip:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-stent-hash-source-ip-920fba:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-stent-hash-source-ip-920fba:80
+      (using http): expected all responses from one endpoint, got map[a-ent-hash-query-param-f6551d-app-v1-b755bb5dc-...'
+    status: ignored
+  backend.destinationrule.outlier-detection:
+    reason: 'failed calling client-ambient (cluster=cluster-0)->''http://240.240.29.225:80'':
+      call failed from client-ambient (cluster=cluster-0) to http://240.240.29.225:80
+      (using http): expected at least one 5xx response, got map[200:10] (err: <nil>)'
+    status: fail
+  backend.destinationrule.outlier-gateway-errors:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-tlier-gateway-errors-d7aefa:80/?codes=504'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-tlier-gateway-errors-d7aefa:80/?codes=504
+      (using http): expected at least one response with status 503, got map[504:10]
+      (err: <nil>...'
+    status: ignored
+  backend.destinationrule.outlier-http-error-codes:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ier-http-error-codes-307bdc:80/?codes=429'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-ier-http-error-codes-307bdc:80/?codes=429
+      (using http): expected at least one response with status 503, got map[429:10]
+      (err: <nil>...'
+    status: ignored
+  backend.destinationrule.outlier-local-origin:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://240.240.20.241:80'': call failed from client-ambient
+      (cluster=cluster-0) to http://240.240.20.241:80 (using http): 10 errors occurred:
+      * response[0]: expected response from "external", got hostname "a-ier-http-error-codes-307bdc-app-v2-598fb9...'
+    status: ignored
+  backend.destinationrule.outlier-min-health-percent:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://240.240.220.39:80'': call failed from client-ambient
+      (cluster=cluster-0) to http://240.240.220.39:80 (using http): 10 errors occurred:
+      * response[0]: expected response from "external", got hostname "a-ier-http-error-codes-307bdc-app-v2-598fb9...'
+    status: ignored
+  backend.destinationrule.proxy-protocol-v2:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://240.240.62.189:80'': call failed from client-ambient
+      (cluster=cluster-0) to http://240.240.62.189:80 (using http): response[0]: expected
+      proxy protocol 2, received'
+    status: ignored
+  backend.destinationrule.tls-istio-mutual-external:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://240.240.15.17:80'': call failed from client-ambient
+      (cluster=cluster-0) to http://240.240.15.17:80 (using http): response[0]: expected
+      response code `503`, got "200". Response: RawContent: [0] Url=http://240.240.15.17:80
+      [0] SourceIP=10.244.0...'
+    status: ignored
+  backend.destinationrule.tls-simple-insecure:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://240.240.51.3:80'': call failed from client-ambient
+      (cluster=cluster-0) to http://240.240.51.3:80 (using http): response[0]: expected
+      response from "external", got hostname "a-ent-hash-cookie-path-a9e8eb-app-v1-fcb7c686f-4z7r4"'
+    status: ignored
+  backend.serviceentry.addresses:
+    status: supported
+  backend.serviceentry.endpoint-labels-subset:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://240.240.96.233:80/b'': call failed from client-ambient
+      (cluster=cluster-0) to http://240.240.96.233:80/b (using http): 7 errors occurred:
+      * response[0]: expected version "v2", got "v1" * response[2]: expected version
+      "v2", got "v1" * response...'
+    status: ignored
+  backend.serviceentry.endpoint-weight:
+    status: supported
+  backend.serviceentry.workload-selector:
+    status: supported
+  dataplane.default-retry-on-connect-failure.mesh:
+    status: supported
+  dataplane.expect-continue-proxied:
+    status: supported
+  dataplane.grpc-timeout-honored:
+    reason: '/?delay=3s: attempt 4: expected a deadline timeout (grpc-status 4 or
+      14, or 504), got code 200, headers map[Content-Length:[419] Content-Type:[text/plain;
+      charset=utf-8] Date:[Tue, 17 Nov 2026 21:42:25 GMT]] (call error: <nil>)'
+    status: fail
+  dataplane.no-default-route-timeout:
+    reason: 'fails exactly as with the feature config removed: /explicit?delay=16s:
+      attempt 4: response[0]: expected response code `504`, got "200". Response: RawContent:
+      [0] Url=http://a-efault-route-timeout-4f361c:80/explicit?delay=16s [0] SourceIP=10.244.0.13
+      [0] Latency=16.003584494s [0] ActiveRequests=2 [0] StatusCode=200 [0] ResponseHeader=Content-Length:...'
+    status: ignored
+  dataplane.path-normalization.mesh:
+    reason: 'failed calling client-ambient (cluster=cluster-0)->''http://a-h-normalization-mesh-a16537:80/x/../admin'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-h-normalization-mesh-a16537:80/x/../admin
+      (using http): response[0]: expected version "v2", got "v1"'
+    status: fail
+  dataplane.request-id.mesh-preserved:
+    reason: 'failed calling client-ambient (cluster=cluster-0)->''http://a-st-id-mesh-preserved-d777da:80'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-st-id-mesh-preserved-d777da:80
+      (using http): response[0]: expected request header "X-Request-Id" to be present'
+    status: fail
+  dataplane.trace-context-propagation.mesh:
+    status: supported
+  dataplane.xff.mesh-preserved:
+    status: supported
+  flag.100-continue-disabled:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-00-continue-disabled-4ec959:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-00-continue-disabled-4ec959:80
+      (using http): response[0]: expected request header "Expect" to be absent, got
+      [100-continue]'
+    status: ignored
+  istioapi.virtualservice.cors:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-virtualservice-cors-32e6de:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-virtualservice-cors-32e6de:80
+      (using http): response[0]: response header Access-Control-Allow-Origin: expected
+      `https://allowed.example.com`, r...'
+    status: ignored
+  istioapi.virtualservice.cors-full:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ualservice-cors-full-c2a754:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ualservice-cors-full-c2a754:80
+      (using http): response[0]: response header Access-Control-Allow-Origin: expected
+      `https://exact.example.com`, r...'
+    status: ignored
+  istioapi.virtualservice.cors-unmatched-preflights:
+    cases:
+    - forward
+    reason: 'case ignore: failed calling client-ambient (cluster=cluster-0)->''http://a-unmatched-preflights-e0916b:80/ignore'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-unmatched-preflights-e0916b:80/ignore
+      (using http): response[0]: expected response from backend=false, got hostname
+      "a-ent...'
+    status: partial
+  istioapi.virtualservice.delegate:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-tualservice-delegate-b036fc:80/delegated/x'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-tualservice-delegate-b036fc:80/delegated/x
+      (using http): response[0]: expected version "v2", got "v1"'
+    status: ignored
+  istioapi.virtualservice.direct-response:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-vice-direct-response-a0ab82:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-vice-direct-response-a0ab82:80
+      (using http): response[0]: expected response code `418`, got "200". Response:
+      RawContent: [0] Url=http://a-vice...'
+    status: ignored
+  istioapi.virtualservice.direct-response-bytes:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-irect-response-bytes-ed5378:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-irect-response-bytes-ed5378:80
+      (using http): response[0]: want "pcs-bytes" in body but not found: [0] Url=http://a-irect-response-bytes-ed5378...'
+    status: ignored
+  istioapi.virtualservice.fault-abort:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-lservice-fault-abort-7736e:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-lservice-fault-abort-7736e:80
+      (using http): response[0]: expected response code `418`, got "200". Response:
+      RawContent: [0] Url=http://a-lservi...'
+    status: ignored
+  istioapi.virtualservice.fault-delay:
+    status: supported
+  istioapi.virtualservice.fault-delay-percentage:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 364 attempts (last
+      error: 100% route took 3.67658ms (want >= 2s), 0% route took 2.606498ms (want
+      < 1s))'
+    status: fail
+  istioapi.virtualservice.fault-grpc-status:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ce-fault-grpc-status-bed0db:80/abort'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-ce-fault-grpc-status-bed0db:80/abort
+      (using http): response[0]: expected response from backend=false, got hostname
+      "a-ce-fault-grpc-stat...'
+    status: ignored
+  istioapi.virtualservice.fault-percentages:
+    reason: 'failed calling client-ambient (cluster=cluster-0)->''http://a-ce-fault-percentages-63d28f:80'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-ce-fault-percentages-63d28f:80
+      (using http): "status 418" got 0.0% of 598 samples, expected 50% +/- 10.0'
+    status: fail
+  istioapi.virtualservice.first-match-wins:
+    status: supported
+  istioapi.virtualservice.header-and-rewrite:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-e-header-and-rewrite-cfa835:80/old/x'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-e-header-and-rewrite-cfa835:80/old/x
+      (using http): response[0]: expected backend to see path "/new/x", got "/old/x"'
+    status: ignored
+  istioapi.virtualservice.headers-full:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-service-headers-full-b1898d:80/?headers=x-rule-resp-remove:x,x-route-resp-remove:x,x-rule-resp-set:orig,x-route-resp-set:orig'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-service-headers-full-b1898d:80/?headers=x-rule-...'
+    status: ignored
+  istioapi.virtualservice.match-more:
+    status: supported
+  istioapi.virtualservice.match-string-variants:
+    status: supported
+  istioapi.virtualservice.match-variants:
+    status: supported
+  istioapi.virtualservice.mirror:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 11 attempts (last error: no v2 workload logged mirrored
+      request "vs-mirror-x6p859228hr8")'
+    status: ignored
+  istioapi.virtualservice.mirror-subset:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 186 attempts (last error: no v2 workload logged
+      mirrored request "vs-mirror-subset-5wptln4dss5w")'
+    status: ignored
+  istioapi.virtualservice.mirrors:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 29 attempts (last error: no v2 workload logged mirrored
+      request "vs-mirrors-c4c576v9x5lm")'
+    status: ignored
+  istioapi.virtualservice.multiple-for-host:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ce-multiple-for-host-2e92c6:80/a'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ce-multiple-for-host-2e92c6:80/a
+      (using http): response[0]: expected version "v2", got "v1"'
+    status: ignored
+  istioapi.virtualservice.per-try-timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-vice-per-try-timeout-5044e4:80/?delay=2s'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-vice-per-try-timeout-5044e4:80/?delay=2s
+      (using http): response[0]: expected response code `504`, got "200". Response:
+      RawContent: [...'
+    status: ignored
+  istioapi.virtualservice.redirect:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-tualservice-redirect-2b941d:80/old'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-tualservice-redirect-2b941d:80/old
+      (using http): response[0]: expected response code `308`, got "200". Response:
+      RawContent: [0] Url=http:...'
+    status: ignored
+  istioapi.virtualservice.redirect-more:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ervice-redirect-more-87fb4d:80/port'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-ervice-redirect-more-87fb4d:80/port
+      (using http): response[0]: expected response header "Location" to contain "https://a-ervice-redirect-...'
+    status: ignored
+  istioapi.virtualservice.retries:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rtualservice-retries-b66bd5:80/?codes=503:1,200:3'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-rtualservice-retries-b66bd5:80/?codes=503:1,200:3
+      (using http): 16 of 50 requests failed, expected at most 2'
+    status: ignored
+  istioapi.virtualservice.retries-backoff:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-vice-retries-backoff-e2a3a2:80/backoff?codes=500'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-vice-retries-backoff-e2a3a2:80/backoff?codes=500
+      (using http): response[0]: expected response header "x-pcs-route" to contai...'
+    status: ignored
+  istioapi.virtualservice.retries-previous-hosts:
+    status: supported
+  istioapi.virtualservice.rewrite-more:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-service-rewrite-more-3b0baf:80/re/x'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-service-rewrite-more-3b0baf:80/re/x
+      (using http): response[0]: expected backend to see path "/new/x", got "/re/x"'
+    status: ignored
+  istioapi.virtualservice.subsets:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rtualservice-subsets-3c5a9e:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-rtualservice-subsets-3c5a9e:80
+      (using http): response[0]: expected version "v2", got "v1"'
+    status: ignored
+  istioapi.virtualservice.timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rtualservice-timeout-e0517a:80/?delay=3s'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-rtualservice-timeout-e0517a:80/?delay=3s
+      (using http): response[0]: expected response code `504`, got "200". Response:
+      RawContent: [...'
+    status: ignored
+  istioapi.virtualservice.weights:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rtualservice-weights-eba17c:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-rtualservice-weights-eba17c:80
+      (using http): "version v1" got 49.3% of 383 samples, expected 80% +/- 10.0;
+      all: map[v1:189 v2:194]'
+    status: ignored
+  mesh.authz.ip-blocks:
+    reason: 'fails exactly as with the feature config removed: case ipBlocks: failed
+      calling client-ambient (cluster=cluster-0)->''http://a-mesh-authz-ip-blocks-91dbf2:80/ip'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-mesh-authz-ip-blocks-91dbf2:80/ip
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: ...'
+    status: ignored
+  mesh.authz.l4-principal:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-h-authz-l4-principal-26a8d9:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-h-authz-l4-principal-26a8d9:80
+      (using http): expected denial (401/403 or connection closed), got 200'
+    status: ignored
+  mesh.authz.l7-path:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-mesh-authz-l7-path-1483e1:80/blocked'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-mesh-authz-l7-path-1483e1:80/blocked
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=h...'
+    status: ignored
+  mesh.authz.source-identity:
+    reason: 'fails exactly as with the feature config removed: case namespaces: failed
+      calling client-ambient (cluster=cluster-0)->''http://a-uthz-source-identity-fc9a2:80/ns'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-uthz-source-identity-fc9a2:80/ns
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: ...'
+    status: ignored
+  mesh.fault.abort:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-mesh-fault-abort-7cc9ea:80'': call failed from
+      client-ambient (cluster=cluster-0) to http://a-mesh-fault-abort-7cc9ea:80 (using
+      http): response[0]: expected response code `418`, got "200". Response: RawContent:
+      [0] Url=http://a-mesh-fault-a...'
+    status: ignored
+  mesh.routing.header-match:
+    status: supported
+  mesh.routing.path-match:
+    status: supported
+  mesh.routing.rewrite:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-mesh-routing-rewrite-bbb31e:80/prefix/x'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-mesh-routing-rewrite-bbb31e:80/prefix/x
+      (using http): response[0]: expected backend to see path "/rewritten/x", got
+      "/prefix/x"'
+    status: ignored
+  mesh.routing.traffic-split:
+    status: unknown
+  mesh.timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-mesh-timeout-6ea997:80/?delay=3s'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-mesh-timeout-6ea997:80/?delay=3s
+      (using http): response[0]: expected response code `504`, got "200". Response:
+      RawContent: [0] Url=http://a-...'
+    status: ignored
+  meshconfig.default-http-retry-policy:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-lt-http-retry-policy-36f64c:80/?codes=500:1,200:1'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-lt-http-retry-policy-36f64c:80/?codes=500:1,200:1
+      (using http): 26 of 50 requests failed, expected at most 3'
+    status: ignored
+  protocol.websocket.mesh:
+    status: supported
+  security.authz.allow-nothing:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-authz-allow-nothing-a7287e:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-authz-allow-nothing-a7287e:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-authz-...'
+    status: ignored
+  security.authz.allow.header:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-y-authz-allow-header-ef1527:80/private'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-y-authz-allow-header-ef1527:80/private
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] U...'
+    status: ignored
+  security.authz.audit:
+    status: supported
+  security.authz.custom-before-allow:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-custom-before-allow-4403c6:80/custom'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-custom-before-allow-4403c6:80/custom
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=h...'
+    status: ignored
+  security.authz.custom-ext-authz:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-thz-custom-ext-authz-92cf47:80/custom'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-thz-custom-ext-authz-92cf47:80/custom
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url...'
+    status: ignored
+  security.authz.custom-ext-authz-grpc:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ustom-ext-authz-grpc-801568:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ustom-ext-authz-grpc-801568:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-usto...'
+    status: ignored
+  security.authz.custom-ext-authz-headers:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-om-ext-authz-headers-68b07a:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-om-ext-authz-headers-68b07a:80
+      (using http): response[0]: expected request header "X-Ext-Authz-Check-Result"
+      to be present'
+    status: ignored
+  security.authz.deny-overrides-allow:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-deny-overrides-allow-36ca15:80/admin'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-deny-overrides-allow-36ca15:80/admin
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=h...'
+    status: ignored
+  security.authz.deny.method-header:
+    reason: 'fails exactly as with the feature config removed: case methods: failed
+      calling client-ambient (cluster=cluster-0)->''http://a-z-deny-method-header-564888:80'':
+      call failed from client-ambient (cluster=cluster-0) to http://a-z-deny-method-header-564888:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url...'
+    status: ignored
+  security.authz.deny.path:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rity-authz-deny-path-87b7ec:80/deny/x'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-rity-authz-deny-path-87b7ec:80/deny/x
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url...'
+    status: ignored
+  security.authz.dry-run:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-curity-authz-dry-run-17ad0a:80/enforced'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-curity-authz-dry-run-17ad0a:80/enforced
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0]...'
+    status: ignored
+  security.authz.not-request-principals:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-t-request-principals-6a5b4a:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-t-request-principals-6a5b4a:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-t-re...'
+    status: ignored
+  security.authz.not-values:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ity-authz-not-values-f36abd:80/other'': call
+      failed from client-ambient (cluster=cluster-0) to http://a-ity-authz-not-values-f36abd:80/other
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=h...'
+    status: ignored
+  security.jwt.audiences:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-curity-jwt-audiences-cfe72b:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-curity-jwt-audiences-cfe72b:80
+      (using http): response[0]: expected 401 or 403, got 200'
+    status: ignored
+  security.jwt.claims-authz:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ity-jwt-claims-authz-90de82:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ity-jwt-claims-authz-90de82:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-ity-...'
+    status: ignored
+  security.jwt.forward-original-token:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rward-original-token-761eb7:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-rward-original-token-761eb7:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-rwar...'
+    status: ignored
+  security.jwt.from-cookies:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ity-jwt-from-cookies-229964:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ity-jwt-from-cookies-229964:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-ity-...'
+    status: ignored
+  security.jwt.from-header-and-param:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rom-header-and-param-b186e4:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-rom-header-and-param-b186e4:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-rom-...'
+    status: ignored
+  security.jwt.jwks-timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ity-jwt-jwks-timeout-d5459f:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ity-jwt-jwks-timeout-d5459f:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-ity-...'
+    status: ignored
+  security.jwt.jwks-uri:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ecurity-jwt-jwks-uri-b9c0d8:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ecurity-jwt-jwks-uri-b9c0d8:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-ecur...'
+    status: ignored
+  security.jwt.multiple-issuers:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-jwt-multiple-issuers-fa7289:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-jwt-multiple-issuers-fa7289:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-jwt-...'
+    status: ignored
+  security.jwt.output-claim-to-headers:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-put-claim-to-headers-2d9dd5:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-put-claim-to-headers-2d9dd5:80
+      (using http): response[0]: request header x-jwt-sub: expected `sub-1`, received
+      ``'
+    status: ignored
+  security.jwt.output-payload-to-header:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ut-payload-to-header-7f29e4:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ut-payload-to-header-7f29e4:80
+      (using http): response[0]: expected request header "x-jwt-payload" to be present'
+    status: ignored
+  security.jwt.presence-optional:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-wt-presence-optional-b863ae:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-wt-presence-optional-b863ae:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-wt-p...'
+    status: ignored
+  security.jwt.presence-required:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-wt-presence-required-725e15:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-wt-presence-required-725e15:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-wt-p...'
+    status: ignored
+  security.jwt.require-principal:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-wt-require-principal-5f625a:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-wt-require-principal-5f625a:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-wt-r...'
+    status: ignored
+  security.jwt.scope-union:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rity-jwt-scope-union-1afe34:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-rity-jwt-scope-union-1afe34:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-rity...'
+    status: ignored
+  security.jwt.space-delimited-claims:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-ace-delimited-claims-57d890:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-ace-delimited-claims-57d890:80
+      (using http): response[0]: expected response code `403`, got "200". Response:
+      RawContent: [0] Url=http://a-ace-...'
+    status: ignored
+  security.jwt.strip-token:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-rity-jwt-strip-token-1e6664:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-rity-jwt-strip-token-1e6664:80
+      (using http): response[0]: expected request header "Authorization" to be absent,
+      got [Bearer eyJhbGciOiJSUzI1Ni...'
+    status: ignored
+  security.jwt.validation:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-urity-jwt-validation-ee9f2b:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-urity-jwt-validation-ee9f2b:80
+      (using http): response[0]: expected response code `401`, got "200". Response:
+      RawContent: [0] Url=http://a-urit...'
+    status: ignored
+  telemetry.accesslog.disabled:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 59 attempts (last error: witness pcs_witness="x8bxlw2x" not in metrics
+      yet)'
+    status: ignored
+  telemetry.accesslog.disabled-named-provider:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 59 attempts (last error: witness pcs_witness="2qscptmj" not in metrics
+      yet)'
+    status: ignored
+  telemetry.accesslog.filter:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 59 attempts (last error: witness pcs_witness="sqdwkmmw" not in metrics
+      yet)'
+    status: ignored
+  telemetry.accesslog.mesh-default:
+    status: supported
+  telemetry.metrics.disabled:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 30 attempts (last
+      error: baseline: no istio_requests_total with destination_workload="a-try-metrics-disabled-bc161d-app-v1"
+      before disabling)'
+    status: fail
+  telemetry.metrics.istio-requests-total:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 313 attempts (last
+      error: no istio_requests_total series with destination_workload="a-istio-requests-total-8ebddf-app-v1"
+      and response_code=200)'
+    status: fail
+  telemetry.metrics.tag-override:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 60 attempts (last
+      error: no istio_requests_total series with destination_workload="a-metrics-tag-override-809c54-app-v1"
+      and pcs_tag="pcs-tnbf44k5")'
+    status: fail
+  telemetry.metrics.tag-override.all-metrics-upsert:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 59 attempts (last error: no istio_requests_total
+      series with destination_workload="a-e-all-metrics-upsert-e06645-app-v1" and
+      pcs_tag="pcs-b24zg977")'
+    status: ignored
+  telemetry.metrics.tag-override.request-duration:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 60 attempts (last error: no istio_request_duration_milliseconds_count
+      series with destination_workload="a-ide-request-duration-f0b71a-app-v1" and
+      pcs_tag="pcs-bz4zsh4v")'
+    status: ignored
+  telemetry.metrics.tag-override.request-size:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 60 attempts (last error: no istio_request_bytes_count
+      series with destination_workload="a-verride-request-size-290105-app-v1" and
+      pcs_tag="pcs-5r7nffn4")'
+    status: ignored
+  telemetry.metrics.tag-override.response-size:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 59 attempts (last error: no istio_response_bytes_count
+      series with destination_workload="a-erride-response-size-d862eb-app-v1" and
+      pcs_tag="pcs-4stwcp22")'
+    status: ignored
+  telemetry.metrics.tag-remove:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 60 attempts (last error: witness pcs_witness="cml696nx" not in metrics
+      yet)'
+    status: ignored
+  telemetry.tracing.sampling-all:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-tracing-sampling-all-7e0a6f:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-tracing-sampling-all-7e0a6f:80
+      (using http): 5 errors occurred: * response[0]: request header X-B3-Sampled:
+      expected `1`, received `` * respon...'
+    status: ignored
+  telemetry.tracing.sampling-none:
+    reason: 'fails exactly as with the feature config removed: failed calling client-ambient
+      (cluster=cluster-0)->''http://a-racing-sampling-none-c049c0:80'': call failed
+      from client-ambient (cluster=cluster-0) to http://a-racing-sampling-none-c049c0:80
+      (using http): 5 errors occurred: * response[0]: request header X-B3-Sampled:
+      expected `0`, received `` * respon...'
+    status: ignored
+maxUnknown: 1

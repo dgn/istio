@@ -113,7 +113,37 @@ endef
 # Ensure that all test files are tagged properly. This ensures that we don't accidentally skip tests
 # and that integration tests are not run as part of the unit test suite.
 check-go-tag:
-	@go list ./tests/integration/... 2>/dev/null | xargs -r -I{} sh -c 'echo "Detected a file in tests/integration/ without a build tag set. Add //go:build integ to the files: {}"; exit 2'
+	@go list ./tests/integration/... ./tests/conformance/proxy/... 2>/dev/null | { grep -v -E '/conformance/proxy/($(PCS_TOOL_DIRS))$$' || true; } | \
+		xargs -r -I{} sh -c 'echo "Detected a file in tests/integration/ or tests/conformance/proxy/ without a build tag set. Add //go:build integ to the files: {}"; exit 2'
+
+# The proxy conformance suite's tooling, which needs no cluster and so no integ build tag: the
+# coverage checks, the outcome taxonomy and the pcs tool. `make test` runs their tests.
+PCS_TOOL_DIRS := coverage|coverage/defaults|outcome|cmd/pcs
+PCS_TOOL_PACKAGES := $(addprefix ./tests/conformance/proxy/,coverage/... outcome/ cmd/pcs/)
+
+# Check the proxy conformance suite's coverage of the API surface, the declared support of each proxy
+# and the release-note decisions.
+.PHONY: pcs-check
+pcs-check:
+	go test $(PCS_TOOL_PACKAGES)
+
+# Regenerate the suite's generated files (surface.yaml, summary.yaml, defaults-values.yaml, ...) and
+# lower the ratchets after a change to the features or the API.
+.PHONY: pcs-update
+pcs-update:
+	go test ./tests/conformance/proxy/coverage/... -update
+
+# Run a pcs command, e.g. make pcs.worklist PCS_ARGS="-role ingress -source proto". Commands:
+# worklist, scaffold, changed, report, backlog.
+pcs.%:
+	@go run ./tests/conformance/proxy/cmd/pcs $* $(PCS_ARGS)
+
+# Run the proxy conformance suite against a cluster, like test.integration.<component>.kube.
+# The full suite takes well over the default 30m test timeout.
+PCS_TIMEOUT ?= 3h
+.PHONY: test.conformance.proxy.kube
+test.conformance.proxy.kube: | $(JUNIT_REPORT) check-go-tag
+	$(call run-test,./tests/conformance/proxy/,-timeout $(PCS_TIMEOUT))
 
 # Generate integration test targets for kubernetes environment.
 # Set SINGLE_PACKAGE=true to not include sub-packages (/... suffix).

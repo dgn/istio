@@ -67,6 +67,9 @@ if [[ "${CONTAINER_CLI:-}" == "podman" ]] && [[ "$(podman info --format '{{.Host
   export KIND_EXPERIMENTAL_PROVIDER="${KIND_EXPERIMENTAL_PROVIDER:-podman}"
   # TPROXY interception does not work in rootless kind nodes.
   export INTEGRATION_TEST_FLAGS="${INTEGRATION_TEST_FLAGS:-} --istio.test.skipTProxy"
+  # In rootless kind nodes, iptables-mode kube-proxy fails to sync ("sendmsg() failed: Message too long")
+  # once a test creates enough Services, leaving new ClusterIPs unreachable.
+  export KIND_KUBE_PROXY_MODE="${KIND_KUBE_PROXY_MODE:-nftables}"
 fi
 
 PARAMS=()

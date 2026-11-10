@@ -21,6 +21,7 @@ import (
 	"github.com/agentgateway/agentgateway/api"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
+	"istio.io/istio/pilot/pkg/config/kube/gatewayext"
 	"istio.io/istio/pkg/config"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/kube/krt"
@@ -112,7 +113,7 @@ func buildAgwDestination(
 				Port: uint32(svc.Spec.TargetPorts[0].Number), //nolint:gosec // G115: InferencePool TargetPort is int32 with validation 1-65535, always safe
 			}
 		}
-	case "Hostname":
+	case gatewayext.HostnameBackendKind:
 		// Hostname is an Istio-specific backend kind where the name is the literal hostname
 		// Used for referencing services by their full hostname (e.g., from ServiceEntry)
 		// The actual resolution to ServiceEntry happens via the BackendIndex alias mechanism

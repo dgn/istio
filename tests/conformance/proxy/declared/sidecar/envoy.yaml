@@ -1,0 +1,605 @@
+# Declared support of envoy in the sidecar role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; issue optionally tracks the fix.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#   Its kinds (generated) list the API kinds the feature applied in the last reference run.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/conformance/proxy/ -run TestSidecarConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  backend.destinationrule.connection-pool.max-concurrent-streams:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Sidecar.networking.istio.io
+    status: supported
+  backend.destinationrule.connection-pool.max-requests:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.connection-pool.pending-overflow:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash-cookie:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash-cookie-attributes:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash-cookie-path:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash-maglev:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash-query-param:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash-ring-hash:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.consistent-hash-source-ip:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.outlier-detection:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.outlier-gateway-errors:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.outlier-http-error-codes:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.outlier-local-origin:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.outlier-min-health-percent:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.proxy-protocol-v2:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-disable-mesh:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.destinationrule.tls-istio-mutual-external:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-simple-insecure:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.workload-selector:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.serviceentry.addresses:
+    kinds:
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.endpoint-labels-subset:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  backend.serviceentry.endpoint-weight:
+    kinds:
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.workload-selector:
+    kinds:
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.default-retry-on-connect-failure.mesh:
+    kinds:
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.expect-continue-proxied:
+    status: supported
+  dataplane.grpc-timeout-honored:
+    status: supported
+  dataplane.inbound-passthrough:
+    status: supported
+  dataplane.inbound-source-address:
+    status: supported
+  dataplane.no-default-route-timeout:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  dataplane.outbound-allow-any:
+    status: supported
+  dataplane.path-normalization.mesh:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.permissive-mtls-default:
+    status: supported
+  dataplane.request-id.mesh-preserved:
+    status: supported
+  dataplane.trace-context-propagation.mesh:
+    status: supported
+  dataplane.xfcc.mesh-client-identity:
+    status: supported
+  dataplane.xff.mesh-preserved:
+    status: supported
+  flag.100-continue-disabled:
+    kinds:
+    - IstiodEnv
+    status: supported
+  flag.pilot-http10:
+    kinds:
+    - IstiodEnv
+    status: supported
+  istioapi.virtualservice.cors:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.cors-full:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.cors-unmatched-preflights:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.delegate:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.direct-response:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.direct-response-bytes:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-abort:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-delay:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-delay-percentage:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-grpc-status:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-percentages:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.first-match-wins:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.header-and-rewrite:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.headers-full:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-more:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-source:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-string-variants:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-variants:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.mirror:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.mirror-subset:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.mirrors:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.per-try-timeout:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.redirect:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.redirect-more:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.retries:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.retries-backoff:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.retries-previous-hosts:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.rewrite-more:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.subsets:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.timeout:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.weights:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  mesh.authz.ip-blocks:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  mesh.authz.l4-principal:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  mesh.authz.l7-path:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  mesh.authz.source-identity:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  mesh.baseline.reachability:
+    status: supported
+  mesh.fault.abort:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  mesh.mtls.strict:
+    kinds:
+    - PeerAuthentication.security.istio.io
+    status: supported
+  mesh.peerauthentication.port-level-strict:
+    kinds:
+    - PeerAuthentication.security.istio.io
+    status: supported
+  mesh.peerauthentication.port-level-unset-inherits:
+    kinds:
+    - PeerAuthentication.security.istio.io
+    status: supported
+  mesh.routing.header-match:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  mesh.routing.path-match:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  mesh.routing.rewrite:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  mesh.routing.traffic-split:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  mesh.timeout:
+    kinds:
+    - VirtualService.networking.istio.io
+    status: supported
+  meshconfig.default-http-retry-policy:
+    kinds:
+    - MeshConfig
+    status: supported
+  meshconfig.enable-auto-mtls-disabled:
+    kinds:
+    - MeshConfig
+    status: supported
+  protocol.websocket.mesh:
+    status: supported
+  security.authz.allow-nothing:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.allow.header:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.audit:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.custom-before-allow:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.custom-ext-authz:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.custom-ext-authz-grpc:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.custom-ext-authz-headers:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.deny-overrides-allow:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.deny.method-header:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.deny.path:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.dry-run:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.not-request-principals:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.authz.not-values:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.authz.selector:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  security.jwt.audiences:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.claims-authz:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.forward-original-token:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.from-cookies:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.from-header-and-param:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.jwks-timeout:
+    kinds:
+    - Deployment.apps
+    - RequestAuthentication.security.istio.io
+    - Service
+    status: supported
+  security.jwt.jwks-uri:
+    kinds:
+    - Deployment.apps
+    - RequestAuthentication.security.istio.io
+    - Service
+    status: supported
+  security.jwt.multiple-issuers:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.output-claim-to-headers:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.output-payload-to-header:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.presence-optional:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.presence-required:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.require-principal:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.scope-union:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.selector:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.space-delimited-claims:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.strip-token:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.validation:
+    kinds:
+    - RequestAuthentication.security.istio.io
+    status: supported
+  sidecar.egress-hosts:
+    kinds:
+    - Sidecar.networking.istio.io
+    status: supported
+  sidecar.inbound-connection-pool:
+    kinds:
+    - Sidecar.networking.istio.io
+    status: supported
+  sidecar.ingress-connection-pool:
+    kinds:
+    - Sidecar.networking.istio.io
+    status: supported
+  sidecar.ingress-default-endpoint:
+    kinds:
+    - Sidecar.networking.istio.io
+    status: supported
+  sidecar.ingress-tls:
+    kinds:
+    - PeerAuthentication.security.istio.io
+    - Secret
+    - Sidecar.networking.istio.io
+    status: supported
+  sidecar.outbound-registry-only:
+    kinds:
+    - Sidecar.networking.istio.io
+    status: supported
+  telemetry.accesslog.disabled:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    reason: 'proxy logged "/pcs-nolog-vw2jk6hk6p", expected no log: [2026-11-17T21:18:35.730Z]
+      "GET /pcs-nolog-vw2jk6hk6p HTTP/1.1" 200 - via_upstream - "-" 0 662 0 0 "-"
+      "Go-http-client/1.1" "fb5d32cd-85a7-41c4-b762-38f099b8d8ff" "e-y-accesslog-disabled-a29700"
+      "10.244.0.159:18080" inbound|18080|| 127.0.0.6:561...'
+    status: fail
+  telemetry.accesslog.disabled-named-provider:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.accesslog.filter:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.accesslog.mesh-default:
+    status: supported
+  telemetry.accesslog.selector:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    reason: 'proxy logged "/pcs-nolog-bwb6lrsfqf", expected no log: [2026-11-17T21:17:41.726Z]
+      "GET /pcs-nolog-bwb6lrsfqf HTTP/1.1" 200 - via_upstream - "-" 0 663 0 0 "-"
+      "Go-http-client/1.1" "d2e9478d-28bc-4f7a-b7d3-02beacc490d1" "e-y-accesslog-selector-906ab3"
+      "10.244.0.144:18080" inbound|18080|| 127.0.0.6:452...'
+    status: fail
+  telemetry.metrics.disabled:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.istio-requests-total:
+    status: supported
+  telemetry.metrics.tag-override:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.all-metrics-upsert:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.request-duration:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.request-size:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.response-size:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-remove:
+    kinds:
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.tracing.sampling-all:
+    kinds:
+    - MeshConfig
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.tracing.sampling-none:
+    kinds:
+    - MeshConfig
+    - Telemetry.telemetry.istio.io
+    status: supported
+maxUnknown: 0
+reference: true

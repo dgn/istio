@@ -1,0 +1,12 @@
+# Ratchets of the coverage check (TestCoverage). They may only go down: -update lowers them, and only
+# -update -raise-todo raises them, for deliberate surface expansions (e.g. tracking a new API).
+#
+# - maxTodo: surface entries neither covered by a feature nor exempt (status "todo" in coverage.yaml).
+# - maxRoleGaps: per role, in-scope entries (scope.yaml) that no feature of the role covers.
+maxRoleGaps:
+  egress: 139
+  ingress: 421
+  node: 70
+  sidecar: 384
+  waypoint: 249
+maxTodo: 623

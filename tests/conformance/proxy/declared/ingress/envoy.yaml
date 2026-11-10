@@ -1,0 +1,1883 @@
+# Declared support of envoy in the ingress role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; issue optionally tracks the fix.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#   Its kinds (generated) list the API kinds the feature applied in the last reference run.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/conformance/proxy/ -run TestIngressConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  backend.destinationrule.connect-timeout:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.connection-pool.max-concurrent-streams:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.connection-pool.max-requests:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.connection-pool.pending-overflow:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash-cookie:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash-cookie-attributes:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash-cookie-path:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash-maglev:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash-query-param:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash-ring-hash:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.consistent-hash-source-ip:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.export-to:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.h2-upgrade:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.h2-upgrade-policy-override:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.locality-distribute:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.locality-enabled:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.locality-failover:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.locality-failover-priority:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.lookup-namespace:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.merge:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  backend.destinationrule.outlier-detection:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.outlier-gateway-errors:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.outlier-http-error-codes:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.outlier-local-origin:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.outlier-min-health-percent:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.port-level-settings:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.proxy-protocol-v2:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.subset-traffic-policy:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-ca-cert-credential-name:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-crl:
+    kinds:
+    - ConfigMap
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-disable-and-istio-mutual:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-files:
+    kinds:
+    - ConfigMap
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-istio-mutual-external:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-mutual:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-origination:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-san-mismatch:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.tls-simple-insecure:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.use-client-protocol:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.workload-selector-gateway:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.destinationrule.zone-aware:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.kubernetes-externalname:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Service
+    status: supported
+  backend.mesh.authz-gateway-principal:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.mesh.auto-mtls:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  backend.mesh.peerauthentication-disable:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - PeerAuthentication.security.istio.io
+    status: supported
+  backend.mesh.peerauthentication-strict:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - PeerAuthentication.security.istio.io
+    status: supported
+  backend.meshconfig.connect-timeout:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.meshconfig.default-destination-rule-export-to:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.meshconfig.default-traffic-policy:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.meshconfig.locality-distribute:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.meshconfig.locality-failover:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.meshconfig.locality-failover-priority:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.meshconfig.zone-aware:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.dns-round-robin:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.endpoint-identity:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.endpoint-labels-subset:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  backend.serviceentry.endpoint-weight:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.hostname-backendref:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.same-host-as-service:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Service
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.static-endpoints:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.serviceentry.workload-selector:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  backend.workloadentry.locality:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    - WorkloadEntry.networking.istio.io
+    status: supported
+  backend.workloadentry.ports-labels:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    - WorkloadEntry.networking.istio.io
+    status: supported
+  dataplane.access-log-text:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.default-retry-on-connect-failure:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.expect-continue-proxied:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.grpc-timeout-honored:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.host-case-insensitive:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.host-port-ignored:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.no-default-route-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  dataplane.no-h2-upgrade:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.no-route-404:
+    status: supported
+  dataplane.path-normalization:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.proxy-protocol.downstream:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - TCPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.proxy-protocol.upstream:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.request-id:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.trace-context-propagation:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.x-forwarded-proto:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.xfcc.always-forward-only:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.xfcc.mode-append-forward:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.xfcc.mode-forward-only:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.xfcc.mode-sanitize:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.xfcc.mode-sanitize-set:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.xfcc.mode-undefined:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.xfcc.sanitize:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  dataplane.xff.append-client-ip:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.xff.num-trusted-proxies:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  dataplane.xff.untrusted-by-default:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  flag.100-continue-disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - IstiodEnv
+    status: supported
+  flag.persistent-session:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - IstiodEnv
+    - Service
+    status: supported
+  flag.pilot-http10:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - IstiodEnv
+    status: supported
+  flag.pilot-jwt-enable-remote-jwks:
+    kinds:
+    - Deployment.apps
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - IstiodEnv
+    - RequestAuthentication.security.istio.io
+    - Service
+    - ServiceEntry.networking.istio.io
+    status: supported
+  impl-specific.envoyfilter:
+    kinds:
+    - EnvoyFilter.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  impl-specific.trafficextension-lua:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - TrafficExtension.extensions.istio.io
+    status: supported
+  infra.addresses-hostname-manual-deployment:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  infra.gateway-metadata-copied:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.gatewayclass-defaults-configmap:
+    kinds:
+    - ConfigMap
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.name-override-annotation:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.owner-references:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.parametersref-configmap:
+    kinds:
+    - ConfigMap
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.parametersref-hpa-pdb-serviceaccount:
+    kinds:
+    - ConfigMap
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.reconcile-drift:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.service-account-annotation:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  infra.service-ports-from-listeners:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  infra.service-type-annotation:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  infra.standard-labels:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  istioapi.gateway-api.httproute-and-virtualservice:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway-virtualservice.route:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.https-redirect:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    status: supported
+  istioapi.gateway.same-port-tls-conflict:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.server-bind:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.server-merge:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.server-name:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.strict-merging:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-alpn-protocols:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-auto-passthrough:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-ca-cert-credential-name:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    reason: 'Istio bug: for Gateway servers the CA SDS resource is requested as kubernetes://<caCertCredentialName>
+      without the -cacert suffix (pilot/pkg/security/model/authentication.go ApplyCredentialSDSToServerCommonTLSContext),
+      so istiod looks for tls.crt/tls.key in the CA secret, never serves the validation
+      context, and every connection fails, as with the config removed'
+    status: ignored
+  istioapi.gateway.tls-ca-crl:
+    kinds:
+    - ConfigMap
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-certificates:
+    kinds:
+    - ConfigMap
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-cipher-suites:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-credential-names:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-credential-rotation:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-ecdh-curves:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-file-certificates:
+    kinds:
+    - ConfigMap
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-insecure-skip-verify:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-istio-mutual:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-mutual:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-optional-mutual:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-protocol-version:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-protocol-version-auto:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-protocol-version-tls10:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-protocol-version-tls11:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-protocol-version-tls13:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-simple:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-sni-servers:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-subject-alt-names:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-verify-certificate-hash:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.gateway.tls-verify-certificate-spki:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - Secret
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.claim-routing:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - RequestAuthentication.security.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.cors:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.cors-full:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.cors-unmatched-preflights:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.delegate:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.direct-response:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.direct-response-bytes:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.export-to:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-abort:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-delay:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-delay-percentage:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-grpc-status:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.fault-percentages:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.first-match-wins:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.header-and-rewrite:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.headers-full:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.host-specificity:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-authority:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-more:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-source:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-string-variants:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.match-variants:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.mirror:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.mirror-subset:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.mirrors:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.multiple-for-host:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.per-try-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.redirect:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.redirect-more:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.retries:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.retries-backoff:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.retries-previous-hosts:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.rewrite-more:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.subsets:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.tcp:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.tcp-match-weight:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.tcp-subset-gateways:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.tls-sni-passthrough:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.tls-subset-weight-gateways:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  istioapi.virtualservice.weights:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - VirtualService.networking.istio.io
+    status: supported
+  listener.tls-option.auto-passthrough:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  listener.tls-option.cipher-suites:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    status: supported
+  listener.tls-option.terminate-mode-istio-mutual:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  listener.tls-option.terminate-mode-istio-simple:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  listener.tls-option.terminate-mode-mutual:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  listener.tls-option.terminate-mode-optional-mutual:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  listener.tls.terminate-tcproute:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Secret
+    - TCPRoute.gateway.networking.k8s.io
+    status: supported
+  meshconfig.access-log-encoding-json:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    status: supported
+  meshconfig.access-log-format:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    status: supported
+  meshconfig.ca-certificates:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - IstiodEnv
+    - MeshConfig
+    - ProxyConfig.networking.istio.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.connect-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.default-destination-rule-export-to:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.default-http-retry-policy:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    status: supported
+  meshconfig.default-http-retry-policy-per-try-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    status: supported
+  meshconfig.default-service-export-to:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.default-virtual-service-export-to:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - Gateway.networking.istio.io
+    - MeshConfig
+    - VirtualService.networking.istio.io
+    status: supported
+  meshconfig.discovery-selectors:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.enable-auto-mtls-disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    status: supported
+  meshconfig.h2-upgrade-policy:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.path-normalization-base:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.path-normalization-decode-and-merge-slashes:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.path-normalization-default:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.path-normalization-merge-slashes:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.path-normalization-none:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.root-namespace:
+    kinds:
+    - DestinationRule.networking.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.service-entry-visibility-namespace:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.service-entry-visibility-namespace-policy:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.service-entry-visibility-none-policy:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.service-entry-visibility-public-policy:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.trust-domain:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  meshconfig.trust-domain-aliases:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  protocol.http1-upstream-default:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  protocol.http2-downstream:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  protocol.http2-upstream-appprotocol:
+    kinds:
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  protocol.websocket:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  proxyconfig.connection.drain-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.escaped-slashes:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.global-downstream-limit:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.headers-with-underscores:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.idle-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.listener-limit:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.20.171:80/?delay=2s'': call failed from
+      client (cluster=cluster-0) to http://10.96.20.171:80/?delay=2s (using http):
+      expected at least one response with status 503, got map[200:20] (err: <nil>)'
+    status: ignored
+  proxyconfig.connection.max-connection-duration:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.max-stream-duration:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.merge-slashes:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  proxyconfig.connection.profile:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.request-headers-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.connection.stream-idle-timeout:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.proxyheaders.attempt-count-disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.proxyheaders.debug-headers-disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.proxyheaders.metadata-exchange-in-mesh:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.proxyheaders.request-id-disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.proxyheaders.server-disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.proxyheaders.server-value:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  proxyconfig.proxyheaders.x-forwarded-port-host:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  security.authz.allow-nothing:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.allow.header:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.audit:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.custom-before-allow:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.custom-ext-authz:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.custom-ext-authz-grpc:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.custom-ext-authz-headers:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.deny-overrides-allow:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.deny.host:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.deny.method-header:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.deny.path:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.dry-run:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.ip-blocks-l4:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.namespace-wide:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  security.authz.not-hosts-not-values:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.not-ip-blocks:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.not-request-principals:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.authz.not-values:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.remote-ip:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.root-namespace:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  security.authz.scope-union:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - ServiceEntry.networking.istio.io
+    status: supported
+  security.authz.selector:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.source-identity-plaintext:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.source-trust-domains:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Secret
+    - ServiceEntry.networking.istio.io
+    status: supported
+  security.authz.target-ref:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.authz.targetref-scoped:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  security.jwt.audiences:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.claims-authz:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.forward-original-token:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.from-cookies:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.from-header-and-param:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.jwks-timeout:
+    kinds:
+    - Deployment.apps
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    - Service
+    status: supported
+  security.jwt.jwks-uri:
+    kinds:
+    - Deployment.apps
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    - Service
+    status: supported
+  security.jwt.multiple-issuers:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.output-claim-to-headers:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.output-payload-to-header:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.presence-optional:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.presence-required:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.require-principal:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.scope-union:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.selector:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.space-delimited-claims:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.strip-token:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.target-ref:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.jwt.validation:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - RequestAuthentication.security.istio.io
+    status: supported
+  security.mtls.gateway-to-restricted-sidecar:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    status: supported
+  status.address-type-annotation:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    status: supported
+  telemetry.accesslog.disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    reason: 'proxy logged "/pcs-nolog-blpnlsj68g", expected no log: [2026-11-19T12:57:49.046Z]
+      "GET /pcs-nolog-blpnlsj68g HTTP/1.1" 200 - via_upstream - "-" 0 766 1 1 "10.244.0.13"
+      "Go-http-client/1.1" "138146c5-dc23-4bf5-ba60-7807cee46e1b" "e-y-accesslog-disabled-3c1045.example.com"
+      "10.244.0.14:18080" outbound...'
+    status: fail
+  telemetry.accesslog.disabled-named-provider:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.accesslog.filter:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.accesslog.mesh-default:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  telemetry.accesslog.selector:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    reason: 'proxy logged "/pcs-nolog-dlsf8tglzz", expected no log: [2026-11-19T12:57:29.394Z]
+      "GET /pcs-nolog-dlsf8tglzz HTTP/1.1" 200 - via_upstream - "-" 0 766 3 3 "10.244.0.13"
+      "Go-http-client/1.1" "46fedad7-a0bf-4607-aecc-19026b1abc63" "e-y-accesslog-selector-d4140e.example.com"
+      "10.244.0.14:18080" outbound...'
+    status: fail
+  telemetry.metrics.disabled:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.istio-requests-total:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    status: supported
+  telemetry.metrics.tag-override:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.all-metrics-upsert:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.request-duration:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.request-size:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-override.response-size:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tag-remove:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.metrics.tcp:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - TCPRoute.gateway.networking.k8s.io
+    status: supported
+  telemetry.target-ref:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.tracing.sampling-all:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - Telemetry.telemetry.istio.io
+    status: supported
+  telemetry.tracing.sampling-none:
+    kinds:
+    - Gateway.gateway.networking.k8s.io
+    - HTTPRoute.gateway.networking.k8s.io
+    - MeshConfig
+    - Telemetry.telemetry.istio.io
+    status: supported
+maxUnknown: 0
+reference: true

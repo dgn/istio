@@ -22,14 +22,15 @@ import (
 	klabels "k8s.io/apimachinery/pkg/labels"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
+	"istio.io/istio/pilot/pkg/config/kube/gatewayext"
 	"istio.io/istio/pilot/pkg/features"
 )
 
 const (
 	// GatewayClassDefaults is the label key for gateway class defaults on ConfigMaps.
-	GatewayClassDefaults = "gateway.istio.io/defaults-for-class"
+	GatewayClassDefaults = gatewayext.ClassDefaultsLabel
 	// GatewayTLSTerminateModeKey is the annotation key for TLS terminate mode.
-	GatewayTLSTerminateModeKey = "gateway.istio.io/tls-terminate-mode"
+	GatewayTLSTerminateModeKey = gatewayext.TLSTerminateModeOption
 )
 
 // GetDefaultName returns the default name for a gateway resource.

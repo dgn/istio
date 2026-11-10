@@ -1,0 +1,1721 @@
+# Declared support of agentgateway in the ingress role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; issue optionally tracks the fix.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#   Its kinds (generated) list the API kinds the feature applied in the last reference run.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/conformance/proxy/ -run TestIngressConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  backend.destinationrule.connect-timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): no responses received'
+    status: ignored
+  backend.destinationrule.connection-pool.max-concurrent-streams:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.179.78:80/?delay=1s'': call failed from
+      client (cluster=cluster-0) to http://10.96.179.78:80/?delay=1s (using http):
+      expected at least one response with status 503, got map[200:20] (err: <nil>)'
+    status: ignored
+  backend.destinationrule.connection-pool.max-requests:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80/?delay=1s'': call failed from
+      client (cluster=cluster-0) to http://10.96.102.201:80/?delay=1s (using http):
+      expected at least one response with status 503, got map[200:20] (err: <nil>)'
+    status: ignored
+  backend.destinationrule.connection-pool.pending-overflow:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80/?delay=1s'': call failed from
+      client (cluster=cluster-0) to http://10.96.102.201:80/?delay=1s (using http):
+      expected at least one response with status 503, got map[200:20] (err: <nil>)'
+    status: ignored
+  backend.destinationrule.consistent-hash:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): expected all responses from one endpoint,
+      got map[backend-v1-545cfcb999-7lsrm:7 backend-v2-57d56495c-scmss:13]'
+    status: ignored
+  backend.destinationrule.consistent-hash-cookie:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response header
+      "Set-Cookie" to contain "pcs-affinity=", got ""'
+    status: ignored
+  backend.destinationrule.consistent-hash-cookie-attributes:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): response[0]: expected response header
+      "Set-Cookie" to contain "pcs-affinity=", got ""'
+    status: ignored
+  backend.destinationrule.consistent-hash-cookie-path:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response header
+      "Set-Cookie" to contain "pcs-affinity=", got ""'
+    status: ignored
+  backend.destinationrule.consistent-hash-maglev:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): expected all responses from one endpoint,
+      got map[backend-v1-545cfcb999-7lsrm:13 backend-v2-57d56495c-scmss:7]'
+    status: ignored
+  backend.destinationrule.consistent-hash-query-param:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80/?user=alice'': call failed from
+      client (cluster=cluster-0) to http://10.96.102.201:80/?user=alice (using http):
+      expected all responses from one endpoint, got map[backend-v1-545cfcb999-7lsrm:13
+      backend-v2-57d56495c-scmss:7]'
+    status: ignored
+  backend.destinationrule.consistent-hash-ring-hash:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): expected all responses from one endpoint,
+      got map[backend-v1-545cfcb999-7lsrm:5 backend-v2-57d56495c-scmss:15]'
+    status: ignored
+  backend.destinationrule.consistent-hash-source-ip:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): expected all responses from one endpoint,
+      got map[backend-v1-545cfcb999-7lsrm:8 backend-v2-57d56495c-scmss:12]'
+    status: ignored
+  backend.destinationrule.export-to:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): response[0]: expected response code
+      `200`, got "500". Response: RawContent: [0] Url=http://10.96.53.107:80 [0] SourceIP=10.244.0.236
+      [0] Latency=72...'
+    status: ignored
+  backend.destinationrule.h2-upgrade:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected protocol HTTP/2.0,
+      received HTTP/1.1'
+    status: ignored
+  backend.destinationrule.h2-upgrade-policy-override:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): response[0]: expected protocol HTTP/2.0,
+      received HTTP/1.1'
+    status: ignored
+  backend.destinationrule.locality-distribute:
+    status: supported
+  backend.destinationrule.locality-enabled:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.131.212:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.131.212:80 (using http): 19 errors occurred: * response[0]:
+      expected response from "backend-v1", got hostname "external-v1-55b648fcf-j4b7s"
+      * response[2]: expected respon...'
+    status: ignored
+  backend.destinationrule.locality-failover:
+    status: supported
+  backend.destinationrule.locality-failover-priority:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.154.93:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.154.93:80 (using http): 4 errors occurred: * response[9]: expected
+      response from "external", got hostname "backend-v1-7dff757769-pk6fp" * response[10]:
+      expected response f...'
+    status: ignored
+  backend.destinationrule.lookup-namespace:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): response[0]: expected response code
+      `200`, got "500". Response: RawContent: [0] Url=http://10.96.53.107:80 [0] SourceIP=10.244.0.236
+      [0] Latency=57...'
+    status: ignored
+  backend.destinationrule.merge:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80/v1'': call failed from client
+      (cluster=cluster-0) to http://10.96.53.107:80/v1 (using http): response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.53.107:80/v1
+      [0] SourceIP=10.244.0.236 [0] L...'
+    status: ignored
+  backend.destinationrule.outlier-detection:
+    status: supported
+  backend.destinationrule.outlier-gateway-errors:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80/?codes=504'': call failed from
+      client (cluster=cluster-0) to http://10.96.53.107:80/?codes=504 (using http):
+      expected at least one response with status 503, got map[504:10] (err: <nil>)'
+    status: ignored
+  backend.destinationrule.outlier-http-error-codes:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80/?codes=429'': call failed from
+      client (cluster=cluster-0) to http://10.96.53.107:80/?codes=429 (using http):
+      expected at least one response with status 503, got map[429:10] (err: <nil>)'
+    status: ignored
+  backend.destinationrule.outlier-local-origin:
+    status: supported
+  backend.destinationrule.outlier-min-health-percent:
+    status: supported
+  backend.destinationrule.port-level-settings:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected request header
+      "X-Forwarded-Client-Cert" to be absent, got [By=spiffe://cluster.local/ns/pcs-1-22380/sa/default;URI=spiffe:...'
+    status: ignored
+  backend.destinationrule.proxy-protocol-v2:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response code
+      `200`, got "503". Response: RawContent: [0] Url=http://10.96.102.201:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  backend.destinationrule.subset-traffic-policy:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.78.158:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.78.158:80 (using http): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.78.158:80":
+      dial tcp 10...'
+    status: ignored
+  backend.destinationrule.tls-ca-cert-credential-name:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): response[0]: expected response code
+      `200`, got "400". Response: RawContent: [0] Url=http://10.96.53.107:80 [0] SourceIP=10.244.0.236
+      [0] Latency=91...'
+    status: ignored
+  backend.destinationrule.tls-crl:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.73.236:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.73.236:80 (using http): response[0]: expected response code
+      `200`, got "503". Response: RawContent: [0] Url=http://10.96.73.236:80 [0] SourceIP=10.244.0.227
+      [0] Latency=1....'
+    status: ignored
+  backend.destinationrule.tls-disable-and-istio-mutual:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected request header
+      "X-Forwarded-Client-Cert" to be absent, got [By=spiffe://cluster.local/ns/pcs-1-22380/sa/default;URI=spiffe:...'
+    status: ignored
+  backend.destinationrule.tls-files:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.57.24:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.57.24:80 (using http): response[0]: expected response code `200`,
+      got "400". Response: RawContent: [0] Url=http://10.96.57.24:80 [0] SourceIP=10.244.0.227
+      [0] Latency=961.7...'
+    status: ignored
+  backend.destinationrule.tls-istio-mutual-external:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response code
+      `503`, got "200". Response: RawContent: [0] Url=http://10.96.102.201:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  backend.destinationrule.tls-mutual:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.12.191:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.12.191:80 (using http): response[0]: expected response code
+      `200`, got "400". Response: RawContent: [0] Url=http://10.96.12.191:80 [0] SourceIP=10.244.0.133
+      [0] Latency=88...'
+    status: ignored
+  backend.destinationrule.tls-origination:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response code
+      `200`, got "400". Response: RawContent: [0] Url=http://10.96.102.201:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  backend.destinationrule.tls-san-mismatch:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response code
+      `503`, got "400". Response: RawContent: [0] Url=http://10.96.102.201:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  backend.destinationrule.tls-simple-insecure:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response code
+      `200`, got "400". Response: RawContent: [0] Url=http://10.96.102.201:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  backend.destinationrule.use-client-protocol:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected protocol HTTP/2.0,
+      received HTTP/1.1'
+    status: ignored
+  backend.destinationrule.workload-selector-gateway:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.192.5:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.192.5:80 (using http): response[0]: expected response header
+      "Set-Cookie" to contain "pcs-selected=", got ""'
+    status: ignored
+  backend.destinationrule.zone-aware:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.113.7:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.113.7:80 (using http): 15 errors occurred: * response[0]: expected
+      response from "backend-v1", got hostname "external-v1-55b648fcf-j4b7s" * response[1]:
+      expected response f...'
+    status: ignored
+  backend.kubernetes-externalname:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.20.115:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.20.115:80 (using
+      http): response[0]: expected response code `200`, got "500". Response: RawContent:
+      [0] Url=http://10.96.20.115:80 [0] SourceIP=10.244.0.164 [0] Latency=52...'
+    status: fail
+  backend.mesh.authz-gateway-principal:
+    status: supported
+  backend.mesh.auto-mtls:
+    status: supported
+  backend.mesh.peerauthentication-disable:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected request header
+      "X-Forwarded-Client-Cert" to be absent, got [By=spiffe://cluster.local/ns/pcs-1-22380/sa/default;URI=spiffe:...'
+    status: ignored
+  backend.mesh.peerauthentication-strict:
+    status: supported
+  backend.meshconfig.connect-timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): no responses received'
+    status: ignored
+  backend.meshconfig.default-destination-rule-export-to:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.53.107:80 (using http): response[0]: expected response code
+      `200`, got "500". Response: RawContent: [0] Url=http://10.96.53.107:80 [0] SourceIP=10.244.0.236
+      [0] Latency=70...'
+    status: ignored
+  backend.meshconfig.default-traffic-policy:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.53.107:80/?delay=1s'': call failed from
+      client (cluster=cluster-0) to http://10.96.53.107:80/?delay=1s (using http):
+      expected at least one response with status 503, got map[200:20] (err: <nil>)'
+    status: ignored
+  backend.meshconfig.locality-distribute:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.201.156:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.201.156:80 (using http): 4 errors occurred: * response[2]: expected
+      response from "external", got hostname "backend-v1-7dff757769-pk6fp" * response[3]:
+      expected response ...'
+    status: ignored
+  backend.meshconfig.locality-failover:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.36.173:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.36.173:80 (using http): response[9]: expected response code
+      `200`, got "503". Response: RawContent: [9] Url=http://10.96.36.173:80 [9] SourceIP=10.244.0.125
+      [9] Latency=3....'
+    status: ignored
+  backend.meshconfig.locality-failover-priority:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.191.19:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.191.19:80 (using http): 6 errors occurred: * response[2]: expected
+      response from "external", got hostname "backend-v1-7dff757769-6vm2q" * response[5]:
+      expected response fr...'
+    status: ignored
+  backend.meshconfig.zone-aware:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.204.123:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.204.123:80 (using http): 14 errors occurred: * response[0]:
+      expected response from "backend-v1", got hostname "external-v1-55b648fcf-j4b7s"
+      * response[1]: expected respon...'
+    status: ignored
+  backend.serviceentry.dns-round-robin:
+    status: supported
+  backend.serviceentry.endpoint-identity:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.96.240:80/sa-ok'':
+      call failed from client (cluster=cluster-0) to http://10.96.96.240:80/sa-ok
+      (using http): response[0]: expected request header "X-Forwarded-Client-Cert"
+      to contain "URI=spiffe://", got ""'
+    status: fail
+  backend.serviceentry.endpoint-labels-subset:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.48.54:80/a'': call failed from client (cluster=cluster-0)
+      to http://10.96.48.54:80/a (using http): 10 errors occurred: * response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.48.54:80/a
+      [0] SourceIP=10...'
+    status: ignored
+  backend.serviceentry.endpoint-weight:
+    status: supported
+  backend.serviceentry.hostname-backendref:
+    status: supported
+  backend.serviceentry.same-host-as-service:
+    status: supported
+  backend.serviceentry.static-endpoints:
+    status: supported
+  backend.serviceentry.workload-selector:
+    status: supported
+  backend.workloadentry.locality:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.221.194:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.221.194:80 (using http): 14 errors occurred: * response[0]:
+      expected response from "backend-v1", got hostname "external-v1-55b648fcf-p479c"
+      * response[1]: expected respon...'
+    status: ignored
+  backend.workloadentry.ports-labels:
+    status: supported
+  dataplane.access-log-text:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 119 attempts (last
+      error: access log line is not in the default text format: 2026-11-20T15:17:52.432633Z
+      info request gateway=pcs-1-45593/a-lane-access-log-text-f0d9c0 listener=http
+      route=pcs-1-45593/a-lane-access-log-text-207d22 endpoint=10.244....'
+    status: fail
+  dataplane.default-retry-on-connect-failure:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.211.169:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.211.169:80 (using
+      http): 5 of 30 requests failed, expected at most 1'
+    status: fail
+  dataplane.expect-continue-proxied:
+    status: supported
+  dataplane.grpc-timeout-honored:
+    status: supported
+  dataplane.host-case-insensitive:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.102.201:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.102.201:80 (using
+      http): response[0]: expected response code `200`, got "404". Response: RawContent:
+      [0] Url=http://10.96.102.201:80 [0] SourceIP=10.244.0.133 [0] Latency...'
+    status: fail
+  dataplane.host-port-ignored:
+    status: supported
+  dataplane.no-default-route-timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.213.210:80/ready'': call failed from client
+      (cluster=cluster-0) to http://10.96.213.210:80/ready (using http): expected
+      no error, but encountered rpc error: code = Unknown desc = 1/1 requests had
+      errors; first error: Get "http:/ready": dial tcp...'
+    status: ignored
+  dataplane.no-h2-upgrade:
+    status: supported
+  dataplane.no-route-404:
+    status: supported
+  dataplane.path-normalization:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.102.201:80/x/../admin'':
+      call failed from client (cluster=cluster-0) to http://10.96.102.201:80/x/../admin
+      (using http): response[0]: expected version "v2", got "v1"'
+    status: fail
+  dataplane.proxy-protocol.downstream:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''tcp://10.96.17.135:9090'': call failed from client (cluster=cluster-0)
+      to tcp://10.96.17.135:9090 (using tcp): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: dial tcp
+      10.96.17.135:9090: i/o timeout'
+    status: ignored
+  dataplane.proxy-protocol.upstream:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.201:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.201:80 (using http): response[0]: expected response code
+      `200`, got "503". Response: RawContent: [0] Url=http://10.96.102.201:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  dataplane.request-id:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.102.201:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.102.201:80 (using
+      http): response[0]: expected request header "X-Request-Id" not to contain "pcs-fixed-id",
+      got "pcs-fixed-id"'
+    status: fail
+  dataplane.trace-context-propagation:
+    status: supported
+  dataplane.x-forwarded-proto:
+    status: supported
+  dataplane.xfcc.always-forward-only:
+    status: supported
+  dataplane.xfcc.mode-append-forward:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.96.152.128:443/'': call failed from client
+      (cluster=cluster-0) to https://10.96.152.128:443/ (using https): response[0]:
+      expected request header "X-Forwarded-Client-Cert" to contain "spiffe://pcs-client.example/ns/x/sa/client",
+      got "By=spiffe://p...'
+    status: ignored
+  dataplane.xfcc.mode-forward-only:
+    status: supported
+  dataplane.xfcc.mode-sanitize:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.96.226.226:443/'': call failed from client
+      (cluster=cluster-0) to https://10.96.226.226:443/ (using https): response[0]:
+      expected request header "X-Forwarded-Client-Cert" to be absent, got [By=spiffe://pcs-upstream.example/ns/x/sa/y;Hash=0]'
+    status: ignored
+  dataplane.xfcc.mode-sanitize-set:
+    reason: 'failed calling client (cluster=cluster-0)->''https://10.96.7.126:443/'':
+      call failed from client (cluster=cluster-0) to https://10.96.7.126:443/ (using
+      https): response[0]: expected request header "X-Forwarded-Client-Cert" to contain
+      "spiffe://pcs-client.example/ns/x/sa/client", got "By=spiffe://pcs-u...'
+    status: fail
+  dataplane.xfcc.mode-undefined:
+    reason: 'failed calling client (cluster=cluster-0)->''https://10.96.54.164:443/'':
+      call failed from client (cluster=cluster-0) to https://10.96.54.164:443/ (using
+      https): response[0]: expected request header "X-Forwarded-Client-Cert" to contain
+      "spiffe://pcs-client.example/ns/x/sa/client", got "By=spiffe://pcs...'
+    status: fail
+  dataplane.xfcc.sanitize:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.91.14:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.91.14:80 (using
+      http): response[0]: expected request header "X-Forwarded-Client-Cert" not to
+      contain "spiffe://evil", got "By=spiffe://evil/ns/x/sa/y;Hash=0"'
+    status: fail
+  dataplane.xff.append-client-ip:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.244.0.73:80'':
+      call failed from client (cluster=cluster-0) to http://10.244.0.73:80 (using
+      http): response[0]: expected request header "X-Forwarded-For" to contain "10.244.0.133",
+      got ""'
+    status: fail
+  dataplane.xff.num-trusted-proxies:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.73.153:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.73.153:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.73.153:80 [0] Header=X-Forwarded-For:1.2.3.4
+      [0] S...'
+    status: ignored
+  dataplane.xff.untrusted-by-default:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.244.0.211:80/probe'': call failed from client
+      (cluster=cluster-0) to http://10.244.0.211:80/probe (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.244.0.211:80/probe
+      [0] SourceIP=10.244.0....'
+    status: ignored
+  flag.100-continue-disabled:
+    status: supported
+  flag.persistent-session:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 120 attempts (last
+      error: /cookie: no session returned (response headers map[Content-Length:[534]
+      Content-Type:[text/plain; charset=utf-8] Date:[Fri, 20 Nov 2026 12:25:15 GMT]
+      Server:[istio-envoy] X-Envoy-Decorator-Operation:[backend.pcs-1-30188....'
+    status: fail
+  flag.pilot-http10:
+    status: supported
+  flag.pilot-jwt-enable-remote-jwks:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.108.28:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.108.28:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.108.28:80 [0] Header=Authorization:Bearer
+      TokenInv...'
+    status: ignored
+  impl-specific.envoyfilter:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.122.193:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.122.193:80 (using http): response[0]: response header x-envoyfilter:
+      expected `yes`, received ``'
+    status: ignored
+  impl-specific.trafficextension-lua:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.33.223:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.33.223:80 (using http): response[0]: response header x-lua:
+      expected `yes`, received ``'
+    status: ignored
+  infra.addresses-hostname-manual-deployment:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.245.196:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.245.196:80 (using
+      http): response[0]: expected response code `200`, got "404". Response: RawContent:
+      [0] Url=http://10.96.245.196:80 [0] SourceIP=10.244.0.133 [0] Latency...'
+    status: fail
+  infra.gateway-metadata-copied:
+    status: supported
+  infra.gatewayclass-defaults-configmap:
+    status: supported
+  infra.name-override-annotation:
+    status: supported
+  infra.owner-references:
+    status: supported
+  infra.parametersref-configmap:
+    status: supported
+  infra.parametersref-hpa-pdb-serviceaccount:
+    status: supported
+  infra.reconcile-drift:
+    status: supported
+  infra.service-account-annotation:
+    status: supported
+  infra.service-ports-from-listeners:
+    status: supported
+  infra.service-type-annotation:
+    status: supported
+  infra.standard-labels:
+    status: supported
+  istioapi.gateway-api.httproute-and-virtualservice:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.77.156:80/virtualservice'': call failed
+      from client (cluster=cluster-0) to http://10.96.77.156:80/virtualservice (using
+      http): response[0]: expected response code `200`, got "404". Response: RawContent:
+      [0] Url=http://10.96.77.156:80/virtualser...'
+    status: ignored
+  istioapi.gateway-virtualservice.route:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.152.225:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.152.225:80 (using http): response[0]: expected response code
+      `200`, got "404". Response: RawContent: [0] Url=http://10.96.152.225:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  istioapi.gateway.https-redirect:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.159.5:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.159.5:80 (using
+      http): response[0]: expected response code `301`, got "404". Response: RawContent:
+      [0] Url=http://10.96.159.5:80 [0] SourceIP=10.244.0.133 [0] Latency=361.6...'
+    status: fail
+  istioapi.gateway.same-port-tls-conflict:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.108:8443'': call failed from client
+      (cluster=cluster-0) to https://10.244.0.108:8443 (using https): expected no
+      error, but encountered rpc error: code = Unknown desc = 1/1 requests had errors;
+      first error: Get "https://10.244.0.108:8443": d...'
+    status: ignored
+  istioapi.gateway.server-bind:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.244.0.109:8081'': call failed from client (cluster=cluster-0)
+      to http://10.244.0.109:8081 (using http): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.244.0.109:8081":
+      dial ...'
+    status: ignored
+  istioapi.gateway.server-merge:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.105:8443'': call failed from client
+      (cluster=cluster-0) to https://10.244.0.105:8443 (using https): expected no
+      error, but encountered rpc error: code = Unknown desc = 1/1 requests had errors;
+      first error: Get "https://10.244.0.105:8443": d...'
+    status: ignored
+  istioapi.gateway.server-name:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.182:8443'': call failed from client
+      (cluster=cluster-0) to https://10.244.0.182:8443 (using https): expected no
+      error, but encountered rpc error: code = Unknown desc = 3/3 requests had errors;
+      first error: Get "https://10.244.0.182:8443": d...'
+    status: ignored
+  istioapi.gateway.strict-merging:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.244.0.111:8081'': call failed from client (cluster=cluster-0)
+      to http://10.244.0.111:8081 (using http): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.244.0.111:8081":
+      dial ...'
+    status: ignored
+  istioapi.gateway.tls-alpn-protocols:
+    reason: 'fails exactly as with the feature config removed: case https: failed
+      calling client (cluster=cluster-0)->''https://10.244.0.113:8443'': call failed
+      from client (cluster=cluster-0) to https://10.244.0.113:8443 (using https):
+      expected no error, but encountered rpc error: code = Unknown desc = 1/1 requests
+      had errors; first error: Get "https://10.244.0....'
+    status: ignored
+  istioapi.gateway.tls-auto-passthrough:
+    cases:
+    - mesh-client-other-host
+    - non-istio-client
+    reason: 'case mesh-client-listed-host: failed calling client-mesh (cluster=cluster-0)->''http://240.240.252.6:8443'':
+      call failed from client-mesh (cluster=cluster-0) to http://240.240.252.6:8443
+      (using http): expected no error, but encountered rpc error: code = Unknown desc
+      = 1/1 requests had errors; first er...'
+    status: partial
+  istioapi.gateway.tls-ca-cert-credential-name:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.25:8443'': call failed from client (cluster=cluster-0)
+      to https://10.244.0.25:8443 (using https): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "https://10.244.0.25:8443":
+      dial...'
+    status: ignored
+  istioapi.gateway.tls-ca-crl:
+    cases:
+    - revoked-client-cert
+    reason: 'case client-cert: failed calling client (cluster=cluster-0)->''https://10.244.0.112:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.112:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10....'
+    status: partial
+  istioapi.gateway.tls-certificates:
+    reason: 'fails exactly as with the feature config removed: case https: failed
+      calling client (cluster=cluster-0)->''https://10.244.0.115:8443'': call failed
+      from client (cluster=cluster-0) to https://10.244.0.115:8443 (using https):
+      expected no error, but encountered rpc error: code = Unknown desc = 1/1 requests
+      had errors; first error: Get "https://10.244.0....'
+    status: ignored
+  istioapi.gateway.tls-cipher-suites:
+    cases:
+    - other-cipher
+    reason: 'case https: failed calling client (cluster=cluster-0)->''https://10.244.0.121:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.121:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.244.0....'
+    status: partial
+  istioapi.gateway.tls-credential-names:
+    reason: 'fails exactly as with the feature config removed: case https: failed
+      calling client (cluster=cluster-0)->''https://10.244.0.117:8443'': call failed
+      from client (cluster=cluster-0) to https://10.244.0.117:8443 (using https):
+      expected no error, but encountered rpc error: code = Unknown desc = 1/1 requests
+      had errors; first error: Get "https://10.244.0....'
+    status: ignored
+  istioapi.gateway.tls-credential-rotation:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.27:8443'': call failed from client (cluster=cluster-0)
+      to https://10.244.0.27:8443 (using https): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "https://10.244.0.27:8443":
+      dial...'
+    status: ignored
+  istioapi.gateway.tls-ecdh-curves:
+    cases:
+    - other-curve
+    reason: 'case listed-curve: failed calling client (cluster=cluster-0)->''https://10.244.0.115:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.115:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10...'
+    status: partial
+  istioapi.gateway.tls-file-certificates:
+    cases:
+    - no-client-cert
+    - untrusted-client-cert
+    reason: 'case client-cert: failed calling client (cluster=cluster-0)->''https://10.244.0.119:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.119:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10....'
+    status: partial
+  istioapi.gateway.tls-insecure-skip-verify:
+    cases:
+    - no-client-cert
+    reason: 'case client-cert: failed calling client (cluster=cluster-0)->''https://10.244.0.116:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.116:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10....'
+    status: partial
+  istioapi.gateway.tls-istio-mutual:
+    cases:
+    - no-client-cert
+    - untrusted-client-cert
+    reason: 'case mesh-client: failed calling client-mesh (cluster=cluster-0)->''http://240.240.153.120:8443'':
+      call failed from client-mesh (cluster=cluster-0) to http://240.240.153.120:8443
+      (using http): expected no error, but encountered rpc error: code = Unknown desc
+      = 1/1 requests had errors; first error: Get...'
+    status: partial
+  istioapi.gateway.tls-mutual:
+    cases:
+    - no-client-cert
+    - untrusted-client-cert
+    reason: 'case client-cert: failed calling client (cluster=cluster-0)->''https://10.244.0.114:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.114:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10....'
+    status: partial
+  istioapi.gateway.tls-optional-mutual:
+    cases:
+    - untrusted-client-cert
+    reason: 'case no-client-cert: failed calling client (cluster=cluster-0)->''https://10.244.0.113:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.113:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://...'
+    status: partial
+  istioapi.gateway.tls-protocol-version:
+    cases:
+    - tls13-only
+    reason: 'case tls12: failed calling client (cluster=cluster-0)->''https://10.244.0.112:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.112:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.244.0....'
+    status: partial
+  istioapi.gateway.tls-protocol-version-auto:
+    reason: 'fails exactly as with the feature config removed: case https: failed
+      calling client (cluster=cluster-0)->''https://10.244.0.122:8443'': call failed
+      from client (cluster=cluster-0) to https://10.244.0.122:8443 (using https):
+      expected no error, but encountered rpc error: code = Unknown desc = 1/1 requests
+      had errors; first error: Get "https://10.244.0....'
+    status: ignored
+  istioapi.gateway.tls-protocol-version-tls10:
+    cases:
+    - tls12-client
+    - other-version
+    - tls12
+    reason: 'case legacy-client: failed calling client (cluster=cluster-0)->''https://10.244.0.120:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.120:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://1...'
+    status: partial
+  istioapi.gateway.tls-protocol-version-tls11:
+    cases:
+    - tls12-client
+    - other-version
+    - tls12
+    reason: 'case legacy-client: failed calling client (cluster=cluster-0)->''https://10.244.0.114:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.114:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://1...'
+    status: partial
+  istioapi.gateway.tls-protocol-version-tls13:
+    cases:
+    - tls12
+    reason: 'case https: failed calling client (cluster=cluster-0)->''https://10.244.0.118:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.118:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.244.0....'
+    status: partial
+  istioapi.gateway.tls-simple:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.110:8443'': call failed from client
+      (cluster=cluster-0) to https://10.244.0.110:8443 (using https): expected no
+      error, but encountered rpc error: code = Unknown desc = 1/1 requests had errors;
+      first error: Get "https://10.244.0.110:8443": d...'
+    status: ignored
+  istioapi.gateway.tls-sni-servers:
+    reason: 'fails exactly as with the feature config removed: case exact-hosts: failed
+      calling client (cluster=cluster-0)->''https://10.244.0.26:8443'': call failed
+      from client (cluster=cluster-0) to https://10.244.0.26:8443 (using https): expected
+      no error, but encountered rpc error: code = Unknown desc = 1/1 requests had
+      errors; first error: Get "https://10.24...'
+    status: ignored
+  istioapi.gateway.tls-subject-alt-names:
+    cases:
+    - other-san
+    reason: 'case listed-san: failed calling client (cluster=cluster-0)->''https://10.244.0.87:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.87:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.244...'
+    status: partial
+  istioapi.gateway.tls-verify-certificate-hash:
+    cases:
+    - other-cert
+    reason: 'case pinned-cert: failed calling client (cluster=cluster-0)->''https://10.244.0.74:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.74:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.24...'
+    status: partial
+  istioapi.gateway.tls-verify-certificate-spki:
+    cases:
+    - other-key
+    reason: 'case pinned-key: failed calling client (cluster=cluster-0)->''https://10.244.0.111:8443'':
+      call failed from client (cluster=cluster-0) to https://10.244.0.111:8443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.2...'
+    status: partial
+  istioapi.virtualservice.claim-routing:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.188.108:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.188.108:80 (using http): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.188.108:80":
+      dial tcp...'
+    status: ignored
+  istioapi.virtualservice.cors:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.25.179:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.25.179:80 (using http): no responses received'
+    status: ignored
+  istioapi.virtualservice.cors-full:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.54.11:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.54.11:80 (using http): no responses received'
+    status: ignored
+  istioapi.virtualservice.cors-unmatched-preflights:
+    reason: 'fails exactly as with the feature config removed: case forward: failed
+      calling client (cluster=cluster-0)->''http://10.96.128.97:80/forward'': call
+      failed from client (cluster=cluster-0) to http://10.96.128.97:80/forward (using
+      http): expected no error, but encountered rpc error: code = Unknown desc = 1/1
+      requests had errors; first error: Options "ht...'
+    status: ignored
+  istioapi.virtualservice.delegate:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.134.212:80/delegated/x'': call failed from
+      client (cluster=cluster-0) to http://10.96.134.212:80/delegated/x (using http):
+      expected no error, but encountered rpc error: code = Unknown desc = 1/1 requests
+      had errors; first error: Get "http:/dele...'
+    status: ignored
+  istioapi.virtualservice.direct-response:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.116.155:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.116.155:80 (using http): no responses received'
+    status: ignored
+  istioapi.virtualservice.direct-response-bytes:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.29.243:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.29.243:80 (using http): no responses received'
+    status: ignored
+  istioapi.virtualservice.export-to:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.150.70:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.150.70:80 (using http): response[0]: expected response code
+      `200`, got "404". Response: RawContent: [0] Url=http://10.96.150.70:80 [0] SourceIP=10.244.0.133
+      [0] Latency=39...'
+    status: ignored
+  istioapi.virtualservice.fault-abort:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.122.101:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.122.101:80 (using http): response[0]: expected response code
+      `418`, got "404". Response: RawContent: [0] Url=http://10.96.122.101:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  istioapi.virtualservice.fault-delay:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.239.196:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.239.196:80 (using http): response[0]: expected response code
+      `200`, got "404". Response: RawContent: [0] Url=http://10.96.239.196:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  istioapi.virtualservice.fault-delay-percentage:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.237.196:80/zero'': call failed from client
+      (cluster=cluster-0) to http://10.96.237.196:80/zero (using http): response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.237.196:80/zero
+      [0] SourceIP=10.244.0....'
+    status: ignored
+  istioapi.virtualservice.fault-grpc-status:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.6.234:80/ok'': call failed from client (cluster=cluster-0)
+      to http://10.96.6.234:80/ok (using http): response[0]: expected response from
+      backend=true, got hostname "" (code 200)'
+    status: ignored
+  istioapi.virtualservice.fault-percentages:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.33.39:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.33.39:80 (using http): "status 418" got 0.0% of 598 samples,
+      expected 50% +/- 10.0'
+    status: ignored
+  istioapi.virtualservice.first-match-wins:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.230.199:80/specific'': call failed from
+      client (cluster=cluster-0) to http://10.96.230.199:80/specific (using http):
+      response[0]: expected response code `200`, got "404". Response: RawContent:
+      [0] Url=http://10.96.230.199:80/specific [0] Source...'
+    status: ignored
+  istioapi.virtualservice.header-and-rewrite:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.209.71:80/old/x'': call failed from client
+      (cluster=cluster-0) to http://10.96.209.71:80/old/x (using http): response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.209.71:80/old/x
+      [0] SourceIP=10.244.0....'
+    status: ignored
+  istioapi.virtualservice.headers-full:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.124.240:80/?headers=x-rule-resp-remove:x,x-route-resp-remove:x,x-rule-resp-set:orig,x-route-resp-set:orig'':
+      call failed from client (cluster=cluster-0) to http://10.96.124.240:80/?headers=x-rule-resp-remove:x,x-route-resp-remove:x,x-rule-resp-...'
+    status: ignored
+  istioapi.virtualservice.host-specificity:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.179.234:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.179.234:80 (using http): response[0]: expected response code
+      `200`, got "404". Response: RawContent: [0] Url=http://10.96.179.234:80 [0]
+      SourceIP=10.244.0.164 [0] Latency...'
+    status: ignored
+  istioapi.virtualservice.match-authority:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.180.110:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.180.110:80 (using http): response[0]: expected response code
+      `200`, got "404". Response: RawContent: [0] Url=http://10.96.180.110:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  istioapi.virtualservice.match-more:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.179.196:80/case/x'': call failed from client
+      (cluster=cluster-0) to http://10.96.179.196:80/case/x (using http): response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.179.196:80/case/x
+      [0] SourceIP=10....'
+    status: ignored
+  istioapi.virtualservice.match-source:
+    reason: 'fails exactly as with the feature config removed: case source-labels:
+      failed calling client (cluster=cluster-0)->''http://10.96.56.226:80/labels'':
+      call failed from client (cluster=cluster-0) to http://10.96.56.226:80/labels
+      (using http): response[0]: expected response code `200`, got "404". Response:
+      RawContent: [0] Url=http://10.96.56.226:80/labels...'
+    status: ignored
+  istioapi.virtualservice.match-string-variants:
+    reason: 'fails exactly as with the feature config removed: case method: failed
+      calling client (cluster=cluster-0)->''http://10.96.245.149:80/method'': call
+      failed from client (cluster=cluster-0) to http://10.96.245.149:80/method (using
+      http): response[0]: expected response code `200`, got "404". Response: RawContent:
+      [0] Url=http://10.96.245.149:80/method [0]...'
+    status: ignored
+  istioapi.virtualservice.match-variants:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.22.66:80/re42'': call failed from client
+      (cluster=cluster-0) to http://10.96.22.66:80/re42 (using http): response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.22.66:80/re42
+      [0] Header=X-Required:1 [0] ...'
+    status: ignored
+  istioapi.virtualservice.mirror:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.138.221:80/vs-mirror-6l4jf4wqhcmv'': call
+      failed from client (cluster=cluster-0) to http://10.96.138.221:80/vs-mirror-6l4jf4wqhcmv
+      (using http): 5 errors occurred: * response[0]: expected response code `200`,
+      got "404". Response: RawContent: [0...'
+    status: ignored
+  istioapi.virtualservice.mirror-subset:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.156.1:80/vs-mirror-subset-krqnjfcs5vpm'':
+      call failed from client (cluster=cluster-0) to http://10.96.156.1:80/vs-mirror-subset-krqnjfcs5vpm
+      (using http): 5 errors occurred: * response[0]: expected response code `200`,
+      got "404". Response: RawC...'
+    status: ignored
+  istioapi.virtualservice.mirrors:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.106.65:80/vs-mirrors-jfzjz7887mlq'': call
+      failed from client (cluster=cluster-0) to http://10.96.106.65:80/vs-mirrors-jfzjz7887mlq
+      (using http): 5 errors occurred: * response[0]: expected response code `200`,
+      got "404". Response: RawContent: [0...'
+    status: ignored
+  istioapi.virtualservice.multiple-for-host:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.112.191:80/a'': call failed from client
+      (cluster=cluster-0) to http://10.96.112.191:80/a (using http): response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.112.191:80/a
+      [0] SourceIP=10.244.0.133 [0] L...'
+    status: ignored
+  istioapi.virtualservice.per-try-timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.217.1:80/?delay=2s'': call failed from client
+      (cluster=cluster-0) to http://10.96.217.1:80/?delay=2s (using http): response[0]:
+      expected response code `504`, got "404". Response: RawContent: [0] Url=http://10.96.217.1:80/?delay=2s
+      [0] SourceIP=...'
+    status: ignored
+  istioapi.virtualservice.redirect:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.22.234:80/old'': call failed from client
+      (cluster=cluster-0) to http://10.96.22.234:80/old (using http): response[0]:
+      expected response code `308`, got "404". Response: RawContent: [0] Url=http://10.96.22.234:80/old
+      [0] SourceIP=10.244.0.133 [0...'
+    status: ignored
+  istioapi.virtualservice.redirect-more:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.124.199:80/port'': call failed from client
+      (cluster=cluster-0) to http://10.96.124.199:80/port (using http): response[0]:
+      expected response header "Location" to contain "https://vs.a-ervice-redirect-more-bfd83c.example.com:8443/port",
+      got ""'
+    status: ignored
+  istioapi.virtualservice.retries:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.42.166:80/?codes=503:1,200:3'': call failed
+      from client (cluster=cluster-0) to http://10.96.42.166:80/?codes=503:1,200:3
+      (using http): 50 of 50 requests failed, expected at most 2'
+    status: ignored
+  istioapi.virtualservice.retries-backoff:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.54.30:80/backoff?codes=500'': call failed
+      from client (cluster=cluster-0) to http://10.96.54.30:80/backoff?codes=500 (using
+      http): response[0]: expected response code `500`, got "404". Response: RawContent:
+      [0] Url=http://10.96.54.30:80/backoff...'
+    status: ignored
+  istioapi.virtualservice.retries-previous-hosts:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.207.148:80/ignore'': call failed from client
+      (cluster=cluster-0) to http://10.96.207.148:80/ignore (using http): 60 of 60
+      requests failed, expected at most 5'
+    status: ignored
+  istioapi.virtualservice.rewrite-more:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.18.22:80/re/x'': call failed from client
+      (cluster=cluster-0) to http://10.96.18.22:80/re/x (using http): response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.18.22:80/re/x
+      [0] SourceIP=10.244.0.133 [0...'
+    status: ignored
+  istioapi.virtualservice.subsets:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.107.251:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.107.251:80 (using http): response[0]: expected response code
+      `200`, got "404". Response: RawContent: [0] Url=http://10.96.107.251:80 [0]
+      Header=X-Subset:v2 [0] SourceIP=1...'
+    status: ignored
+  istioapi.virtualservice.tcp:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''tcp://10.244.0.162:9999'': call failed from client (cluster=cluster-0)
+      to tcp://10.244.0.162:9999 (using tcp): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: dial tcp
+      10.244.0.162:9999: connect: con...'
+    status: ignored
+  istioapi.virtualservice.tcp-match-weight:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''tcp://10.244.0.132:9999'': call failed from client (cluster=cluster-0)
+      to tcp://10.244.0.132:9999 (using tcp): expected no error, but encountered rpc
+      error: code = Unknown desc = 598/598 requests had errors; first error: dial
+      tcp 10.244.0.132:9999: connect:...'
+    status: ignored
+  istioapi.virtualservice.tcp-subset-gateways:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''tcp://10.244.0.199:9999'': call failed from client (cluster=cluster-0)
+      to tcp://10.244.0.199:9999 (using tcp): expected no error, but encountered rpc
+      error: code = Unknown desc = 10/10 requests had errors; first error: dial tcp
+      10.244.0.199:9999: connect: c...'
+    status: ignored
+  istioapi.virtualservice.timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.206.51:80/?delay=3s'': call failed from
+      client (cluster=cluster-0) to http://10.96.206.51:80/?delay=3s (using http):
+      response[0]: expected response code `504`, got "404". Response: RawContent:
+      [0] Url=http://10.96.206.51:80/?delay=3s [0] Source...'
+    status: ignored
+  istioapi.virtualservice.tls-sni-passthrough:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.129:9443'': call failed from client
+      (cluster=cluster-0) to https://10.244.0.129:9443 (using https): expected no
+      error, but encountered rpc error: code = Unknown desc = 1/1 requests had errors;
+      first error: Get "https://10.244.0.129:9443": d...'
+    status: ignored
+  istioapi.virtualservice.tls-subset-weight-gateways:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.244.0.202:9443'': call failed from client
+      (cluster=cluster-0) to https://10.244.0.202:9443 (using https): expected no
+      error, but encountered rpc error: code = Unknown desc = 10/10 requests had errors;
+      first error: Get "https://10.244.0.202:9443":...'
+    status: ignored
+  istioapi.virtualservice.weights:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.111.34:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.111.34:80 (using http): 383 errors occurred: * response[0]:
+      expected response code `200`, got "404". Response: RawContent: [0] Url=http://10.96.111.34:80
+      [0] SourceIP=10.2...'
+    status: ignored
+  listener.tls-option.auto-passthrough:
+    cases:
+    - mesh-client-other-host
+    - non-istio-client
+    reason: 'agentgateway''s translator does not implement gateway.istio.io/listener-protocol=auto-passthrough:
+      the listener is plain Passthrough (pilot/pkg/config/kube/agentgateway/gateway_collection.go
+      TLSPassthrough), which forwards only by TLSRoute, so Istio mTLS to the listed
+      host gets no response; only the refused cases hold'
+    status: partial
+  listener.tls-option.cipher-suites:
+    cases:
+    - listed-cipher
+    reason: agentgateway's translator does not read gateway.istio.io/tls-cipher-suites
+      (pilot/pkg/config/kube/agentgateway/listener.go buildTLS), so ciphers outside
+      the list are still negotiated
+    status: partial
+  listener.tls-option.terminate-mode-istio-mutual:
+    reason: 'agentgateway''s translator ignores gateway.istio.io/tls-terminate-mode
+      and requires exactly one certificateRef for Terminate (pilot/pkg/config/kube/agentgateway/listener.go
+      buildTLS), so the listener without one is invalid: Accepted=False (ListenersNotValid)'
+    status: rejected
+  listener.tls-option.terminate-mode-istio-simple:
+    reason: 'agentgateway''s translator ignores gateway.istio.io/tls-terminate-mode
+      and requires exactly one certificateRef for Terminate (pilot/pkg/config/kube/agentgateway/listener.go
+      buildTLS), so the listener without one is invalid: Accepted=False (ListenersNotValid)'
+    status: rejected
+  listener.tls-option.terminate-mode-mutual:
+    reason: 'failed calling client (cluster=cluster-0)->''https://10.96.95.118:443'':
+      call failed from client (cluster=cluster-0) to https://10.96.95.118:443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.96.95.118:443": dial...'
+    status: fail
+  listener.tls-option.terminate-mode-optional-mutual:
+    reason: 'failed calling client (cluster=cluster-0)->''https://10.96.232.85:443'':
+      call failed from client (cluster=cluster-0) to https://10.96.232.85:443 (using
+      https): expected no error, but encountered rpc error: code = Unknown desc =
+      1/1 requests had errors; first error: Get "https://10.96.232.85:443": dial...'
+    status: fail
+  listener.tls.terminate-tcproute:
+    status: supported
+  meshconfig.access-log-encoding-json:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 119 attempts (last error: access log line is not
+      JSON (invalid character ''-'' after top-level value): 2026-11-12T15:13:16.490717Z
+      info request gateway=pcs-1-58659/a-ss-log-encoding-json-6b88ae listener=http
+      route=pcs-1-58659/a-ss-log-encoding-json...'
+    status: ignored
+  meshconfig.access-log-format:
+    reason: 'fails exactly as with the feature config removed: retry.UntilSuccessOrFail:
+      timeout while waiting after 119 attempts (last error: access log line does not
+      use the configured format (want "pcs-format path=/pcs-log-xbnjjm8whg code=200"):
+      2026-11-12T15:19:36.313061Z info request gateway=pcs-1-58659/a-ig-access-log-format-a11c8f
+      listener=http route=pcs...'
+    status: ignored
+  meshconfig.ca-certificates:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.240.28:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.240.28:80 (using http): response[0]: expected response code
+      `200`, got "503". Response: RawContent: [0] Url=http://10.96.240.28:80 [0] SourceIP=10.244.0.243
+      [0] Latency=1....'
+    status: ignored
+  meshconfig.connect-timeout:
+    reason: 'pilot/pkg/config/kube/agentgateway never reads MeshConfig.connectTimeout:
+      the agentgateway translation does not consume it'
+    status: ignored
+  meshconfig.default-destination-rule-export-to:
+    reason: pilot/pkg/config/kube/agentgateway/destination.go translates a Hostname
+      backendRef to a service reference in the route namespace, so a ServiceEntry
+      in another namespace is never found (500) whatever its exportTo or visibility;
+      DestinationRules are not translated either
+    status: ignored
+  meshconfig.default-http-retry-policy:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.213.228:80/?codes=500:1,200:1'': call failed
+      from client (cluster=cluster-0) to http://10.96.213.228:80/?codes=500:1,200:1
+      (using http): 21 of 50 requests failed, expected at most 3'
+    status: ignored
+  meshconfig.default-http-retry-policy-per-try-timeout:
+    reason: 'pilot/pkg/config/kube/agentgateway never reads MeshConfig.defaultHttpRetryPolicy:
+      the agentgateway translation does not consume it'
+    status: ignored
+  meshconfig.default-service-export-to:
+    reason: pilot/pkg/config/kube/agentgateway/destination.go translates a Hostname
+      backendRef to a service reference in the route namespace, so a ServiceEntry
+      in another namespace is never found (500) whatever its exportTo or visibility
+    status: ignored
+  meshconfig.default-virtual-service-export-to:
+    reason: 'agentgateway is programmed from Gateway API routes only: VirtualServices
+      bound to an Istio Gateway are not translated (pilot/pkg/config/kube/agentgateway/agentgateway_controller.go
+      List/Get are not implemented)'
+    status: ignored
+  meshconfig.discovery-selectors:
+    reason: pilot/pkg/config/kube/agentgateway/destination.go translates a Hostname
+      backendRef to a service reference in the route namespace, so a ServiceEntry
+      in another namespace is never found (500) whatever its exportTo or visibility
+    status: ignored
+  meshconfig.enable-auto-mtls-disabled:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.161.7:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.161.7:80 (using http): response[0]: expected request header
+      "X-Forwarded-Client-Cert" to be absent, got [By=spiffe://cluster.local/ns/pcs-1-58659/sa/default;URI=spiffe://cl...'
+    status: ignored
+  meshconfig.h2-upgrade-policy:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.252.75:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.252.75:80 (using http): response[0]: expected protocol HTTP/2.0,
+      received HTTP/1.1'
+    status: ignored
+  meshconfig.path-normalization-base:
+    reason: 'the backend sees /x/../a unnormalized; pilot/pkg/config/kube/agentgateway
+      never reads MeshConfig.pathNormalization: the agentgateway translation does
+      not consume it'
+    status: fail
+  meshconfig.path-normalization-decode-and-merge-slashes:
+    reason: 'pilot/pkg/config/kube/agentgateway never reads MeshConfig.pathNormalization:
+      the agentgateway translation does not consume it'
+    status: ignored
+  meshconfig.path-normalization-default:
+    reason: 'the backend sees /x/../a unnormalized; pilot/pkg/config/kube/agentgateway
+      never reads MeshConfig.pathNormalization: the agentgateway translation does
+      not consume it'
+    status: fail
+  meshconfig.path-normalization-merge-slashes:
+    reason: 'pilot/pkg/config/kube/agentgateway never reads MeshConfig.pathNormalization:
+      the agentgateway translation does not consume it'
+    status: ignored
+  meshconfig.path-normalization-none:
+    status: supported
+  meshconfig.root-namespace:
+    reason: DestinationRules are not translated by pilot/pkg/config/kube/agentgateway,
+      nor is MeshConfig.rootNamespace read
+    status: ignored
+  meshconfig.service-entry-visibility-namespace:
+    reason: pilot/pkg/config/kube/agentgateway/destination.go translates a Hostname
+      backendRef to a service reference in the route namespace, so a ServiceEntry
+      in another namespace is never found (500) whatever its exportTo or visibility
+    status: ignored
+  meshconfig.service-entry-visibility-namespace-policy:
+    reason: pilot/pkg/config/kube/agentgateway/destination.go translates a Hostname
+      backendRef to a service reference in the route namespace, so a ServiceEntry
+      in another namespace is never found (500) whatever its exportTo or visibility
+    status: ignored
+  meshconfig.service-entry-visibility-none-policy:
+    reason: pilot/pkg/config/kube/agentgateway/destination.go translates a Hostname
+      backendRef to a service reference in the route namespace, so a ServiceEntry
+      in another namespace is never found (500) whatever its exportTo or visibility
+    status: ignored
+  meshconfig.service-entry-visibility-public-policy:
+    reason: pilot/pkg/config/kube/agentgateway/destination.go translates a Hostname
+      backendRef to a service reference in the route namespace, so a ServiceEntry
+      in another namespace is never found (500) whatever its exportTo or visibility
+    status: ignored
+  meshconfig.trust-domain:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.96.11.241:443/'': call failed from client
+      (cluster=cluster-0) to https://10.96.11.241:443/ (using https): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=https://10.96.11.241:443/
+      [0] SourceIP=10.244.0.243 [0] ...'
+    status: ignored
+  meshconfig.trust-domain-aliases:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.96.253.78:443/'': call failed from client
+      (cluster=cluster-0) to https://10.96.253.78:443/ (using https): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=https://10.96.253.78:443/
+      [0] SourceIP=10.244.0.238 [0] ...'
+    status: ignored
+  protocol.http1-upstream-default:
+    status: supported
+  protocol.http2-downstream:
+    status: supported
+  protocol.http2-upstream-appprotocol:
+    status: supported
+  protocol.websocket:
+    status: supported
+  proxyconfig.connection.drain-timeout:
+    reason: pilot/pkg/config/kube/agentgateway does not translate ProxyConfig connectionSettings
+      (proxy.istio.io/config)
+    status: ignored
+  proxyconfig.connection.escaped-slashes:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.144.228:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.144.228:80 (using http): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.144.228:80":
+      dial tcp...'
+    status: ignored
+  proxyconfig.connection.global-downstream-limit:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.80.84:80/?delay=2s'': call failed from client
+      (cluster=cluster-0) to http://10.96.80.84:80/?delay=2s (using http): expected
+      at least one response with status 503, got map[200:20] (err: <nil>)'
+    status: ignored
+  proxyconfig.connection.headers-with-underscores:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.247.127:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.247.127:80 (using http): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.247.127:80":
+      dial tcp...'
+    status: ignored
+  proxyconfig.connection.idle-timeout:
+    reason: pilot/pkg/config/kube/agentgateway does not translate ProxyConfig connectionSettings
+      (proxy.istio.io/config)
+    status: ignored
+  proxyconfig.connection.listener-limit:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.58.237:80/?delay=2s'': call failed from
+      client (cluster=cluster-0) to http://10.96.58.237:80/?delay=2s (using http):
+      expected at least one response with status 503, got map[200:20] (err: <nil>)'
+    status: ignored
+  proxyconfig.connection.max-connection-duration:
+    reason: pilot/pkg/config/kube/agentgateway does not translate ProxyConfig connectionSettings
+      (proxy.istio.io/config)
+    status: fail
+  proxyconfig.connection.max-stream-duration:
+    reason: pilot/pkg/config/kube/agentgateway does not translate ProxyConfig connectionSettings
+      (proxy.istio.io/config)
+    status: ignored
+  proxyconfig.connection.merge-slashes:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.74.53:80/a//b'': call failed from client
+      (cluster=cluster-0) to http://10.96.74.53:80/a//b (using http): expected no
+      error, but encountered rpc error: code = Unknown desc = 1/1 requests had errors;
+      first error: Get "http:/a//b": dial tcp 10.96....'
+    status: ignored
+  proxyconfig.connection.profile:
+    reason: pilot/pkg/config/kube/agentgateway does not translate ProxyConfig connectionSettings
+      (proxy.istio.io/config)
+    status: ignored
+  proxyconfig.connection.request-headers-timeout:
+    reason: pilot/pkg/config/kube/agentgateway does not translate ProxyConfig connectionSettings
+      (proxy.istio.io/config)
+    status: ignored
+  proxyconfig.connection.stream-idle-timeout:
+    reason: pilot/pkg/config/kube/agentgateway does not translate ProxyConfig connectionSettings
+      (proxy.istio.io/config)
+    status: ignored
+  proxyconfig.proxyheaders.attempt-count-disabled:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.148.166:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.148.166:80 (using http): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.148.166:80":
+      dial tcp...'
+    status: ignored
+  proxyconfig.proxyheaders.debug-headers-disabled:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.171.38:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.171.38:80 (using http): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.171.38:80":
+      dial tcp 10...'
+    status: ignored
+  proxyconfig.proxyheaders.metadata-exchange-in-mesh:
+    status: supported
+  proxyconfig.proxyheaders.request-id-disabled:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.157.240:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.157.240:80 (using http): expected no error, but encountered
+      rpc error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.157.240:80":
+      dial tcp...'
+    status: ignored
+  proxyconfig.proxyheaders.server-disabled:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.243.51:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.243.51:80 (using http): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.243.51:80":
+      dial tcp 10...'
+    status: ignored
+  proxyconfig.proxyheaders.server-value:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.29.78:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.29.78:80 (using http): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.29.78:80":
+      dial tcp 10.96...'
+    status: ignored
+  proxyconfig.proxyheaders.x-forwarded-port-host:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.139.76:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.139.76:80 (using http): no responses received'
+    status: ignored
+  security.authz.allow-nothing:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.60.216:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.60.216:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.60.216:80 [0] SourceIP=10.244.0.13
+      [0] Latency=1.3...'
+    status: ignored
+  security.authz.allow.header:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.211.24:80/private'': call failed from client
+      (cluster=cluster-0) to http://10.96.211.24:80/private (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.211.24:80/private
+      [0] SourceIP=10....'
+    status: ignored
+  security.authz.audit:
+    status: supported
+  security.authz.custom-before-allow:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.25.214:80/custom'': call failed from client
+      (cluster=cluster-0) to http://10.96.25.214:80/custom (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.25.214:80/custom
+      [0] SourceIP=10.244...'
+    status: ignored
+  security.authz.custom-ext-authz:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.162.234:80/custom'': call failed from client
+      (cluster=cluster-0) to http://10.96.162.234:80/custom (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.162.234:80/custom
+      [0] SourceIP=10....'
+    status: ignored
+  security.authz.custom-ext-authz-grpc:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.194.173:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.194.173:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.194.173:80 [0]
+      SourceIP=10.244.0.13 [0] Latency=...'
+    status: ignored
+  security.authz.custom-ext-authz-headers:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.9.128:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.9.128:80 (using http): response[0]: expected request header
+      "X-Ext-Authz-Check-Result" to be present'
+    status: ignored
+  security.authz.deny-overrides-allow:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.130.197:80/admin'': call failed from client
+      (cluster=cluster-0) to http://10.96.130.197:80/admin (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.130.197:80/admin
+      [0] SourceIP=10.244...'
+    status: ignored
+  security.authz.deny.host:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.238.109:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.238.109:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.238.109:80 [0]
+      SourceIP=10.244.0.13 [0] Latency=...'
+    status: ignored
+  security.authz.deny.method-header:
+    reason: 'fails exactly as with the feature config removed: case methods: failed
+      calling client (cluster=cluster-0)->''http://10.96.174.43:80'': call failed
+      from client (cluster=cluster-0) to http://10.96.174.43:80 (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.174.43:80
+      [0] SourceIP=10.244.0.13 [...'
+    status: ignored
+  security.authz.deny.path:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.64.184:80/deny/x'': call failed from client
+      (cluster=cluster-0) to http://10.96.64.184:80/deny/x (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.64.184:80/deny/x
+      [0] SourceIP=10.244...'
+    status: ignored
+  security.authz.dry-run:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.114.220:80/enforced'': call failed from
+      client (cluster=cluster-0) to http://10.96.114.220:80/enforced (using http):
+      response[0]: expected response code `403`, got "200". Response: RawContent:
+      [0] Url=http://10.96.114.220:80/enforced [0] Source...'
+    status: ignored
+  security.authz.ip-blocks-l4:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.244.0.132:80'': call failed from client (cluster=cluster-0)
+      to http://10.244.0.132:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.244.0.132:80 [0] SourceIP=10.244.0.13
+      [0] Latency=1.3...'
+    status: ignored
+  security.authz.namespace-wide:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.248.167:80/pcs-ns-deny-a-authz-namespace-wide-635655'':
+      call failed from client (cluster=cluster-0) to http://10.96.248.167:80/pcs-ns-deny-a-authz-namespace-wide-635655
+      (using http): response[0]: expected response code `403`, got "200". Respons...'
+    status: ignored
+  security.authz.not-hosts-not-values:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.252.213:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.252.213:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.252.213:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  security.authz.not-ip-blocks:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.244.0.79:80/remote'': call failed from client
+      (cluster=cluster-0) to http://10.244.0.79:80/remote (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.244.0.79:80/remote
+      [0] SourceIP=10.244.0....'
+    status: ignored
+  security.authz.not-request-principals:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.57.166:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.57.166:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.57.166:80 [0] SourceIP=10.244.0.133
+      [0] Latency=1....'
+    status: ignored
+  security.authz.not-values:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.186.112:80/other'': call failed from client
+      (cluster=cluster-0) to http://10.96.186.112:80/other (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.186.112:80/other
+      [0] SourceIP=10.244...'
+    status: ignored
+  security.authz.remote-ip:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.244.0.88:80/deny'': call failed from client
+      (cluster=cluster-0) to http://10.244.0.88:80/deny (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.244.0.88:80/deny
+      [0] SourceIP=10.244.0.13 [0]...'
+    status: ignored
+  security.authz.root-namespace:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.138.119:80/pcs-mesh-deny-a-authz-root-namespace-c018f8'':
+      call failed from client (cluster=cluster-0) to http://10.96.138.119:80/pcs-mesh-deny-a-authz-root-namespace-c018f8
+      (using http): response[0]: expected response code `403`, got "200". Res...'
+    status: ignored
+  security.authz.scope-union:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.113.44:80/other'': call failed from client
+      (cluster=cluster-0) to http://10.96.113.44:80/other (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.113.44:80/other
+      [0] SourceIP=10.244.0....'
+    status: ignored
+  security.authz.selector:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.176.183:80/deny'': call failed from client
+      (cluster=cluster-0) to http://10.96.176.183:80/deny (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.176.183:80/deny
+      [0] SourceIP=10.244.0....'
+    status: ignored
+  security.authz.source-identity-plaintext:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.136.239:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.136.239:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.136.239:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  security.authz.source-trust-domains:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''https://10.96.37.150:443/td'': call failed from client
+      (cluster=cluster-0) to https://10.96.37.150:443/td (using https): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=https://10.96.37.150:443/td
+      [0] SourceIP=10.244.0.95...'
+    status: ignored
+  security.authz.target-ref:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.16.240:80/denied'': call failed from client
+      (cluster=cluster-0) to http://10.96.16.240:80/denied (using http): response[0]:
+      expected response code `403`, got "200". Response: RawContent: [0] Url=http://10.96.16.240:80/denied
+      [0] SourceIP=10.244...'
+    status: ignored
+  security.authz.targetref-scoped:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.146.172:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.146.172:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.146.172:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  security.jwt.audiences:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.221.198:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.221.198:80 (using http): response[0]: expected 401 or 403, got
+      200'
+    status: ignored
+  security.jwt.claims-authz:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.90.44:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.90.44:80 (using http): response[0]: expected response code `403`,
+      got "200". Response: RawContent: [0] Url=http://10.96.90.44:80 [0] Header=Authorization:Bearer
+      eyJhbGciOiJ...'
+    status: ignored
+  security.jwt.forward-original-token:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.136.207:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.136.207:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.136.207:80 [0]
+      Header=Authorization:Bearer Token...'
+    status: ignored
+  security.jwt.from-cookies:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.102.172:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.102.172:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.102.172:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  security.jwt.from-header-and-param:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.164.254:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.164.254:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.164.254:80 [0]
+      Header=Authorization:Bearer eyJhb...'
+    status: ignored
+  security.jwt.jwks-timeout:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.169.126:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.169.126:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.169.126:80 [0]
+      Header=Authorization:Bearer eyJhb...'
+    status: ignored
+  security.jwt.jwks-uri:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.242.71:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.242.71:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.242.71:80 [0] Header=Authorization:Bearer
+      TokenInv...'
+    status: ignored
+  security.jwt.multiple-issuers:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.253.183:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.253.183:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.253.183:80 [0]
+      Header=Authorization:Bearer eyJhb...'
+    status: ignored
+  security.jwt.output-claim-to-headers:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.70.36:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.70.36:80 (using http): response[0]: request header x-jwt-sub:
+      expected `sub-1`, received ``'
+    status: ignored
+  security.jwt.output-payload-to-header:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.47.153:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.47.153:80 (using http): response[0]: expected request header
+      "x-jwt-payload" to be present'
+    status: ignored
+  security.jwt.presence-optional:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.105.232:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.105.232:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.105.232:80 [0]
+      SourceIP=10.244.0.95 [0] Latency=...'
+    status: ignored
+  security.jwt.presence-required:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.218.139:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.218.139:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.218.139:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  security.jwt.require-principal:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.133.106:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.133.106:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.133.106:80 [0]
+      SourceIP=10.244.0.133 [0] Latency...'
+    status: ignored
+  security.jwt.scope-union:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.16.46:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.16.46:80 (using http): response[0]: expected response code `401`,
+      got "200". Response: RawContent: [0] Url=http://10.96.16.46:80 [0] Header=Authorization:Bearer
+      eyJhbGciOiJ...'
+    status: ignored
+  security.jwt.selector:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.19.141:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.19.141:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.19.141:80 [0] Header=Authorization:Bearer
+      TokenInv...'
+    status: ignored
+  security.jwt.space-delimited-claims:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.190.232:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.190.232:80 (using http): response[0]: expected response code
+      `403`, got "200". Response: RawContent: [0] Url=http://10.96.190.232:80 [0]
+      Header=Authorization:Bearer eyJhb...'
+    status: ignored
+  security.jwt.strip-token:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.213.47:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.213.47:80 (using http): response[0]: expected request header
+      "Authorization" to be absent, got [Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6InRUX3c5TFJOclk3d0phbEdzVFlTdDdydXRaaTg2...'
+    status: ignored
+  security.jwt.target-ref:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.46.242:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.46.242:80 (using http): response[0]: expected response code
+      `401`, got "200". Response: RawContent: [0] Url=http://10.96.46.242:80 [0] Header=Authorization:Bearer
+      TokenInv...'
+    status: ignored
+  security.jwt.validation:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.106.2:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.106.2:80 (using http): response[0]: expected response code `401`,
+      got "200". Response: RawContent: [0] Url=http://10.96.106.2:80 [0] Header=Authorization:Bearer
+      TokenInvali...'
+    status: ignored
+  security.mtls.gateway-to-restricted-sidecar:
+    status: supported
+  status.address-type-annotation:
+    status: supported
+  telemetry.accesslog.disabled:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 60 attempts (last error: witness pcs_witness="gcltfqpw" not in metrics
+      yet)'
+    status: ignored
+  telemetry.accesslog.disabled-named-provider:
+    status: unknown
+  telemetry.accesslog.filter:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 60 attempts (last error: witness pcs_witness="tc6h9rdt" not in metrics
+      yet)'
+    status: ignored
+  telemetry.accesslog.mesh-default:
+    status: supported
+  telemetry.accesslog.selector:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 60 attempts (last error: witness pcs_witness="l4ww6jp5" not in metrics
+      yet)'
+    status: ignored
+  telemetry.metrics.disabled:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 30 attempts (last
+      error: baseline: no istio_requests_total with destination_workload="backend-v1"
+      before disabling)'
+    status: fail
+  telemetry.metrics.istio-requests-total:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 330 attempts (last
+      error: no istio_requests_total series with destination_workload="backend-v1"
+      and response_code=200)'
+    status: fail
+  telemetry.metrics.tag-override:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.139.251:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.139.251:80 (using
+      http): expected no error, but encountered rpc error: code = Unknown desc = 1/1
+      requests had errors; first error: Get "http://10.96.139.251:80": dial tcp...'
+    status: fail
+  telemetry.metrics.tag-override.all-metrics-upsert:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.81.6:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.81.6:80 (using http):
+      expected no error, but encountered rpc error: code = Unknown desc = 1/1 requests
+      had errors; first error: Get "http://10.96.81.6:80": dial tcp 10.96.81...'
+    status: fail
+  telemetry.metrics.tag-override.request-duration:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 60 attempts (last
+      error: no istio_request_duration_milliseconds_count series with destination_workload="backend-v1"
+      and pcs_tag="pcs-rsplzf2z")'
+    status: fail
+  telemetry.metrics.tag-override.request-size:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 60 attempts (last
+      error: no istio_request_bytes_count series with destination_workload="backend-v1"
+      and pcs_tag="pcs-4s5mjt27")'
+    status: fail
+  telemetry.metrics.tag-override.response-size:
+    reason: 'failed calling client (cluster=cluster-0)->''http://10.96.223.107:80'':
+      call failed from client (cluster=cluster-0) to http://10.96.223.107:80 (using
+      http): expected no error, but encountered rpc error: code = Unknown desc = 1/1
+      requests had errors; first error: Get "http://10.96.223.107:80": dial tcp...'
+    status: fail
+  telemetry.metrics.tag-remove:
+    status: unknown
+  telemetry.metrics.tcp:
+    reason: 'retry.UntilSuccessOrFail: timeout while waiting after 329 attempts (last
+      error: no istio_tcp_connections_opened_total series)'
+    status: fail
+  telemetry.target-ref:
+    reason: 'fails exactly as with the feature config removed: indeterminate: Telemetry
+      propagation witness never appeared (metrics tagOverrides): timeout while waiting
+      after 60 attempts (last error: witness pcs_witness="wlbg9gtv" not in metrics
+      yet)'
+    status: ignored
+  telemetry.tracing.sampling-all:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.86.109:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.86.109:80 (using http): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.86.109:80":
+      dial tcp 10...'
+    status: ignored
+  telemetry.tracing.sampling-none:
+    reason: 'fails exactly as with the feature config removed: failed calling client
+      (cluster=cluster-0)->''http://10.96.79.191:80'': call failed from client (cluster=cluster-0)
+      to http://10.96.79.191:80 (using http): expected no error, but encountered rpc
+      error: code = Unknown desc = 1/1 requests had errors; first error: Get "http://10.96.79.191:80":
+      dial tcp 10...'
+    status: ignored
+maxUnknown: 2

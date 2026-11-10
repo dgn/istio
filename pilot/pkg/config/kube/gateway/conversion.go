@@ -42,6 +42,7 @@ import (
 	"istio.io/api/label"
 	istio "istio.io/api/networking/v1alpha3"
 	"istio.io/istio/pilot/pkg/config/kube/gatewaycommon"
+	"istio.io/istio/pilot/pkg/config/kube/gatewayext"
 	"istio.io/istio/pilot/pkg/credentials"
 	kubecreds "istio.io/istio/pilot/pkg/credentials/kube"
 	"istio.io/istio/pilot/pkg/features"
@@ -66,8 +67,8 @@ import (
 )
 
 const (
-	addressTypeOverride    = "networking.istio.io/address-type"
-	gatewayTLSCipherSuites = "gateway.istio.io/tls-cipher-suites"
+	addressTypeOverride    = gatewayext.AddressTypeAnnotation
+	gatewayTLSCipherSuites = gatewayext.TLSCipherSuitesOption
 )
 
 func sortConfigByCreationTime(configs []config.Config) {
@@ -1218,7 +1219,7 @@ func buildDestination(ctx RouteContext, to k8s.BackendRef, ns string,
 		if !krt.ResourceExists(ctx.Krt, ctx.Services, key) {
 			invalidBackendErr = &ConfigError{Reason: InvalidDestinationNotFound, Message: fmt.Sprintf("backend(%s) not found", hostname)}
 		}
-	case config.GroupVersionKind{Group: gvk.ServiceEntry.Group, Kind: "Hostname"}:
+	case config.GroupVersionKind{Group: gvk.ServiceEntry.Group, Kind: gatewayext.HostnameBackendKind}:
 		if to.Namespace != nil {
 			return nil, nil, &ConfigError{Reason: InvalidDestination, Message: "namespace may not be set with Hostname type"}
 		}
@@ -2386,17 +2387,17 @@ func buildTLS(
 		out.Mode = istio.ServerTLSSettings_SIMPLE
 		if tls.Options != nil {
 			switch tls.Options[gatewaycommon.GatewayTLSTerminateModeKey] {
-			case "MUTUAL":
+			case gatewayext.TLSModeMutual:
 				out.Mode = istio.ServerTLSSettings_MUTUAL
-			case "OPTIONAL_MUTUAL":
+			case gatewayext.TLSModeOptionalMutual:
 				out.Mode = istio.ServerTLSSettings_OPTIONAL_MUTUAL
-			case "ISTIO_SIMPLE":
+			case gatewayext.TLSModeIstioSimple:
 				// Simple TLS but with builtin workload certificate.
 				// equivalent to `credentialName: builtin://
 				out.Mode = istio.ServerTLSSettings_SIMPLE
 				out.CredentialName = creds.BuiltinGatewaySecretTypeURI
 				return out, nil
-			case "ISTIO_MUTUAL":
+			case gatewayext.TLSModeIstioMutual:
 				out.Mode = istio.ServerTLSSettings_ISTIO_MUTUAL
 				return out, nil
 			}
@@ -2481,10 +2482,10 @@ func buildTLS(
 			out.CaCertCredentialName = cred.ResourceName
 			if tls.Options != nil {
 				switch tls.Options[gatewaycommon.GatewayTLSTerminateModeKey] {
-				case "MUTUAL":
+				case gatewayext.TLSModeMutual:
 					out.Mode = istio.ServerTLSSettings_MUTUAL
 					out.InsecureSkipVerify = proto.BoolFalse
-				case "OPTIONAL_MUTUAL":
+				case gatewayext.TLSModeOptionalMutual:
 					out.Mode = istio.ServerTLSSettings_OPTIONAL_MUTUAL
 					out.InsecureSkipVerify = proto.BoolFalse
 				}

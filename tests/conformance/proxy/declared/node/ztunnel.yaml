@@ -1,0 +1,37 @@
+# Declared support of ztunnel in the node role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; issue optionally tracks the fix.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#   Its kinds (generated) list the API kinds the feature applied in the last reference run.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/conformance/proxy/ -run TestNodeConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  dataplane.permissive-mtls-default:
+    status: supported
+  mesh.authz.l4-principal:
+    kinds:
+    - AuthorizationPolicy.security.istio.io
+    status: supported
+  mesh.baseline.reachability:
+    status: supported
+  mesh.mtls.strict:
+    kinds:
+    - PeerAuthentication.security.istio.io
+    status: supported
+  mesh.peerauthentication.port-level-strict:
+    kinds:
+    - PeerAuthentication.security.istio.io
+    status: supported
+  mesh.peerauthentication.port-level-unset-inherits:
+    kinds:
+    - PeerAuthentication.security.istio.io
+    status: supported
+maxUnknown: 0
+reference: true

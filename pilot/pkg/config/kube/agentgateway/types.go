@@ -22,15 +22,16 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
+	"istio.io/istio/pilot/pkg/config/kube/gatewayext"
 	"istio.io/istio/pkg/config"
 	"istio.io/istio/pkg/config/schema/collections"
 )
 
 const (
-	gatewayTLSTerminateModeKey = "gateway.istio.io/tls-terminate-mode"
-	addressTypeOverride        = "networking.istio.io/address-type"
-	gatewayClassDefaults       = "gateway.istio.io/defaults-for-class"
-	gatewayTLSCipherSuites     = "gateway.istio.io/tls-cipher-suites"
+	gatewayTLSTerminateModeKey = gatewayext.TLSTerminateModeOption
+	addressTypeOverride        = gatewayext.AddressTypeAnnotation
+	gatewayClassDefaults       = gatewayext.ClassDefaultsLabel
+	gatewayTLSCipherSuites     = gatewayext.TLSCipherSuitesOption
 )
 
 // AgwParentKey holds info about a parentRef (eg route binding to a Gateway). This is a mirror of

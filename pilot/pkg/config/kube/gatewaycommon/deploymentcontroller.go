@@ -40,6 +40,7 @@ import (
 	"istio.io/api/label"
 	meshapi "istio.io/api/mesh/v1alpha1"
 	"istio.io/istio/pilot/pkg/config/kube/crd"
+	"istio.io/istio/pilot/pkg/config/kube/gatewayext"
 	"istio.io/istio/pilot/pkg/features"
 	"istio.io/istio/pilot/pkg/model"
 	"istio.io/istio/pkg/cluster"
@@ -658,13 +659,7 @@ func (d *DeploymentController) render(templateName string, mi TemplateInput) ([]
 	return transformedOutput, nil
 }
 
-var supportedOverlays = sets.New(
-	"deployment",
-	"service",
-	"serviceAccount",
-	"horizontalPodAutoscaler",
-	"podDisruptionBudget",
-)
+var supportedOverlays = sets.New(gatewayext.ParametersRefOverlays...)
 
 var requiredOverlays = sets.New(
 	"horizontalPodAutoscaler",
