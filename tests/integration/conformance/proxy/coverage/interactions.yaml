@@ -1,0 +1,218 @@
+# Reviewed inventory of multi-resource semantics the proxy conformance suite must cover: behavior
+# that emerges from how several resources (or fields of different resources) combine, which no
+# single API field in the surface represents. Checked by TestCoverage.
+#
+# Each entry becomes surface "interaction:<id>". It is covered when a feature lists it in Covers, or
+# when coveredBy names existing features (IDs or aliases) that already test it; otherwise it needs a
+# "todo" (or a reason) in exemptions.yaml like any other surface entry. roles are the roles in which
+# the interaction applies; each non-ingress role must cover it with a feature of its own (an implicit
+# roleScope entry, ratcheted by maxRoleGaps). source is an istio.io page or a path in this repository.
+#
+# Keep entries narrow enough that one feature can test one entry: "CUSTOM before DENY" and "DENY
+# before ALLOW" are separate, so a feature testing only one does not claim both.
+
+# --- Authorization -------------------------------------------------------------------------------
+- id: authz.custom-before-deny
+  description: CUSTOM policies are evaluated before DENY and ALLOW policies, and a CUSTOM deny rejects the request even if an ALLOW policy matches.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/concepts/security/#implicit-enablement
+- id: authz.deny-before-allow
+  description: When a DENY and an ALLOW policy both match a request, the request is denied.
+  roles: [ingress, egress, sidecar, node, waypoint]
+  source: https://istio.io/latest/docs/concepts/security/#implicit-enablement
+  coveredBy: [security.authz.deny-overrides-allow]
+- id: authz.implicit-deny-with-allow
+  description: Once any ALLOW policy applies to a workload, requests matching no ALLOW policy are denied, while a workload with no ALLOW policy allows everything not denied.
+  roles: [ingress, egress, sidecar, node, waypoint]
+  source: https://istio.io/latest/docs/concepts/security/#implicit-enablement
+  coveredBy: [security.authz.allow.header, security.authz.allow-nothing]
+- id: authz.dry-run
+  description: An AuthorizationPolicy annotated istio.io/dry-run is evaluated and reported but never changes the response.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/tasks/security/authorization/authz-dry-run/
+- id: authz.scope-attachment
+  description: An AuthorizationPolicy applies from each scope (root namespace, the workload's namespace, a matching selector, targetRefs), and a targetRefs policy affects only its target.
+  roles: [ingress, egress, sidecar, node, waypoint]
+  source: https://istio.io/latest/docs/reference/config/security/authorization-policy/
+  coveredBy: [security.authz.root-namespace, security.authz.namespace-wide, security.authz.selector, security.authz.targetref-scoped]
+- id: authz.scope-union
+  description: AuthorizationPolicies from different scopes that apply to the same workload combine (all DENY and all ALLOW rules are evaluated together); a narrower scope does not override a wider one.
+  roles: [ingress, egress, sidecar, node, waypoint]
+  source: https://istio.io/latest/docs/reference/config/security/authorization-policy/
+- id: authz.targetref-vs-selector-enforcement-point
+  description: In ambient, policies attached with targetRefs to a Service or waypoint are enforced by the waypoint, while selector policies are enforced by ztunnel at the destination (L4 attributes only).
+  roles: [node, waypoint]
+  source: https://istio.io/latest/docs/ambient/usage/l7-features/
+- id: authz.l7-policy-on-l4-proxy
+  description: A policy with L7 attributes enforced by a proxy that only sees L4 (ztunnel, a TCP port) fails closed for ALLOW (rule dropped) and DENY (whole rule denies), never silently allowing.
+  roles: [node, sidecar]
+  source: https://istio.io/latest/docs/ambient/usage/l4-policy/
+
+# --- Authentication ------------------------------------------------------------------------------
+- id: peerauthn.scope-precedence
+  description: The most specific PeerAuthentication wins (workload selector over namespace over root namespace); policies are not merged.
+  roles: [sidecar, node]
+  source: https://istio.io/latest/docs/tasks/security/authentication/authn-policy/#policy-precedence
+- id: peerauthn.port-level-override
+  description: portLevelMtls overrides the policy's workload-level mtls mode for that port only.
+  roles: [sidecar, node]
+  source: https://istio.io/latest/docs/reference/config/security/peer_authentication/
+  coveredBy: [backend.mesh.peerauthentication-strict]
+- id: peerauthn.unset-inherits
+  description: Mode UNSET (or no mtls field) inherits from the parent scope, and portLevelMtls UNSET inherits the workload-level mode.
+  roles: [sidecar, node]
+  source: https://istio.io/latest/docs/reference/config/security/peer_authentication/
+- id: requestauthn.scope-union
+  description: RequestAuthentications from the root namespace, the namespace, selectors and targetRefs all apply; a token valid for any of their rules is accepted.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/concepts/security/#request-authentication
+- id: requestauthn.invalid-vs-missing-token
+  description: RequestAuthentication alone rejects invalid tokens but admits requests without one; requiring a token needs an AuthorizationPolicy on requestPrincipals.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/concepts/security/#request-authentication
+  coveredBy: [security.jwt.validation, security.jwt.require-principal]
+- id: mtls.auto
+  description: Without DestinationRule tls settings, a client proxy uses Istio mTLS (ISTIO_MUTUAL) to destinations with a mesh proxy and plaintext to others.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/tasks/security/authentication/authn-policy/#auto-mutual-tls
+  coveredBy: [backend.mesh.auto-mtls]
+- id: mtls.destinationrule-overrides-auto
+  description: An explicit DestinationRule tls mode overrides auto mTLS towards a destination with a mesh proxy (DISABLE sends plaintext, ISTIO_MUTUAL sends mTLS).
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/tasks/security/authentication/authn-policy/#auto-mutual-tls
+  coveredBy: [backend.destinationrule.tls-disable-and-istio-mutual]
+
+# --- Telemetry -----------------------------------------------------------------------------------
+- id: telemetry.scope-override
+  description: A workload-level Telemetry overrides the namespace-level one, which overrides the root-namespace one, field by field for metrics overrides, access logging and tracing.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/reference/config/telemetry/
+- id: telemetry.provider-inheritance
+  description: A Telemetry entry without providers applies to the providers inherited from the parent scope or MeshConfig defaultProviders.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/tasks/observability/telemetry/
+
+# --- Traffic: routing ----------------------------------------------------------------------------
+- id: virtualservice.first-match-wins
+  description: VirtualService http routes are evaluated in order and the first matching route is used, so a catch-all route short-circuits later ones.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: tests/integration/pilot/common/routing.go
+- id: virtualservice.multiple-for-host
+  description: Several VirtualServices for the same host bound to the same gateway or mesh scope are merged into one route table, rather than one replacing the others.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/ops/best-practices/traffic-management/#split-virtual-services
+- id: virtualservice.delegation
+  description: A root VirtualService delegates matching requests to a child VirtualService whose routes apply only within the parent match.
+  roles: [ingress, sidecar]
+  source: https://istio.io/latest/docs/reference/config/networking/virtual-service/#Delegate
+  coveredBy: [istioapi.virtualservice.delegate]
+- id: virtualservice.host-specificity
+  description: When several hosts match a request (exact, wildcard, short name), the most specific host's routes are used.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService
+- id: gatewayapi.route-vs-virtualservice
+  description: A Gateway API route and a VirtualService for the same host on the same proxy resolve deterministically as documented, instead of producing undefined routing.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/
+- id: gateway.server-merge
+  description: Istio Gateway servers from several Gateway resources selecting the same proxy on one port are merged into one listener, with routes bound per host.
+  roles: [ingress, egress]
+  source: https://istio.io/latest/docs/ops/configuration/traffic-management/tls-configuration/#gateways
+- id: gateway.same-port-tls-conflict
+  description: Two Istio Gateway servers on one port with conflicting TLS settings for the same host are resolved deterministically (oldest wins) instead of breaking the listener.
+  roles: [ingress, egress]
+  source: pilot/pkg/model/gateway.go
+
+# --- Traffic: destinations -----------------------------------------------------------------------
+- id: destinationrule.merge
+  description: Several DestinationRules for the same host without selectors are merged (subsets combined, first top-level trafficPolicy wins) in the importing namespace.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: pilot/pkg/model/destination_rule.go
+- id: destinationrule.subset-overrides-top-level
+  description: A subset's trafficPolicy overrides the top-level trafficPolicy for that subset, field by field.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/reference/config/networking/destination-rule/#Subset
+  coveredBy: [backend.destinationrule.subset-traffic-policy]
+- id: destinationrule.port-level-precedence
+  description: portLevelSettings override the top-level trafficPolicy for the matching port, and subset portLevelSettings override both.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/reference/config/networking/destination-rule/#TrafficPolicy-PortTrafficPolicy
+  coveredBy: [backend.destinationrule.port-level-settings]
+- id: destinationrule.lookup-namespace
+  description: A client uses the DestinationRule from its own namespace first, then the service's namespace, then the root namespace.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/ops/best-practices/traffic-management/#cross-namespace-configuration
+- id: destinationrule.mesh-default-traffic-policy
+  description: MeshConfig defaultTrafficPolicy applies to destinations without a DestinationRule and is overridden by one.
+  roles: [ingress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/
+- id: serviceentry.same-host-as-service
+  description: A ServiceEntry with the same hostname as a Kubernetes Service does not override it; the Kubernetes Service takes precedence for clients that see both.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: pilot/pkg/model/push_context.go
+- id: serviceentry.workload-selector
+  description: A ServiceEntry with workloadSelector selects Pods and WorkloadEntries as its endpoints, and a Kubernetes Service selects matching WorkloadEntries.
+  roles: [sidecar, node, waypoint]
+  source: https://istio.io/latest/docs/reference/config/networking/service-entry/
+- id: serviceentry.kubernetes-externalname
+  description: A Kubernetes ExternalName Service is routed like a DNS ServiceEntry to the external name.
+  roles: [ingress, sidecar, waypoint]
+  source: tests/integration/pilot/common/routing.go
+- id: outbound-traffic-policy.registry-only
+  description: With outboundTrafficPolicy REGISTRY_ONLY (mesh or Sidecar), traffic to hosts not in the registry is blocked while ServiceEntry hosts stay reachable; ALLOW_ANY passes them through.
+  roles: [sidecar, egress]
+  source: tests/integration/pilot/common/routing.go
+
+# --- Visibility and scoping ----------------------------------------------------------------------
+- id: visibility.export-to
+  description: exportTo on a resource (or the networking.istio.io/exportTo annotation on a Service, or MeshConfig defaults) hides it from proxies in namespaces it is not exported to.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService
+  coveredBy: [istioapi.virtualservice.export-to]
+- id: visibility.sidecar-egress-hosts
+  description: A Sidecar egress hosts list restricts which services a sidecar can reach to the imported ones; the most specific Sidecar (selector over namespace default over root) applies.
+  roles: [sidecar]
+  source: https://istio.io/latest/docs/reference/config/networking/sidecar/
+
+# --- Load balancing ------------------------------------------------------------------------------
+- id: locality.failover
+  description: With outlier detection, traffic prefers endpoints in the client's locality and fails over to the next locality (or the failover/failoverPriority order) when they are unhealthy.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/tasks/traffic-management/locality-load-balancing/failover/
+- id: locality.distribution
+  description: localityLbSetting distribute sends the configured share of traffic from each locality to the target localities.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/tasks/traffic-management/locality-load-balancing/distribute/
+- id: locality.traffic-distribution
+  description: The networking.istio.io/traffic-distribution annotation (or Service trafficDistribution PreferClose) makes ztunnel prefer endpoints in the same network, region and zone.
+  roles: [node]
+  source: https://istio.io/latest/docs/reference/config/annotations/#NetworkingTrafficDistribution
+
+# --- Protocols -----------------------------------------------------------------------------------
+- id: protocol.declared
+  description: The protocol of a Service port is taken from appProtocol, then the port name prefix (http-, grpc-, tcp-, ...), and decides HTTP versus TCP proxying.
+  roles: [ingress, egress, sidecar, waypoint]
+  source: https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/
+  coveredBy: [protocol.http2-upstream-appprotocol, protocol.http1-upstream-default]
+- id: protocol.sniffing
+  description: Ports with no declared protocol are sniffed, so HTTP and raw TCP traffic on the same undeclared port are both proxied correctly, and server-first protocols still work.
+  roles: [sidecar]
+  source: https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/#automatic-protocol-selection
+
+# --- Ambient enrollment --------------------------------------------------------------------------
+- id: ambient.waypoint-binding-precedence
+  description: istio.io/use-waypoint on a Pod overrides its Service, which overrides its Namespace, and the value none opts a resource out of an inherited waypoint.
+  roles: [node, waypoint]
+  source: https://istio.io/latest/docs/ambient/usage/waypoint/#configure-a-pod-to-use-a-specific-waypoint
+- id: ambient.waypoint-for
+  description: A waypoint's istio.io/waypoint-for (service, workload, all, none) decides whether service-addressed and workload-addressed traffic is sent through it.
+  roles: [node, waypoint]
+  source: https://istio.io/latest/docs/ambient/usage/waypoint/#waypoint-traffic-types
+- id: ambient.dataplane-mode-precedence
+  description: istio.io/dataplane-mode on a Pod overrides its Namespace (none opts out), and a Pod with a sidecar is never captured by ztunnel.
+  roles: [node]
+  source: https://istio.io/latest/docs/ambient/usage/add-workloads/
+- id: ambient.ingress-use-waypoint
+  description: With istio.io/ingress-use-waypoint, an ingress gateway sends traffic for the service through its waypoint instead of directly to the endpoints.
+  roles: [ingress, waypoint]
+  source: https://istio.io/latest/docs/ambient/usage/waypoint/#ingress-and-waypoints

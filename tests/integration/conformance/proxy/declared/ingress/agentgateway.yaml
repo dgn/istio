@@ -1,0 +1,299 @@
+# Declared support of agentgateway in the ingress role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/integration/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; an ignored security.* feature also needs an issue.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/integration/conformance/proxy/ -run TestIngressConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/integration/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  backend.destinationrule.consistent-hash:
+    status: unknown
+  backend.destinationrule.consistent-hash-cookie:
+    status: unknown
+  backend.destinationrule.consistent-hash-source-ip:
+    status: unknown
+  backend.destinationrule.h2-upgrade:
+    status: unknown
+  backend.destinationrule.lb-round-robin:
+    status: unknown
+  backend.destinationrule.port-level-settings:
+    status: unknown
+  backend.destinationrule.subset-traffic-policy:
+    status: unknown
+  backend.destinationrule.tls-disable-and-istio-mutual:
+    status: unknown
+  backend.destinationrule.tls-mutual:
+    status: unknown
+  backend.destinationrule.tls-origination:
+    status: unknown
+  backend.destinationrule.tls-san-mismatch:
+    status: unknown
+  backend.destinationrule.use-client-protocol:
+    status: unknown
+  backend.mesh.authz-gateway-principal:
+    status: unknown
+  backend.mesh.auto-mtls:
+    status: unknown
+  backend.mesh.peerauthentication-disable:
+    status: unknown
+  backend.mesh.peerauthentication-strict:
+    status: unknown
+  backend.serviceentry.dns-round-robin:
+    status: unknown
+  backend.serviceentry.hostname-backendref:
+    status: unknown
+  backend.serviceentry.static-endpoints:
+    status: unknown
+  dataplane.default-retry-on-connect-failure:
+    status: unknown
+  dataplane.host-case-insensitive:
+    status: unknown
+  dataplane.host-port-ignored:
+    status: unknown
+  dataplane.no-route-404:
+    status: unknown
+  dataplane.path-normalization:
+    status: unknown
+  dataplane.proxy-protocol.downstream:
+    status: unknown
+  dataplane.proxy-protocol.upstream:
+    status: unknown
+  dataplane.request-id:
+    status: unknown
+  dataplane.trace-context-propagation:
+    status: unknown
+  dataplane.x-forwarded-proto:
+    status: unknown
+  dataplane.xfcc.always-forward-only:
+    status: unknown
+  dataplane.xfcc.sanitize:
+    status: unknown
+  dataplane.xff.append-client-ip:
+    status: unknown
+  dataplane.xff.num-trusted-proxies:
+    status: unknown
+  dataplane.xff.untrusted-by-default:
+    status: unknown
+  impl-specific.envoyfilter:
+    status: unknown
+  impl-specific.trafficextension-lua:
+    status: unknown
+  infra.addresses-hostname-manual-deployment:
+    status: unknown
+  infra.gateway-metadata-copied:
+    status: unknown
+  infra.gatewayclass-defaults-configmap:
+    status: unknown
+  infra.name-override-annotation:
+    status: unknown
+  infra.owner-references:
+    status: unknown
+  infra.parametersref-configmap:
+    status: unknown
+  infra.parametersref-hpa-pdb-serviceaccount:
+    status: unknown
+  infra.reconcile-drift:
+    status: unknown
+  infra.service-account-annotation:
+    status: unknown
+  infra.service-ports-from-listeners:
+    status: unknown
+  infra.service-type-annotation:
+    status: unknown
+  infra.standard-labels:
+    status: unknown
+  istioapi.gateway-virtualservice.route:
+    status: unknown
+  istioapi.gateway.https-redirect:
+    status: unknown
+  istioapi.gateway.tls-simple:
+    status: unknown
+  istioapi.virtualservice.claim-routing:
+    status: unknown
+  istioapi.virtualservice.cors:
+    status: unknown
+  istioapi.virtualservice.cors-full:
+    status: unknown
+  istioapi.virtualservice.delegate:
+    status: unknown
+  istioapi.virtualservice.direct-response:
+    status: unknown
+  istioapi.virtualservice.direct-response-bytes:
+    status: unknown
+  istioapi.virtualservice.export-to:
+    status: unknown
+  istioapi.virtualservice.fault-abort:
+    status: unknown
+  istioapi.virtualservice.fault-delay:
+    status: unknown
+  istioapi.virtualservice.fault-percentages:
+    status: unknown
+  istioapi.virtualservice.header-and-rewrite:
+    status: unknown
+  istioapi.virtualservice.headers-full:
+    status: unknown
+  istioapi.virtualservice.match-authority:
+    status: unknown
+  istioapi.virtualservice.match-more:
+    status: unknown
+  istioapi.virtualservice.match-variants:
+    status: unknown
+  istioapi.virtualservice.mirror:
+    status: unknown
+  istioapi.virtualservice.mirrors:
+    status: unknown
+  istioapi.virtualservice.per-try-timeout:
+    status: unknown
+  istioapi.virtualservice.redirect:
+    status: unknown
+  istioapi.virtualservice.redirect-more:
+    status: unknown
+  istioapi.virtualservice.retries:
+    status: unknown
+  istioapi.virtualservice.rewrite-more:
+    status: unknown
+  istioapi.virtualservice.subsets:
+    status: unknown
+  istioapi.virtualservice.tcp:
+    status: unknown
+  istioapi.virtualservice.tcp-match-weight:
+    status: unknown
+  istioapi.virtualservice.timeout:
+    status: unknown
+  istioapi.virtualservice.tls-sni-passthrough:
+    status: unknown
+  istioapi.virtualservice.weights:
+    status: unknown
+  listener.tls-option.terminate-mode-mutual:
+    status: unknown
+  listener.tls-option.terminate-mode-optional-mutual:
+    status: unknown
+  listener.tls.terminate-tcproute:
+    status: unknown
+  protocol.http1-upstream-default:
+    status: unknown
+  protocol.http2-downstream:
+    status: unknown
+  protocol.http2-upstream-appprotocol:
+    status: unknown
+  protocol.websocket:
+    status: unknown
+  proxyconfig.connection.escaped-slashes:
+    status: unknown
+  proxyconfig.connection.headers-with-underscores:
+    status: unknown
+  proxyconfig.connection.merge-slashes:
+    status: unknown
+  proxyconfig.proxyheaders.attempt-count-disabled:
+    status: unknown
+  proxyconfig.proxyheaders.debug-headers-disabled:
+    status: unknown
+  proxyconfig.proxyheaders.metadata-exchange-in-mesh:
+    status: unknown
+  proxyconfig.proxyheaders.request-id-disabled:
+    status: unknown
+  proxyconfig.proxyheaders.server-disabled:
+    status: unknown
+  proxyconfig.proxyheaders.server-value:
+    status: unknown
+  proxyconfig.proxyheaders.x-forwarded-port-host:
+    status: unknown
+  security.authz.allow-nothing:
+    status: unknown
+  security.authz.allow.header:
+    status: unknown
+  security.authz.audit:
+    status: unknown
+  security.authz.custom-ext-authz:
+    status: unknown
+  security.authz.custom-ext-authz-grpc:
+    status: unknown
+  security.authz.custom-ext-authz-headers:
+    status: unknown
+  security.authz.deny-overrides-allow:
+    status: unknown
+  security.authz.deny.host:
+    status: unknown
+  security.authz.deny.method-header:
+    status: unknown
+  security.authz.deny.path:
+    status: unknown
+  security.authz.ip-blocks-l4:
+    status: unknown
+  security.authz.namespace-wide:
+    status: unknown
+  security.authz.not-hosts-not-values:
+    status: unknown
+  security.authz.not-ip-blocks:
+    status: unknown
+  security.authz.not-request-principals:
+    status: unknown
+  security.authz.not-values:
+    status: unknown
+  security.authz.remote-ip:
+    status: unknown
+  security.authz.root-namespace:
+    status: unknown
+  security.authz.selector:
+    status: unknown
+  security.authz.source-identity-plaintext:
+    status: unknown
+  security.authz.targetref-scoped:
+    status: unknown
+  security.jwt.audiences:
+    status: unknown
+  security.jwt.claims-authz:
+    status: unknown
+  security.jwt.forward-original-token:
+    status: unknown
+  security.jwt.from-cookies:
+    status: unknown
+  security.jwt.from-header-and-param:
+    status: unknown
+  security.jwt.multiple-issuers:
+    status: unknown
+  security.jwt.output-claim-to-headers:
+    status: unknown
+  security.jwt.output-payload-to-header:
+    status: unknown
+  security.jwt.presence-required:
+    status: unknown
+  security.jwt.require-principal:
+    status: unknown
+  security.jwt.selector:
+    status: unknown
+  security.jwt.space-delimited-claims:
+    status: unknown
+  security.jwt.strip-token:
+    status: unknown
+  security.jwt.validation:
+    status: unknown
+  status.address-type-annotation:
+    status: unknown
+  telemetry.accesslog.disabled:
+    status: unknown
+  telemetry.accesslog.disabled-named-provider:
+    status: unknown
+  telemetry.accesslog.filter:
+    status: unknown
+  telemetry.accesslog.mesh-default:
+    status: unknown
+  telemetry.accesslog.selector:
+    status: unknown
+  telemetry.metrics.disabled:
+    status: unknown
+  telemetry.metrics.istio-requests-total:
+    status: unknown
+  telemetry.metrics.tag-override:
+    status: unknown
+  telemetry.metrics.tag-remove:
+    status: unknown
+  telemetry.metrics.tcp:
+    status: unknown
+maxUnknown: 142

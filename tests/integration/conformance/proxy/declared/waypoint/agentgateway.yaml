@@ -1,0 +1,29 @@
+# Declared support of agentgateway in the waypoint role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/integration/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; an ignored security.* feature also needs an issue.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/integration/conformance/proxy/ -run TestWaypointConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/integration/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  mesh.authz.l7-path:
+    status: unknown
+  mesh.fault.abort:
+    status: unknown
+  mesh.routing.header-match:
+    status: unknown
+  mesh.routing.path-match:
+    status: unknown
+  mesh.routing.rewrite:
+    status: unknown
+  mesh.routing.traffic-split:
+    status: unknown
+  mesh.timeout:
+    status: unknown
+maxUnknown: 7

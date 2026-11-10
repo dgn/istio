@@ -1,0 +1,465 @@
+# Defaults istiod configures with no user config, and the proxy conformance suite's decision on each.
+# Checked by TestDefaultsInventory (go test ./tests/integration/conformance/proxy/coverage/defaults/).
+#
+# Keys are normalized xDS paths, <proxy>/<resource>/<field>/..., generated from a minimal mesh: list
+# indexes, values and per-service names dropped, extensions keyed by name ([envoy.filters...]) and
+# other Any fields by type ([@Type]). "*/" matches every proxy type; "<path>/*" a whole subtree
+# (exempt only). The longest key wins.
+#
+# Decisions:
+# - "feature <id>": a PCS feature (catalog.yaml ID or alias) observes the behavior for that proxy type.
+# - "exempt: <reason>": not observable black-box, or naming/bookkeeping.
+# - "todo": a behavior a new proxy must replicate that PCS does not test yet. maxTodo is a ratchet on
+#   todo paths: it may only go down.
+# Run with -update to drop stale decisions and add new paths as todo; -raise-todo to allow maxTodo to grow.
+decisions:
+  '*/cluster/alt_stat_name': 'exempt: naming/bookkeeping; names are not behavior'
+  '*/cluster/circuit_breakers/thresholds/max_connections': todo
+  '*/cluster/circuit_breakers/thresholds/max_pending_requests': todo
+  '*/cluster/circuit_breakers/thresholds/max_requests': todo
+  '*/cluster/circuit_breakers/thresholds/max_retries': todo
+  '*/cluster/cleanup_interval': 'exempt: original-destination host cleanup; internal'
+  '*/cluster/common_lb_config': 'exempt: empty message: Envoy load balancer defaults,
+    nothing set by istiod'
+  '*/cluster/common_lb_config/healthy_panic_threshold': todo
+  '*/cluster/connect_timeout': todo
+  '*/cluster/eds_cluster_config/*': 'exempt: EDS subscription plumbing between istiod
+    and the proxy'
+  '*/cluster/filters[istio.metadata_exchange][envoy.tcp.metadataexchange.config.MetadataExchange]': todo
+  '*/cluster/lb_policy': todo
+  '*/cluster/load_assignment/cluster_name': 'exempt: naming/bookkeeping; names are
+    not behavior'
+  '*/cluster/metadata/*': 'exempt: istiod metadata for stats labels; the labels it
+    produces are decided on the stats filter paths'
+  '*/cluster/name': 'exempt: naming/bookkeeping; names are not behavior'
+  '*/cluster/transport_socket[tls]/common_tls_context/alpn_protocols': 'exempt: mesh-internal
+    mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible only to an
+    Istio peer proxy; interop with Istio peers is what the mTLS features test'
+  ? '*/cluster/transport_socket[tls]/common_tls_context/combined_validation_context/default_validation_context/match_typed_subject_alt_names/matcher/prefix'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  ? '*/cluster/transport_socket[tls]/common_tls_context/combined_validation_context/default_validation_context/match_typed_subject_alt_names/san_type'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  '*/cluster/transport_socket[tls]/common_tls_context/combined_validation_context/validation_context_sds_secret_config/*': 'exempt:
+    certificate delivery from the local agent over SDS; mTLS features observe the
+    certificates in use'
+  '*/cluster/transport_socket[tls]/common_tls_context/tls_certificate_sds_secret_configs/*': 'exempt:
+    certificate delivery from the local agent over SDS; mTLS features observe the
+    certificates in use'
+  '*/cluster/transport_socket[tls]/common_tls_context/tls_params/tls_maximum_protocol_version': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  '*/cluster/transport_socket[tls]/common_tls_context/tls_params/tls_minimum_protocol_version': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  '*/cluster/transport_socket_matches/name': 'exempt: naming/bookkeeping; names are
+    not behavior'
+  '*/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/common_tls_context/alpn_protocols': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  ? '*/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/common_tls_context/combined_validation_context/default_validation_context'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  ? '*/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/common_tls_context/combined_validation_context/validation_context_sds_secret_config/*'
+  : 'exempt: certificate delivery from the local agent over SDS; mTLS features observe
+    the certificates in use'
+  ? '*/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/common_tls_context/tls_certificate_sds_secret_configs/*'
+  : 'exempt: certificate delivery from the local agent over SDS; mTLS features observe
+    the certificates in use'
+  ? '*/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/common_tls_context/tls_params/tls_maximum_protocol_version'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  ? '*/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/common_tls_context/tls_params/tls_minimum_protocol_version'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  '*/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/sni': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  '*/cluster/type': 'exempt: service discovery mechanism (EDS/STATIC/ORIGINAL_DST);
+    reachability features observe that backends resolve'
+  ? '*/cluster/typed_extension_protocol_options[envoy.extensions.upstreams.http.v3.HttpProtocolOptions]/common_http_protocol_options/idle_timeout'
+  : todo
+  ? '*/cluster/typed_extension_protocol_options[envoy.extensions.upstreams.http.v3.HttpProtocolOptions]/use_downstream_protocol_config/http_protocol_options'
+  : todo
+  ? '*/cluster/typed_extension_protocol_options[envoy.extensions.upstreams.http.v3.HttpProtocolOptions]/use_downstream_protocol_config/http2_protocol_options'
+  : todo
+  '*/cluster/upstream_bind_config/source_address/address': todo
+  '*/cluster/upstream_bind_config/source_address/port_value': 'exempt: ephemeral source
+    port; decided on upstream_bind_config/source_address/address'
+  '*/listener/address/*': 'exempt: listener address/port derived from the Service/Gateway
+    port, covered by the API coverage check'
+  '*/listener/bind_to_port': 'exempt: virtual listeners reached via the iptables-redirected
+    virtualInbound/virtualOutbound listener; capture mechanism'
+  '*/listener/connection_balance_config/*': 'exempt: connection balancing across worker
+    threads; performance internal'
+  '*/listener/continue_on_listener_filters_timeout': todo
+  '*/listener/default_filter_chain/filter_chain_match': 'exempt: catch-all chain match;
+    decided on listener/use_original_dst'
+  '*/listener/default_filter_chain/filters[envoy.filters.network.tcp_proxy]/cluster': 'exempt:
+    PassthroughCluster target; decided on listener/use_original_dst'
+  '*/listener/default_filter_chain/filters[envoy.filters.network.tcp_proxy]/stat_prefix': 'exempt:
+    stat prefix; Envoy-internal stats naming, not an Istio standard metric'
+  '*/listener/default_filter_chain/filters[istio.stats]': todo
+  '*/listener/default_filter_chain/name': 'exempt: naming/bookkeeping; names are not
+    behavior'
+  '*/listener/filter_chains/filter_chain_match/application_protocols': 'exempt: ALPN-based
+    dispatch of Istio peer traffic (istio-peer-exchange, istio-http/*); mesh-internal'
+  '*/listener/filter_chains/filter_chain_match/transport_protocol': todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[envoy.filters.http.cors]': 'exempt:
+    inert without a CORS policy; the istioapi.virtualservice.cors features test it
+    when configured'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[envoy.filters.http.fault]': 'exempt:
+    inert without a fault policy; the fault features test it when configured'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[envoy.filters.http.grpc_stats]/emit_filter_state'
+  : 'exempt: Envoy gRPC stats (not an Istio standard metric); not part of the observable
+    contract'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[envoy.filters.http.grpc_stats]/stats_for_all_methods'
+  : 'exempt: Envoy gRPC stats (not an Istio standard metric); not part of the observable
+    contract'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[envoy.filters.http.router]': 'exempt:
+    terminal router filter; every HTTP feature exercises it'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[istio.alpn]/alpn_override/alpn_override'
+  : 'exempt: ALPN override signaling the downstream protocol to an Istio peer (istio-http/1.x,
+    istio-h2); mesh-internal'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[istio.alpn]/alpn_override/upstream_protocol'
+  : 'exempt: ALPN override signaling the downstream protocol to an Istio peer (istio-http/1.x,
+    istio-h2); mesh-internal'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[istio.metadata_exchange][io.istio.http.peer_metadata.Config]'
+  : todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[istio.stats]': todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[istio.stats]/disable_host_header_fallback'
+  : 'exempt: istio.stats detail (no Host fallback for destination_service); decided
+    with the stats filter'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[istio.stats]/reporter': todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[waypoint_downstream_peer_metadata][io.istio.http.peer_metadata.Config]'
+  : todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[waypoint_upstream_peer_metadata][io.istio.http.peer_metadata.Config]'
+  : todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_protocol_options': 'exempt:
+    empty message: Envoy HTTP/1 defaults, nothing set by istiod'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/proxy_100_continue': todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/rds/*': 'exempt:
+    RDS subscription plumbing between istiod and the proxy'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/request_id_extension/typed_config[@UuidRequestIdConfig]/use_request_id_for_trace_sampling'
+  : 'exempt: trace sampling/span tags; spans are not observable black-box (§3.2: no
+    tracing backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/max_direct_response_body_size_bytes': 'exempt:
+    raises the direct-response body limit; only matters for user directResponse bodies
+    above Envoy''s 4KiB default'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/name': 'exempt:
+    naming/bookkeeping; names are not behavior'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/validate_clusters': 'exempt:
+    config acceptance knob (routes to unknown clusters are not rejected); no data-plane
+    effect on valid config'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/domains': 'exempt:
+    derived from Service hosts; routing features exercise it'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/name': 'exempt:
+    naming/bookkeeping; names are not behavior'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/decorator/operation'
+  : 'exempt: span operation name; trace sampling/span tags; spans are not observable
+    black-box (§3.2: no tracing backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/match/prefix': 'exempt:
+    catch-all route derived from the Service; routing features exercise it'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/name': 'exempt:
+    naming/bookkeeping; names are not behavior'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/max_grpc_timeout'
+  : todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/max_stream_duration/grpc_timeout_header_max'
+  : todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/max_stream_duration/max_stream_duration'
+  : 'exempt: stream duration cap left unset (0); decided on max_stream_duration/grpc_timeout_header_max'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/retry_policy/host_selection_retry_max_attempts'
+  : todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/retry_policy/num_retries'
+  : todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/retry_policy/retry_host_predicate[envoy.retry_host_predicates.previous_hosts]'
+  : todo
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/retry_policy/retry_on'
+  : todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/timeout': todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/set_current_client_cert_details/cert': 'exempt:
+    XFCC detail; decided on set_current_client_cert_details/uri'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/set_current_client_cert_details/dns': 'exempt:
+    XFCC detail; decided on set_current_client_cert_details/uri'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/set_current_client_cert_details/subject': 'exempt:
+    XFCC detail; decided on set_current_client_cert_details/uri'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/set_current_client_cert_details/uri': todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/stat_prefix': 'exempt:
+    stat prefix; Envoy-internal stats naming, not an Istio standard metric'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/stream_idle_timeout': todo
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/client_sampling': 'exempt:
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/custom_tags/literal/value': 'exempt:
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/custom_tags/metadata/kind/request': 'exempt:
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/custom_tags/metadata/metadata_key/key': 'exempt:
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  ? '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/custom_tags/metadata/metadata_key/path/key'
+  : 'exempt: trace sampling/span tags; spans are not observable black-box (§3.2: no
+    tracing backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/custom_tags/tag': 'exempt:
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/custom_tags/value': 'exempt:
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/overall_sampling': 'exempt:
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  '*/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/tracing/random_sampling': todo
+  '*/listener/filter_chains/filters[envoy.filters.network.tcp_proxy]/cluster': 'exempt:
+    cluster reference derived from the Service; reachability features exercise it'
+  '*/listener/filter_chains/filters[envoy.filters.network.tcp_proxy]/stat_prefix': 'exempt:
+    stat prefix; Envoy-internal stats naming, not an Istio standard metric'
+  '*/listener/filter_chains/filters[istio.metadata_exchange][envoy.tcp.metadataexchange.config.MetadataExchange]': todo
+  '*/listener/filter_chains/filters[istio.stats]': todo
+  '*/listener/filter_chains/filters[istio.stats]/disable_host_header_fallback': 'exempt:
+    istio.stats detail; decided with the stats filter'
+  '*/listener/filter_chains/filters[istio.stats]/reporter': todo
+  '*/listener/filter_chains/name': 'exempt: naming/bookkeeping; names are not behavior'
+  '*/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/common_tls_context/alpn_protocols': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  ? '*/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/common_tls_context/combined_validation_context/default_validation_context/match_subject_alt_names/prefix'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  ? '*/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/common_tls_context/combined_validation_context/validation_context_sds_secret_config/*'
+  : 'exempt: certificate delivery from the local agent over SDS; mTLS features observe
+    the certificates in use'
+  '*/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/common_tls_context/tls_certificate_sds_secret_configs/*': 'exempt:
+    certificate delivery from the local agent over SDS; mTLS features observe the
+    certificates in use'
+  '*/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/common_tls_context/tls_params/cipher_suites': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  ? '*/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/common_tls_context/tls_params/tls_maximum_protocol_version'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  ? '*/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/common_tls_context/tls_params/tls_minimum_protocol_version'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  '*/listener/filter_chains/transport_socket[tls]/common_tls_context/alpn_protocols': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  ? '*/listener/filter_chains/transport_socket[tls]/common_tls_context/combined_validation_context/default_validation_context/match_typed_subject_alt_names/matcher/prefix'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  ? '*/listener/filter_chains/transport_socket[tls]/common_tls_context/combined_validation_context/default_validation_context/match_typed_subject_alt_names/san_type'
+  : 'exempt: mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching)
+    visible only to an Istio peer proxy; interop with Istio peers is what the mTLS
+    features test'
+  ? '*/listener/filter_chains/transport_socket[tls]/common_tls_context/combined_validation_context/validation_context_sds_secret_config/*'
+  : 'exempt: certificate delivery from the local agent over SDS; mTLS features observe
+    the certificates in use'
+  '*/listener/filter_chains/transport_socket[tls]/common_tls_context/tls_certificate_sds_secret_configs/*': 'exempt:
+    certificate delivery from the local agent over SDS; mTLS features observe the
+    certificates in use'
+  '*/listener/filter_chains/transport_socket[tls]/common_tls_context/tls_params/tls_maximum_protocol_version': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  '*/listener/filter_chains/transport_socket[tls]/common_tls_context/tls_params/tls_minimum_protocol_version': 'exempt:
+    mesh-internal mTLS parameter (ALPN, TLS versions, ciphers, SAN matching) visible
+    only to an Istio peer proxy; interop with Istio peers is what the mTLS features
+    test'
+  '*/listener/filter_chains/transport_socket_connect_timeout': todo
+  '*/listener/listener_filters[envoy.filters.listener.http_inspector]/*': 'exempt:
+    per-port sniffing exclusions; decided on listener_filters[envoy.filters.listener.http_inspector]'
+  '*/listener/listener_filters[envoy.filters.listener.original_dst]': 'exempt: capture
+    mechanism; decided on listener/use_original_dst'
+  '*/listener/listener_filters[envoy.filters.listener.tls_inspector]/*': 'exempt:
+    TLS inspector tuning and port exclusions; decided with protocol sniffing on listener_filters[envoy.filters.listener.http_inspector]'
+  '*/listener/listener_filters_timeout': 'exempt: protocol detection timeout; decided
+    on listener/continue_on_listener_filters_timeout'
+  '*/listener/max_connections_to_accept_per_socket_event': 'exempt: connection accept
+    batching; performance internal'
+  '*/listener/name': 'exempt: naming/bookkeeping; names are not behavior'
+  '*/listener/traffic_direction': 'exempt: direction hint for stats/tracing; no request-visible
+    effect'
+  '*/listener/use_original_dst': todo
+  '*/route/max_direct_response_body_size_bytes': 'exempt: raises the direct-response
+    body limit; only matters for user directResponse bodies above Envoy''s 4KiB default'
+  '*/route/name': 'exempt: naming/bookkeeping; names are not behavior'
+  '*/route/validate_clusters': 'exempt: config acceptance knob (routes to unknown
+    clusters are not rejected); no data-plane effect on valid config'
+  '*/route/virtual_hosts/domains': 'exempt: derived from VirtualService/Service hosts;
+    routing features exercise it'
+  '*/route/virtual_hosts/name': 'exempt: naming/bookkeeping; names are not behavior'
+  '*/route/virtual_hosts/routes/decorator/operation': 'exempt: span operation name;
+    trace sampling/span tags; spans are not observable black-box (§3.2: no tracing
+    backend), only propagated context is'
+  '*/route/virtual_hosts/routes/match/prefix': 'exempt: derived from the VirtualService
+    match; routing features exercise it'
+  '*/route/virtual_hosts/routes/metadata/*': 'exempt: istiod metadata for stats labels;
+    the labels it produces are decided on the stats filter paths'
+  '*/route/virtual_hosts/routes/name': 'exempt: naming/bookkeeping; names are not
+    behavior'
+  '*/route/virtual_hosts/routes/route/max_grpc_timeout': todo
+  '*/route/virtual_hosts/routes/route/timeout': todo
+  '*/service/ports/app_protocol': todo
+  '*/service/waypoint/hostname/hostname': todo
+  '*/workload/canonical_name': todo
+  '*/workload/canonical_revision': todo
+  router/cluster/metadata/*: 'exempt: service metadata feeding destination_service
+    labels, observed by telemetry.metrics.istio-requests-total (exempt prefix: features
+    cannot cover subtrees)'
+  router/cluster/transport_socket_matches/match: feature backend.mesh.auto-mtls
+  router/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.raw_buffer]: feature
+    backend.mesh.auto-mtls
+  ? router/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/common_tls_context/combined_validation_context/default_validation_context
+  : feature backend.mesh.auto-mtls
+  router/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.tls]/sni: feature
+    backend.mesh.auto-mtls
+  router/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/forward_client_cert_details: feature
+    dataplane.xfcc.sanitize
+  ? router/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[istio.stats]/disable_host_header_fallback
+  : feature telemetry.metrics.istio-requests-total
+  router/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/normalize_path: feature
+    dataplane.path-normalization
+  router/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/path_with_escaped_slashes_action: feature
+    proxyconfig.connection.escaped-slashes
+  router/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/server_name: feature
+    proxyconfig.proxyheaders.server-disabled
+  router/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/upgrade_configs/upgrade_type: feature
+    protocol.websocket
+  router/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/use_remote_address: feature
+    dataplane.xff.append-client-ip
+  router/route/ignore_port_in_host_matching: feature dataplane.host-port-ignored
+  router/route/virtual_hosts/include_request_attempt_count: feature proxyconfig.proxyheaders.attempt-count-disabled
+  router/route/virtual_hosts/routes/route/cluster: feature istioapi.gateway-virtualservice.route
+  router/route/virtual_hosts/routes/route/retry_policy/host_selection_retry_max_attempts: feature
+    dataplane.default-retry-on-connect-failure
+  router/route/virtual_hosts/routes/route/retry_policy/num_retries: feature dataplane.default-retry-on-connect-failure
+  router/route/virtual_hosts/routes/route/retry_policy/retry_host_predicate[envoy.retry_host_predicates.previous_hosts]: feature
+    dataplane.default-retry-on-connect-failure
+  router/route/virtual_hosts/routes/route/retry_policy/retry_on: feature dataplane.default-retry-on-connect-failure
+  sidecar/cluster/transport_socket_matches/match: feature mesh.mtls.strict
+  sidecar/cluster/transport_socket_matches/transport_socket[envoy.transport_sockets.raw_buffer]: 'exempt:
+    plaintext fallback of auto-mTLS; decided on transport_socket_matches/match'
+  sidecar/listener/filter_chains/filter_chain_match/destination_port: feature mesh.baseline.reachability
+  sidecar/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/forward_client_cert_details: todo
+  sidecar/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/normalize_path: todo
+  sidecar/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/path_with_escaped_slashes_action: todo
+  ? sidecar/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/cluster
+  : feature mesh.baseline.reachability
+  sidecar/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/server_name: todo
+  sidecar/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/upgrade_configs/upgrade_type: todo
+  sidecar/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/use_remote_address: todo
+  sidecar/listener/filter_chains/filters[envoy.filters.network.tcp_proxy]/cluster: feature
+    mesh.baseline.reachability
+  sidecar/listener/filter_chains/transport_socket[envoy.transport_sockets.tls]/require_client_certificate: feature
+    mesh.mtls.strict
+  sidecar/route/ignore_port_in_host_matching: todo
+  sidecar/route/virtual_hosts/include_request_attempt_count: todo
+  sidecar/route/virtual_hosts/routes/route/cluster: feature mesh.baseline.reachability
+  sidecar/route/virtual_hosts/routes/route/retry_policy/host_selection_retry_max_attempts: todo
+  sidecar/route/virtual_hosts/routes/route/retry_policy/num_retries: todo
+  sidecar/route/virtual_hosts/routes/route/retry_policy/retry_host_predicate[envoy.retry_host_predicates.previous_hosts]: todo
+  sidecar/route/virtual_hosts/routes/route/retry_policy/retry_on: todo
+  waypoint/cluster/load_assignment/endpoints/*: 'exempt: HBONE/internal-listener plumbing
+    between ztunnel, waypoint and Envoy internal listeners; observable only as reachability,
+    which every waypoint feature exercises'
+  waypoint/cluster/original_dst_lb_config/*: 'exempt: HBONE/internal-listener plumbing
+    between ztunnel, waypoint and Envoy internal listeners; observable only as reachability,
+    which every waypoint feature exercises'
+  waypoint/cluster/transport_socket[internal_upstream]/*: 'exempt: HBONE/internal-listener
+    plumbing between ztunnel, waypoint and Envoy internal listeners; observable only
+    as reachability, which every waypoint feature exercises'
+  waypoint/cluster/typed_extension_protocol_options[envoy.extensions.upstreams.http.v3.HttpProtocolOptions]/explicit_http_config/*: 'exempt:
+    HBONE/internal-listener plumbing between ztunnel, waypoint and Envoy internal
+    listeners; observable only as reachability, which every waypoint feature exercises'
+  waypoint/listener/filter_chain_matcher/*: 'exempt: HBONE/internal-listener plumbing
+    between ztunnel, waypoint and Envoy internal listeners; observable only as reachability,
+    which every waypoint feature exercises'
+  waypoint/listener/filter_chains/filters[connect_authority]/*: 'exempt: HBONE/internal-listener
+    plumbing between ztunnel, waypoint and Envoy internal listeners; observable only
+    as reachability, which every waypoint feature exercises'
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/forward_client_cert_details: todo
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http_filters[connect_authority]/*: 'exempt:
+    HBONE/internal-listener plumbing between ztunnel, waypoint and Envoy internal
+    listeners; observable only as reachability, which every waypoint feature exercises'
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/http2_protocol_options/*: 'exempt:
+    HBONE/internal-listener plumbing between ztunnel, waypoint and Envoy internal
+    listeners; observable only as reachability, which every waypoint feature exercises'
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/normalize_path: todo
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/path_with_escaped_slashes_action: todo
+  ? waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/match/connect_matcher
+  : 'exempt: HBONE/internal-listener plumbing between ztunnel, waypoint and Envoy
+    internal listeners; observable only as reachability, which every waypoint feature
+    exercises'
+  ? waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/cluster
+  : feature mesh.routing.path-match
+  ? waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/upgrade_configs/connect_config
+  : 'exempt: HBONE/internal-listener plumbing between ztunnel, waypoint and Envoy
+    internal listeners; observable only as reachability, which every waypoint feature
+    exercises'
+  ? waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/route_config/virtual_hosts/routes/route/upgrade_configs/upgrade_type
+  : todo
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/server_name: todo
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/upgrade_configs/upgrade_type: todo
+  waypoint/listener/filter_chains/filters[envoy.filters.network.http_connection_manager]/use_remote_address: todo
+  waypoint/listener/filter_chains/filters[envoy.filters.network.tcp_proxy]/tunneling_config/*: 'exempt:
+    HBONE/internal-listener plumbing between ztunnel, waypoint and Envoy internal
+    listeners; observable only as reachability, which every waypoint feature exercises'
+  waypoint/listener/filter_chains/transport_socket[tls]/require_client_certificate: 'exempt:
+    HBONE/internal-listener plumbing between ztunnel, waypoint and Envoy internal
+    listeners; observable only as reachability, which every waypoint feature exercises'
+  waypoint/listener/internal_listener: 'exempt: HBONE/internal-listener plumbing between
+    ztunnel, waypoint and Envoy internal listeners; observable only as reachability,
+    which every waypoint feature exercises'
+  ztunnel/service/addresses/address: 'exempt: workload/service identity or naming
+    used for lookup; no behavior choice'
+  ztunnel/service/canonical: 'exempt: workload/service identity or naming used for
+    lookup; no behavior choice'
+  ztunnel/service/hostname: 'exempt: workload/service identity or naming used for
+    lookup; no behavior choice'
+  ztunnel/service/name: 'exempt: workload/service identity or naming used for lookup;
+    no behavior choice'
+  ztunnel/service/namespace: 'exempt: workload/service identity or naming used for
+    lookup; no behavior choice'
+  ztunnel/service/ports/service_port: feature mesh.baseline.reachability
+  ztunnel/service/ports/target_port: feature mesh.baseline.reachability
+  ztunnel/service/waypoint/hbone_mtls_port: 'exempt: waypoint addressing; decided
+    on service/waypoint/hostname/hostname'
+  ztunnel/service/waypoint/hostname/namespace: 'exempt: waypoint addressing; decided
+    on service/waypoint/hostname/hostname'
+  ztunnel/workload/addresses: 'exempt: workload/service identity or naming used for
+    lookup; no behavior choice'
+  ztunnel/workload/cluster_id: 'exempt: workload/service identity or naming used for
+    lookup; no behavior choice'
+  ztunnel/workload/name: 'exempt: workload/service identity or naming used for lookup;
+    no behavior choice'
+  ztunnel/workload/namespace: 'exempt: workload/service identity or naming used for
+    lookup; no behavior choice'
+  ztunnel/workload/services[*]/ports/service_port: feature mesh.baseline.reachability
+  ztunnel/workload/services[*]/ports/target_port: feature mesh.baseline.reachability
+  ztunnel/workload/tunnel_protocol: feature mesh.mtls.strict
+  ztunnel/workload/uid: 'exempt: workload/service identity or naming used for lookup;
+    no behavior choice'
+  ztunnel/workload/workload_name: 'exempt: workload/service identity or naming used
+    for lookup; no behavior choice'
+  ztunnel/workload/workload_type: 'exempt: workload/service identity or naming used
+    for lookup; no behavior choice'
+maxTodo: 96

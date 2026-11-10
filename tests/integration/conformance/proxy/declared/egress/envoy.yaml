@@ -1,0 +1,26 @@
+# Declared support of envoy in the egress role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/integration/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; an ignored security.* feature also needs an issue.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/integration/conformance/proxy/ -run TestEgressConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/integration/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  egress.authz.l7-path:
+    status: unknown
+  egress.baseline.via-gateway:
+    status: unknown
+  egress.tcp.via-gateway:
+    status: unknown
+  egress.tls-origination.ca:
+    status: unknown
+  egress.tls-origination.untrusted:
+    status: unknown
+maxUnknown: 5
+reference: true

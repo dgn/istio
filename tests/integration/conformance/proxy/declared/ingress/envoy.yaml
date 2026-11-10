@@ -1,0 +1,306 @@
+# Declared support of envoy in the ingress role for the proxy conformance suite features.
+# Checked by TestDeclaredSupport (go test ./tests/integration/conformance/proxy/coverage/).
+#
+# - status: supported|partial|rejected|fail-closed|ignored|fail|unsupported|unknown. Every status
+#   except supported and unknown needs a reason; an ignored security.* feature also needs an issue.
+#   cases lists the passing subcases of a partial feature.
+# - maxUnknown is a ratchet: the number of unknown entries may only go down.
+# - reference: true marks the role's reference implementation; its entries are never added as unknown.
+#
+# Refresh from a run against a cluster (keeps reason/issue when the status is unchanged):
+#   go test -tags=integ ./tests/integration/conformance/proxy/ -run TestIngressConformance -istio.test.pcs.update-declared
+# Add new features / drop removed ones (non-reference files only add unknown entries):
+#   go test ./tests/integration/conformance/proxy/coverage/ -run TestDeclaredSupport -update
+features:
+  backend.destinationrule.consistent-hash:
+    status: supported
+  backend.destinationrule.consistent-hash-cookie:
+    status: supported
+  backend.destinationrule.consistent-hash-source-ip:
+    status: supported
+  backend.destinationrule.h2-upgrade:
+    status: supported
+  backend.destinationrule.lb-round-robin:
+    status: supported
+  backend.destinationrule.port-level-settings:
+    status: supported
+  backend.destinationrule.subset-traffic-policy:
+    status: supported
+  backend.destinationrule.tls-disable-and-istio-mutual:
+    status: supported
+  backend.destinationrule.tls-mutual:
+    status: supported
+  backend.destinationrule.tls-origination:
+    status: supported
+  backend.destinationrule.tls-san-mismatch:
+    status: supported
+  backend.destinationrule.use-client-protocol:
+    status: supported
+  backend.mesh.authz-gateway-principal:
+    status: supported
+  backend.mesh.auto-mtls:
+    status: supported
+  backend.mesh.peerauthentication-disable:
+    status: supported
+  backend.mesh.peerauthentication-strict:
+    status: supported
+  backend.serviceentry.dns-round-robin:
+    status: supported
+  backend.serviceentry.hostname-backendref:
+    status: supported
+  backend.serviceentry.static-endpoints:
+    status: supported
+  dataplane.default-retry-on-connect-failure:
+    status: supported
+  dataplane.host-case-insensitive:
+    status: supported
+  dataplane.host-port-ignored:
+    status: supported
+  dataplane.no-route-404:
+    status: supported
+  dataplane.path-normalization:
+    status: supported
+  dataplane.proxy-protocol.downstream:
+    status: supported
+  dataplane.proxy-protocol.upstream:
+    status: supported
+  dataplane.request-id:
+    status: supported
+  dataplane.trace-context-propagation:
+    status: supported
+  dataplane.x-forwarded-proto:
+    status: supported
+  dataplane.xfcc.always-forward-only:
+    status: supported
+  dataplane.xfcc.sanitize:
+    status: supported
+  dataplane.xff.append-client-ip:
+    status: supported
+  dataplane.xff.num-trusted-proxies:
+    status: supported
+  dataplane.xff.untrusted-by-default:
+    status: supported
+  impl-specific.envoyfilter:
+    status: supported
+  impl-specific.trafficextension-lua:
+    status: supported
+  infra.addresses-hostname-manual-deployment:
+    status: supported
+  infra.gateway-metadata-copied:
+    status: supported
+  infra.gatewayclass-defaults-configmap:
+    status: supported
+  infra.name-override-annotation:
+    status: supported
+  infra.owner-references:
+    status: supported
+  infra.parametersref-configmap:
+    status: supported
+  infra.parametersref-hpa-pdb-serviceaccount:
+    status: supported
+  infra.reconcile-drift:
+    status: supported
+  infra.service-account-annotation:
+    status: supported
+  infra.service-ports-from-listeners:
+    status: supported
+  infra.service-type-annotation:
+    status: supported
+  infra.standard-labels:
+    status: supported
+  istioapi.gateway-virtualservice.route:
+    status: supported
+  istioapi.gateway.https-redirect:
+    status: supported
+  istioapi.gateway.tls-simple:
+    status: supported
+  istioapi.virtualservice.claim-routing:
+    status: supported
+  istioapi.virtualservice.cors:
+    status: supported
+  istioapi.virtualservice.cors-full:
+    status: supported
+  istioapi.virtualservice.delegate:
+    status: supported
+  istioapi.virtualservice.direct-response:
+    status: supported
+  istioapi.virtualservice.direct-response-bytes:
+    status: supported
+  istioapi.virtualservice.export-to:
+    status: supported
+  istioapi.virtualservice.fault-abort:
+    status: supported
+  istioapi.virtualservice.fault-delay:
+    status: supported
+  istioapi.virtualservice.fault-percentages:
+    status: supported
+  istioapi.virtualservice.header-and-rewrite:
+    status: supported
+  istioapi.virtualservice.headers-full:
+    status: supported
+  istioapi.virtualservice.match-authority:
+    status: supported
+  istioapi.virtualservice.match-more:
+    status: supported
+  istioapi.virtualservice.match-variants:
+    status: supported
+  istioapi.virtualservice.mirror:
+    status: supported
+  istioapi.virtualservice.mirrors:
+    status: supported
+  istioapi.virtualservice.per-try-timeout:
+    status: supported
+  istioapi.virtualservice.redirect:
+    status: supported
+  istioapi.virtualservice.redirect-more:
+    status: supported
+  istioapi.virtualservice.retries:
+    status: supported
+  istioapi.virtualservice.rewrite-more:
+    status: supported
+  istioapi.virtualservice.subsets:
+    status: supported
+  istioapi.virtualservice.tcp:
+    status: supported
+  istioapi.virtualservice.tcp-match-weight:
+    status: supported
+  istioapi.virtualservice.timeout:
+    status: supported
+  istioapi.virtualservice.tls-sni-passthrough:
+    status: supported
+  istioapi.virtualservice.weights:
+    status: supported
+  listener.tls-option.terminate-mode-mutual:
+    status: supported
+  listener.tls-option.terminate-mode-optional-mutual:
+    status: supported
+  listener.tls.terminate-tcproute:
+    status: supported
+  protocol.http1-upstream-default:
+    status: supported
+  protocol.http2-downstream:
+    status: supported
+  protocol.http2-upstream-appprotocol:
+    status: supported
+  protocol.websocket:
+    status: supported
+  proxyconfig.connection.escaped-slashes:
+    status: supported
+  proxyconfig.connection.headers-with-underscores:
+    status: supported
+  proxyconfig.connection.merge-slashes:
+    status: supported
+  proxyconfig.proxyheaders.attempt-count-disabled:
+    status: supported
+  proxyconfig.proxyheaders.debug-headers-disabled:
+    status: supported
+  proxyconfig.proxyheaders.metadata-exchange-in-mesh:
+    status: supported
+  proxyconfig.proxyheaders.request-id-disabled:
+    status: supported
+  proxyconfig.proxyheaders.server-disabled:
+    status: supported
+  proxyconfig.proxyheaders.server-value:
+    status: supported
+  proxyconfig.proxyheaders.x-forwarded-port-host:
+    status: supported
+  security.authz.allow-nothing:
+    status: supported
+  security.authz.allow.header:
+    status: supported
+  security.authz.audit:
+    status: supported
+  security.authz.custom-ext-authz:
+    status: supported
+  security.authz.custom-ext-authz-grpc:
+    status: supported
+  security.authz.custom-ext-authz-headers:
+    status: supported
+  security.authz.deny-overrides-allow:
+    status: supported
+  security.authz.deny.host:
+    status: supported
+  security.authz.deny.method-header:
+    status: supported
+  security.authz.deny.path:
+    status: supported
+  security.authz.ip-blocks-l4:
+    status: supported
+  security.authz.namespace-wide:
+    status: supported
+  security.authz.not-hosts-not-values:
+    status: supported
+  security.authz.not-ip-blocks:
+    status: supported
+  security.authz.not-request-principals:
+    status: supported
+  security.authz.not-values:
+    status: supported
+  security.authz.remote-ip:
+    status: supported
+  security.authz.root-namespace:
+    status: supported
+  security.authz.selector:
+    status: supported
+  security.authz.source-identity-plaintext:
+    status: supported
+  security.authz.targetref-scoped:
+    status: supported
+  security.jwt.audiences:
+    status: supported
+  security.jwt.claims-authz:
+    status: supported
+  security.jwt.forward-original-token:
+    status: supported
+  security.jwt.from-cookies:
+    status: supported
+  security.jwt.from-header-and-param:
+    status: supported
+  security.jwt.multiple-issuers:
+    status: supported
+  security.jwt.output-claim-to-headers:
+    status: supported
+  security.jwt.output-payload-to-header:
+    status: supported
+  security.jwt.presence-required:
+    status: supported
+  security.jwt.require-principal:
+    status: supported
+  security.jwt.selector:
+    status: supported
+  security.jwt.space-delimited-claims:
+    status: supported
+  security.jwt.strip-token:
+    status: supported
+  security.jwt.validation:
+    status: supported
+  status.address-type-annotation:
+    status: supported
+  telemetry.accesslog.disabled:
+    reason: 'istiod bug: Telemetry accessLogging disabled without a provider has no
+      effect when logs come from meshConfig.accessLogFile (design doc §4.1 finding
+      2)'
+    status: fail
+  telemetry.accesslog.disabled-named-provider:
+    status: supported
+  telemetry.accesslog.filter:
+    status: supported
+  telemetry.accesslog.mesh-default:
+    status: supported
+  telemetry.accesslog.selector:
+    reason: 'istiod bug: Telemetry accessLogging disabled without a provider has no
+      effect when logs come from meshConfig.accessLogFile (design doc §4.1 finding
+      2)'
+    status: fail
+  telemetry.metrics.disabled:
+    status: supported
+  telemetry.metrics.istio-requests-total:
+    status: supported
+  telemetry.metrics.tag-override:
+    status: supported
+  telemetry.metrics.tag-remove:
+    status: supported
+  telemetry.metrics.tcp:
+    status: supported
+maxUnknown: 0
+reference: true

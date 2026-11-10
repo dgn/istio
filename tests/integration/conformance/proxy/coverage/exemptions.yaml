@@ -1,0 +1,1368 @@
+# API surface not (yet) covered by the proxy conformance suite, with the reason.
+# Checked by TestCoverage (go test ./tests/integration/conformance/proxy/coverage/).
+#
+# - "todo" entries are the backlog. maxTodo is a ratchet: it may only go down, so new API surface
+#   needs a conformance feature (Feature.Covers) or a real reason here.
+# - "key:<string>" entries exempt Istio-specific keys found in the Gateway API translators.
+# - Entries ending in "*" exempt every entry with that prefix: "<Kind>.<path>.*" a whole subtree
+#   (e.g. sidecar-only MeshConfig sections), "annotation:<prefix>*" an annotation family.
+# - roleScope keys match an entry and its fields; a key ending in "*" matches by plain prefix.
+#   interactions.yaml adds implicit roleScope entries for interaction:<id> from each entry's roles.
+# - Run with -update to drop stale/covered entries after adding features.
+exempt:
+  AuthorizationPolicy.action: todo
+  AuthorizationPolicy.rules.from: todo
+  AuthorizationPolicy.rules.from.source: todo
+  AuthorizationPolicy.rules.from.source.notServiceAccounts: todo
+  AuthorizationPolicy.rules.from.source.notTrustDomains: todo
+  AuthorizationPolicy.rules.from.source.trustDomains: todo
+  AuthorizationPolicy.rules.to: todo
+  AuthorizationPolicy.rules.to.operation: todo
+  AuthorizationPolicy.rules.when: todo
+  AuthorizationPolicy.targetRef: todo
+  AuthorizationPolicy.targetRef.group: todo
+  AuthorizationPolicy.targetRef.kind: todo
+  AuthorizationPolicy.targetRef.name: todo
+  AuthorizationPolicy.targetRef.namespace: todo
+  AuthorizationPolicy.targetRefs.namespace: todo
+  DestinationRule.exportTo: todo
+  DestinationRule.trafficPolicy: todo
+  DestinationRule.trafficPolicy.connectionPool: todo
+  DestinationRule.trafficPolicy.connectionPool.http: todo
+  DestinationRule.trafficPolicy.connectionPool.http.h2UpgradePolicy=DEFAULT: todo
+  DestinationRule.trafficPolicy.connectionPool.http.h2UpgradePolicy=DO_NOT_UPGRADE: todo
+  DestinationRule.trafficPolicy.connectionPool.http.http1MaxPendingRequests: todo
+  DestinationRule.trafficPolicy.connectionPool.http.http2KeepAlive: todo
+  DestinationRule.trafficPolicy.connectionPool.http.http2KeepAlive.interval: todo
+  DestinationRule.trafficPolicy.connectionPool.http.http2KeepAlive.timeout: todo
+  DestinationRule.trafficPolicy.connectionPool.http.http2MaxRequests: todo
+  DestinationRule.trafficPolicy.connectionPool.http.idleTimeout: todo
+  DestinationRule.trafficPolicy.connectionPool.http.maxConcurrentStreams: todo
+  DestinationRule.trafficPolicy.connectionPool.http.maxRequestsPerConnection: todo
+  DestinationRule.trafficPolicy.connectionPool.http.maxRetries: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.connectTimeout: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.idleTimeout: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.maxConnectionDuration: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.maxConnections: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.tcpKeepalive: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.tcpKeepalive.interval: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.tcpKeepalive.probes: todo
+  DestinationRule.trafficPolicy.connectionPool.tcp.tcpKeepalive.time: todo
+  DestinationRule.trafficPolicy.loadBalancer: todo
+  DestinationRule.trafficPolicy.loadBalancer.backendUtilization: todo
+  DestinationRule.trafficPolicy.loadBalancer.backendUtilization.errorUtilizationPenaltyPercent: todo
+  DestinationRule.trafficPolicy.loadBalancer.backendUtilization.metricNamesForComputingUtilization: todo
+  DestinationRule.trafficPolicy.loadBalancer.backendUtilization.weightExpirationPeriod: todo
+  DestinationRule.trafficPolicy.loadBalancer.backendUtilization.weightStabilizationPeriod: todo
+  DestinationRule.trafficPolicy.loadBalancer.backendUtilization.weightUpdatePeriod: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.httpCookie.attributes: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.httpCookie.attributes.name: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.httpCookie.attributes.value: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.httpCookie.path: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.httpQueryParameterName: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.maglev: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.maglev.tableSize: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.ringHash: todo
+  DestinationRule.trafficPolicy.loadBalancer.consistentHash.ringHash.minimumRingSize: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.distribute: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.distribute.from: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.distribute.to: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.enabled: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.failover: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.failover.from: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.failover.to: todo
+  DestinationRule.trafficPolicy.loadBalancer.localityLbSetting.failoverPriority: todo
+  DestinationRule.trafficPolicy.loadBalancer.simple=LEAST_REQUEST: todo
+  DestinationRule.trafficPolicy.loadBalancer.simple=PASSTHROUGH: todo
+  DestinationRule.trafficPolicy.loadBalancer.simple=RANDOM: todo
+  DestinationRule.trafficPolicy.loadBalancer.warmup: todo
+  DestinationRule.trafficPolicy.loadBalancer.warmup.aggression: todo
+  DestinationRule.trafficPolicy.loadBalancer.warmup.duration: todo
+  DestinationRule.trafficPolicy.loadBalancer.warmup.minimumPercent: todo
+  DestinationRule.trafficPolicy.loadBalancer.warmupDurationSecs: todo
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting: todo
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting.enabled: todo
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting.failover: todo
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting.failover.from: todo
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting.failover.to: todo
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting.failoverPriority: todo
+  DestinationRule.trafficPolicy.loadBalancer.zoneAwareLbSetting.minClusterSize: todo
+  DestinationRule.trafficPolicy.outlierDetection: todo
+  DestinationRule.trafficPolicy.outlierDetection.baseEjectionTime: todo
+  DestinationRule.trafficPolicy.outlierDetection.consecutive5xxErrors: todo
+  DestinationRule.trafficPolicy.outlierDetection.consecutiveGatewayErrors: todo
+  DestinationRule.trafficPolicy.outlierDetection.consecutiveLocalOriginFailures: todo
+  DestinationRule.trafficPolicy.outlierDetection.failurePercentageThreshold: todo
+  DestinationRule.trafficPolicy.outlierDetection.interval: todo
+  DestinationRule.trafficPolicy.outlierDetection.maxEjectionPercent: todo
+  DestinationRule.trafficPolicy.outlierDetection.minHealthPercent: todo
+  DestinationRule.trafficPolicy.outlierDetection.outlierDetectionHttpErrorCodes: todo
+  DestinationRule.trafficPolicy.outlierDetection.splitExternalLocalOriginErrors: todo
+  DestinationRule.trafficPolicy.proxyProtocol.version: todo
+  DestinationRule.trafficPolicy.proxyProtocol.version=V2: todo
+  DestinationRule.trafficPolicy.retryBudget: todo
+  DestinationRule.trafficPolicy.retryBudget.budgetInterval: todo
+  DestinationRule.trafficPolicy.retryBudget.minRetryConcurrency: todo
+  DestinationRule.trafficPolicy.retryBudget.percent: todo
+  DestinationRule.trafficPolicy.tls.caCertCredentialName: todo
+  DestinationRule.trafficPolicy.tls.caCertificates: todo
+  DestinationRule.trafficPolicy.tls.caCrl: todo
+  DestinationRule.trafficPolicy.tls.clientCertificate: todo
+  DestinationRule.trafficPolicy.tls.insecureSkipVerify: todo
+  DestinationRule.trafficPolicy.tls.privateKey: todo
+  DestinationRule.trafficPolicy.tunnel: todo
+  DestinationRule.trafficPolicy.tunnel.protocol: todo
+  DestinationRule.trafficPolicy.tunnel.targetHost: todo
+  DestinationRule.trafficPolicy.tunnel.targetPort: todo
+  DestinationRule.workloadSelector: todo
+  DestinationRule.workloadSelector.matchLabels: todo
+  EnvoyFilter.*: Envoy-specific extension API (raw Envoy config patches); not a conformance
+    requirement, see impl-specific.* features
+  Gateway.servers.bind: todo
+  Gateway.servers.defaultEndpoint: todo
+  Gateway.servers.name: todo
+  Gateway.servers.port.name: todo
+  Gateway.servers.tls.alpnProtocols: todo
+  Gateway.servers.tls.caCertCredentialName: todo
+  Gateway.servers.tls.caCertificates: todo
+  Gateway.servers.tls.caCrl: todo
+  Gateway.servers.tls.cipherSuites: todo
+  Gateway.servers.tls.credentialNames: todo
+  Gateway.servers.tls.ecdhCurves: todo
+  Gateway.servers.tls.insecureSkipVerify: todo
+  Gateway.servers.tls.maxProtocolVersion: todo
+  Gateway.servers.tls.maxProtocolVersion=TLS_AUTO: todo
+  Gateway.servers.tls.maxProtocolVersion=TLSV1_0: todo
+  Gateway.servers.tls.maxProtocolVersion=TLSV1_1: todo
+  Gateway.servers.tls.maxProtocolVersion=TLSV1_2: todo
+  Gateway.servers.tls.maxProtocolVersion=TLSV1_3: todo
+  Gateway.servers.tls.minProtocolVersion: todo
+  Gateway.servers.tls.minProtocolVersion=TLS_AUTO: todo
+  Gateway.servers.tls.minProtocolVersion=TLSV1_0: todo
+  Gateway.servers.tls.minProtocolVersion=TLSV1_1: todo
+  Gateway.servers.tls.minProtocolVersion=TLSV1_2: todo
+  Gateway.servers.tls.minProtocolVersion=TLSV1_3: todo
+  Gateway.servers.tls.mode: todo
+  Gateway.servers.tls.mode=AUTO_PASSTHROUGH: todo
+  Gateway.servers.tls.mode=ISTIO_MUTUAL: todo
+  Gateway.servers.tls.mode=MUTUAL: todo
+  Gateway.servers.tls.mode=OPTIONAL_MUTUAL: todo
+  Gateway.servers.tls.privateKey: todo
+  Gateway.servers.tls.serverCertificate: todo
+  Gateway.servers.tls.subjectAltNames: todo
+  Gateway.servers.tls.tlsCertificates: todo
+  Gateway.servers.tls.tlsCertificates.caCertificates: todo
+  Gateway.servers.tls.tlsCertificates.privateKey: todo
+  Gateway.servers.tls.tlsCertificates.serverCertificate: todo
+  Gateway.servers.tls.verifyCertificateHash: todo
+  Gateway.servers.tls.verifyCertificateSpki: todo
+  MeshConfig.accessLogEncoding: todo
+  MeshConfig.accessLogEncoding=JSON: todo
+  MeshConfig.accessLogEncoding=TEXT: todo
+  MeshConfig.accessLogFile: todo
+  MeshConfig.accessLogFormat: todo
+  MeshConfig.ca.*: istiod/CA configuration; no per-proxy observable behavior
+  MeshConfig.caCertificates: todo
+  MeshConfig.caCertificates.certSigners: todo
+  MeshConfig.caCertificates.pem: todo
+  MeshConfig.caCertificates.spiffeBundleUrl: todo
+  MeshConfig.caCertificates.trustDomains: todo
+  MeshConfig.configSources.*: istiod config ingestion; no per-proxy observable behavior
+  MeshConfig.connectTimeout: todo
+  MeshConfig.defaultConfig.*: same fields as ProxyConfig.*, which is tracked directly
+  MeshConfig.defaultDestinationRuleExportTo: todo
+  MeshConfig.defaultHttpRetryPolicy: todo
+  MeshConfig.defaultHttpRetryPolicy.attempts: todo
+  MeshConfig.defaultHttpRetryPolicy.backoff: todo
+  MeshConfig.defaultHttpRetryPolicy.perTryTimeout: todo
+  MeshConfig.defaultHttpRetryPolicy.retryIgnorePreviousHosts: todo
+  MeshConfig.defaultHttpRetryPolicy.retryOn: todo
+  MeshConfig.defaultHttpRetryPolicy.retryRemoteLocalities: todo
+  MeshConfig.defaultInboundHttpRetryPolicy.*: 'sidecar-only: applies to inbound sidecar
+    listeners'
+  MeshConfig.defaultProviders: todo
+  MeshConfig.defaultProviders.accessLogging: todo
+  MeshConfig.defaultProviders.metrics: todo
+  MeshConfig.defaultProviders.tracing: todo
+  MeshConfig.defaultServiceExportTo: todo
+  MeshConfig.defaultTrafficPolicy: todo
+  MeshConfig.defaultVirtualServiceExportTo: todo
+  MeshConfig.disableEnvoyListenerLog: todo
+  MeshConfig.discoverySelectors: todo
+  MeshConfig.discoverySelectors.matchExpressions: todo
+  MeshConfig.discoverySelectors.matchExpressions.key: todo
+  MeshConfig.discoverySelectors.matchExpressions.operator: todo
+  MeshConfig.discoverySelectors.matchExpressions.values: todo
+  MeshConfig.discoverySelectors.matchLabels: todo
+  MeshConfig.dnsRefreshRate: todo
+  MeshConfig.enableAutoMtls: todo
+  MeshConfig.enableEnvoyAccessLogService: todo
+  MeshConfig.enablePrometheusMerge: todo
+  MeshConfig.enableTracing: todo
+  MeshConfig.extensionProviders: todo
+  MeshConfig.extensionProviders.datadog: todo
+  MeshConfig.extensionProviders.datadog.maxTagLength: todo
+  MeshConfig.extensionProviders.datadog.port: todo
+  MeshConfig.extensionProviders.datadog.service: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.clearRouteCache: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.failOpen: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.includeRequestBodyInCheck: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.includeRequestBodyInCheck.allowPartialMessage: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.includeRequestBodyInCheck.maxRequestBytes: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.includeRequestBodyInCheck.packAsBytes: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.port: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.service: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.statusOnError: todo
+  MeshConfig.extensionProviders.envoyExtAuthzGrpc.timeout: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.clearRouteCache: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.failOpen: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.headersToDownstreamOnAllow: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.headersToDownstreamOnDeny: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.headersToUpstreamOnAllow: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.includeAdditionalHeadersInCheck: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.includeRequestBodyInCheck: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.includeRequestBodyInCheck.allowPartialMessage: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.includeRequestBodyInCheck.maxRequestBytes: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.includeRequestBodyInCheck.packAsBytes: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.includeRequestHeadersInCheck: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.pathPrefix: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.port: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.service: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.statusOnError: todo
+  MeshConfig.extensionProviders.envoyExtAuthzHttp.timeout: todo
+  MeshConfig.extensionProviders.envoyFileAccessLog: todo
+  MeshConfig.extensionProviders.envoyFileAccessLog.logFormat: todo
+  MeshConfig.extensionProviders.envoyFileAccessLog.logFormat.labels: todo
+  MeshConfig.extensionProviders.envoyFileAccessLog.logFormat.text: todo
+  MeshConfig.extensionProviders.envoyFileAccessLog.omitEmptyValues: todo
+  MeshConfig.extensionProviders.envoyFileAccessLog.path: todo
+  MeshConfig.extensionProviders.envoyHttpAls: todo
+  MeshConfig.extensionProviders.envoyHttpAls.additionalRequestHeadersToLog: todo
+  MeshConfig.extensionProviders.envoyHttpAls.additionalResponseHeadersToLog: todo
+  MeshConfig.extensionProviders.envoyHttpAls.additionalResponseTrailersToLog: todo
+  MeshConfig.extensionProviders.envoyHttpAls.filterStateObjectsToLog: todo
+  MeshConfig.extensionProviders.envoyHttpAls.logName: todo
+  MeshConfig.extensionProviders.envoyHttpAls.port: todo
+  MeshConfig.extensionProviders.envoyHttpAls.service: todo
+  MeshConfig.extensionProviders.envoyOtelAls: todo
+  MeshConfig.extensionProviders.envoyOtelAls.logFormat: todo
+  MeshConfig.extensionProviders.envoyOtelAls.logFormat.labels: todo
+  MeshConfig.extensionProviders.envoyOtelAls.logFormat.text: todo
+  MeshConfig.extensionProviders.envoyOtelAls.logName: todo
+  MeshConfig.extensionProviders.envoyOtelAls.port: todo
+  MeshConfig.extensionProviders.envoyOtelAls.service: todo
+  MeshConfig.extensionProviders.envoyTcpAls: todo
+  MeshConfig.extensionProviders.envoyTcpAls.filterStateObjectsToLog: todo
+  MeshConfig.extensionProviders.envoyTcpAls.logName: todo
+  MeshConfig.extensionProviders.envoyTcpAls.port: todo
+  MeshConfig.extensionProviders.envoyTcpAls.service: todo
+  MeshConfig.extensionProviders.name: todo
+  MeshConfig.extensionProviders.opentelemetry: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.clusterId: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.http: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.http.headers: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.http.headers.envName: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.http.headers.name: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.http.headers.value: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.http.path: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.http.timeout: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.port: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.httpService.service: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.rootSpansPerMinute: todo
+  MeshConfig.extensionProviders.opentelemetry.dynatraceSampler.tenant: todo
+  MeshConfig.extensionProviders.opentelemetry.grpc: todo
+  MeshConfig.extensionProviders.opentelemetry.grpc.initialMetadata: todo
+  MeshConfig.extensionProviders.opentelemetry.grpc.initialMetadata.envName: todo
+  MeshConfig.extensionProviders.opentelemetry.grpc.initialMetadata.name: todo
+  MeshConfig.extensionProviders.opentelemetry.grpc.initialMetadata.value: todo
+  MeshConfig.extensionProviders.opentelemetry.grpc.timeout: todo
+  MeshConfig.extensionProviders.opentelemetry.http: todo
+  MeshConfig.extensionProviders.opentelemetry.http.headers: todo
+  MeshConfig.extensionProviders.opentelemetry.http.headers.envName: todo
+  MeshConfig.extensionProviders.opentelemetry.http.headers.name: todo
+  MeshConfig.extensionProviders.opentelemetry.http.headers.value: todo
+  MeshConfig.extensionProviders.opentelemetry.http.path: todo
+  MeshConfig.extensionProviders.opentelemetry.http.timeout: todo
+  MeshConfig.extensionProviders.opentelemetry.maxTagLength: todo
+  MeshConfig.extensionProviders.opentelemetry.port: todo
+  MeshConfig.extensionProviders.opentelemetry.resourceDetectors: todo
+  MeshConfig.extensionProviders.opentelemetry.resourceDetectors.dynatrace: todo
+  MeshConfig.extensionProviders.opentelemetry.resourceDetectors.environment: todo
+  MeshConfig.extensionProviders.opentelemetry.service: todo
+  MeshConfig.extensionProviders.opentelemetry.serviceAttributeEnrichment: todo
+  MeshConfig.extensionProviders.opentelemetry.serviceAttributeEnrichment=ISTIO_CANONICAL: todo
+  MeshConfig.extensionProviders.opentelemetry.serviceAttributeEnrichment=OTEL_SEMANTIC_CONVENTIONS: todo
+  MeshConfig.extensionProviders.prometheus: todo
+  MeshConfig.extensionProviders.sds: todo
+  MeshConfig.extensionProviders.sds.name: todo
+  MeshConfig.extensionProviders.sds.port: todo
+  MeshConfig.extensionProviders.sds.service: todo
+  MeshConfig.extensionProviders.skywalking: todo
+  MeshConfig.extensionProviders.skywalking.accessToken: todo
+  MeshConfig.extensionProviders.skywalking.port: todo
+  MeshConfig.extensionProviders.skywalking.service: todo
+  MeshConfig.extensionProviders.stackdriver: todo
+  MeshConfig.extensionProviders.stackdriver.logging: todo
+  MeshConfig.extensionProviders.stackdriver.logging.labels: todo
+  MeshConfig.extensionProviders.stackdriver.maxTagLength: todo
+  MeshConfig.extensionProviders.zipkin: todo
+  MeshConfig.extensionProviders.zipkin.enable64bitTraceId: todo
+  MeshConfig.extensionProviders.zipkin.headers: todo
+  MeshConfig.extensionProviders.zipkin.headers.envName: todo
+  MeshConfig.extensionProviders.zipkin.headers.name: todo
+  MeshConfig.extensionProviders.zipkin.headers.value: todo
+  MeshConfig.extensionProviders.zipkin.maxTagLength: todo
+  MeshConfig.extensionProviders.zipkin.path: todo
+  MeshConfig.extensionProviders.zipkin.port: todo
+  MeshConfig.extensionProviders.zipkin.service: todo
+  MeshConfig.extensionProviders.zipkin.timeout: todo
+  MeshConfig.extensionProviders.zipkin.traceContextOption: todo
+  MeshConfig.extensionProviders.zipkin.traceContextOption=USE_B3: todo
+  MeshConfig.extensionProviders.zipkin.traceContextOption=USE_B3_WITH_W3C_PROPAGATION: todo
+  MeshConfig.h2UpgradePolicy: todo
+  MeshConfig.h2UpgradePolicy=DO_NOT_UPGRADE: todo
+  MeshConfig.h2UpgradePolicy=UPGRADE: todo
+  MeshConfig.hboneIdleTimeout: todo
+  MeshConfig.inboundClusterStatName: todo
+  MeshConfig.inboundTrafficPolicy.*: 'sidecar-only: controls sidecar inbound passthrough'
+  MeshConfig.ingressClass: todo
+  MeshConfig.ingressControllerMode: todo
+  MeshConfig.ingressControllerMode=DEFAULT: todo
+  MeshConfig.ingressControllerMode=OFF: todo
+  MeshConfig.ingressControllerMode=STRICT: todo
+  MeshConfig.ingressSelector: todo
+  MeshConfig.ingressService: todo
+  MeshConfig.localityLbSetting: todo
+  MeshConfig.localityLbSetting.distribute: todo
+  MeshConfig.localityLbSetting.distribute.from: todo
+  MeshConfig.localityLbSetting.distribute.to: todo
+  MeshConfig.localityLbSetting.enabled: todo
+  MeshConfig.localityLbSetting.failover: todo
+  MeshConfig.localityLbSetting.failover.from: todo
+  MeshConfig.localityLbSetting.failover.to: todo
+  MeshConfig.localityLbSetting.failoverPriority: todo
+  MeshConfig.meshMTLS: todo
+  MeshConfig.meshMTLS.cipherSuites: todo
+  MeshConfig.meshMTLS.ecdhCurves: todo
+  MeshConfig.meshMTLS.minProtocolVersion: todo
+  MeshConfig.meshMTLS.minProtocolVersion=TLS_AUTO: todo
+  MeshConfig.meshMTLS.minProtocolVersion=TLSV1_2: todo
+  MeshConfig.meshMTLS.minProtocolVersion=TLSV1_3: todo
+  MeshConfig.outboundClusterStatName: todo
+  MeshConfig.outboundTrafficPolicy.*: 'sidecar-only: controls sidecar outbound passthrough'
+  MeshConfig.pathNormalization: todo
+  MeshConfig.pathNormalization.normalization: todo
+  MeshConfig.pathNormalization.normalization=BASE: todo
+  MeshConfig.pathNormalization.normalization=DECODE_AND_MERGE_SLASHES: todo
+  MeshConfig.pathNormalization.normalization=DEFAULT: todo
+  MeshConfig.pathNormalization.normalization=MERGE_SLASHES: todo
+  MeshConfig.pathNormalization.normalization=NONE: todo
+  MeshConfig.protocolDetectionTimeout: todo
+  MeshConfig.proxyHttpPort: todo
+  MeshConfig.proxyInboundListenPort: todo
+  MeshConfig.proxyListenPort: todo
+  MeshConfig.rootNamespace: todo
+  MeshConfig.serviceEntryVisibility: todo
+  MeshConfig.serviceEntryVisibility.applyToSidecars: todo
+  MeshConfig.serviceEntryVisibility.defaultVisibility: todo
+  MeshConfig.serviceEntryVisibility.defaultVisibility=NAMESPACE: todo
+  MeshConfig.serviceEntryVisibility.defaultVisibility=NONE: todo
+  MeshConfig.serviceEntryVisibility.defaultVisibility=PUBLIC: todo
+  MeshConfig.serviceEntryVisibility.policies: todo
+  MeshConfig.serviceEntryVisibility.policies.matchingRules: todo
+  MeshConfig.serviceEntryVisibility.policies.matchingRules.namespaceSelector: todo
+  MeshConfig.serviceEntryVisibility.policies.matchingRules.namespaceSelector.matchExpressions: todo
+  MeshConfig.serviceEntryVisibility.policies.matchingRules.namespaceSelector.matchExpressions.key: todo
+  MeshConfig.serviceEntryVisibility.policies.matchingRules.namespaceSelector.matchExpressions.operator: todo
+  MeshConfig.serviceEntryVisibility.policies.matchingRules.namespaceSelector.matchExpressions.values: todo
+  MeshConfig.serviceEntryVisibility.policies.matchingRules.namespaceSelector.matchLabels: todo
+  MeshConfig.serviceEntryVisibility.policies.visibility: todo
+  MeshConfig.serviceEntryVisibility.policies.visibility=NAMESPACE: todo
+  MeshConfig.serviceEntryVisibility.policies.visibility=NONE: todo
+  MeshConfig.serviceEntryVisibility.policies.visibility=PUBLIC: todo
+  MeshConfig.serviceScopeConfigs: todo
+  MeshConfig.serviceScopeConfigs.namespaceSelector: todo
+  MeshConfig.serviceScopeConfigs.namespaceSelector.matchExpressions: todo
+  MeshConfig.serviceScopeConfigs.namespaceSelector.matchExpressions.key: todo
+  MeshConfig.serviceScopeConfigs.namespaceSelector.matchExpressions.operator: todo
+  MeshConfig.serviceScopeConfigs.namespaceSelector.matchExpressions.values: todo
+  MeshConfig.serviceScopeConfigs.namespaceSelector.matchLabels: todo
+  MeshConfig.serviceScopeConfigs.scope: todo
+  MeshConfig.serviceScopeConfigs.scope=GLOBAL: todo
+  MeshConfig.serviceScopeConfigs.scope=LOCAL: todo
+  MeshConfig.serviceScopeConfigs.servicesSelector: todo
+  MeshConfig.serviceScopeConfigs.servicesSelector.matchExpressions: todo
+  MeshConfig.serviceScopeConfigs.servicesSelector.matchExpressions.key: todo
+  MeshConfig.serviceScopeConfigs.servicesSelector.matchExpressions.operator: todo
+  MeshConfig.serviceScopeConfigs.servicesSelector.matchExpressions.values: todo
+  MeshConfig.serviceScopeConfigs.servicesSelector.matchLabels: todo
+  MeshConfig.serviceSettings: todo
+  MeshConfig.serviceSettings.hosts: todo
+  MeshConfig.serviceSettings.settings: todo
+  MeshConfig.serviceSettings.settings.clusterLocal: todo
+  MeshConfig.tcpKeepalive: todo
+  MeshConfig.tcpKeepalive.interval: todo
+  MeshConfig.tcpKeepalive.probes: todo
+  MeshConfig.tcpKeepalive.time: todo
+  MeshConfig.tlsDefaults: todo
+  MeshConfig.tlsDefaults.cipherSuites: todo
+  MeshConfig.tlsDefaults.ecdhCurves: todo
+  MeshConfig.tlsDefaults.minProtocolVersion: todo
+  MeshConfig.tlsDefaults.minProtocolVersion=TLS_AUTO: todo
+  MeshConfig.tlsDefaults.minProtocolVersion=TLSV1_2: todo
+  MeshConfig.tlsDefaults.minProtocolVersion=TLSV1_3: todo
+  MeshConfig.trustDomain: todo
+  MeshConfig.trustDomainAliases: todo
+  MeshConfig.zoneAwareLbSetting: todo
+  MeshConfig.zoneAwareLbSetting.enabled: todo
+  MeshConfig.zoneAwareLbSetting.failover: todo
+  MeshConfig.zoneAwareLbSetting.failover.from: todo
+  MeshConfig.zoneAwareLbSetting.failover.to: todo
+  MeshConfig.zoneAwareLbSetting.failoverPriority: todo
+  MeshConfig.zoneAwareLbSetting.minClusterSize: todo
+  PeerAuthentication.mtls.mode: todo
+  PeerAuthentication.mtls.mode=DISABLE: todo
+  PeerAuthentication.mtls.mode=UNSET: todo
+  PeerAuthentication.portLevelMtls.mode=PERMISSIVE: todo
+  PeerAuthentication.portLevelMtls.mode=STRICT: todo
+  PeerAuthentication.portLevelMtls.mode=UNSET: todo
+  ProxyConfig.binaryPath: todo
+  ProxyConfig.caCertificatesPem: todo
+  ProxyConfig.concurrency: todo
+  ProxyConfig.configPath: todo
+  ProxyConfig.connectionSettings.clusterPerConnectionBufferLimitBytes: todo
+  ProxyConfig.connectionSettings.globalDownstreamConnectionLimit: todo
+  ProxyConfig.connectionSettings.http2InitialConnectionWindowSize: todo
+  ProxyConfig.connectionSettings.http2InitialStreamWindowSize: todo
+  ProxyConfig.connectionSettings.httpDrainTimeout: todo
+  ProxyConfig.connectionSettings.httpIdleTimeout: todo
+  ProxyConfig.connectionSettings.httpMaxConcurrentStreams: todo
+  ProxyConfig.connectionSettings.httpMaxConnectionDuration: todo
+  ProxyConfig.connectionSettings.httpMaxStreamDuration: todo
+  ProxyConfig.connectionSettings.httpRequestHeadersTimeout: todo
+  ProxyConfig.connectionSettings.httpRequestTimeout: bounds receiving the request
+    (client to proxy), not the backend response; needs a slow-uploading client, which
+    echo cannot do
+  ProxyConfig.connectionSettings.httpStreamIdleTimeout: todo
+  ProxyConfig.connectionSettings.listenerConnectionLimit: todo
+  ProxyConfig.connectionSettings.listenerPerConnectionBufferLimitBytes: todo
+  ProxyConfig.connectionSettings.profile: todo
+  ProxyConfig.connectionSettings.profile=EDGE: todo
+  ProxyConfig.connectionSettings.profile=SIDECAR: todo
+  ProxyConfig.controlPlaneAuthPolicy: todo
+  ProxyConfig.controlPlaneAuthPolicy=INHERIT: todo
+  ProxyConfig.controlPlaneAuthPolicy=MUTUAL_TLS: todo
+  ProxyConfig.controlPlaneAuthPolicy=NONE: todo
+  ProxyConfig.customConfigFile: todo
+  ProxyConfig.discoveryAddress: todo
+  ProxyConfig.drainDuration: todo
+  ProxyConfig.envoyAccessLogService: todo
+  ProxyConfig.envoyAccessLogService.address: todo
+  ProxyConfig.envoyAccessLogService.tcpKeepalive: todo
+  ProxyConfig.envoyAccessLogService.tcpKeepalive.interval: todo
+  ProxyConfig.envoyAccessLogService.tcpKeepalive.probes: todo
+  ProxyConfig.envoyAccessLogService.tcpKeepalive.time: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.caCertCredentialName: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.caCertificates: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.caCrl: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.clientCertificate: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.credentialName: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.insecureSkipVerify: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.mode: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.mode=DISABLE: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.mode=ISTIO_MUTUAL: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.mode=MUTUAL: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.mode=SIMPLE: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.privateKey: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.sni: todo
+  ProxyConfig.envoyAccessLogService.tlsSettings.subjectAltNames: todo
+  ProxyConfig.envoyMetricsService: todo
+  ProxyConfig.envoyMetricsService.address: todo
+  ProxyConfig.envoyMetricsService.tcpKeepalive: todo
+  ProxyConfig.envoyMetricsService.tcpKeepalive.interval: todo
+  ProxyConfig.envoyMetricsService.tcpKeepalive.probes: todo
+  ProxyConfig.envoyMetricsService.tcpKeepalive.time: todo
+  ProxyConfig.envoyMetricsService.tlsSettings: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.caCertCredentialName: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.caCertificates: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.caCrl: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.clientCertificate: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.credentialName: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.insecureSkipVerify: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.mode: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.mode=DISABLE: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.mode=ISTIO_MUTUAL: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.mode=MUTUAL: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.mode=SIMPLE: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.privateKey: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.sni: todo
+  ProxyConfig.envoyMetricsService.tlsSettings.subjectAltNames: todo
+  ProxyConfig.extraStatTags: todo
+  ProxyConfig.fileFlushInterval: todo
+  ProxyConfig.fileFlushMinSizeKb: todo
+  ProxyConfig.gatewayTopology.forwardClientCertDetails=APPEND_FORWARD: todo
+  ProxyConfig.gatewayTopology.forwardClientCertDetails=FORWARD_ONLY: todo
+  ProxyConfig.gatewayTopology.forwardClientCertDetails=SANITIZE: todo
+  ProxyConfig.gatewayTopology.forwardClientCertDetails=SANITIZE_SET: todo
+  ProxyConfig.gatewayTopology.forwardClientCertDetails=UNDEFINED: todo
+  ProxyConfig.holdApplicationUntilProxyStarts: todo
+  ProxyConfig.image: todo
+  ProxyConfig.image.imageType: todo
+  ProxyConfig.interceptionMode: todo
+  ProxyConfig.interceptionMode=NONE: todo
+  ProxyConfig.interceptionMode=REDIRECT: todo
+  ProxyConfig.interceptionMode=TPROXY: todo
+  ProxyConfig.meshId: todo
+  ProxyConfig.privateKeyProvider: todo
+  ProxyConfig.privateKeyProvider.cryptomb: todo
+  ProxyConfig.privateKeyProvider.cryptomb.fallback: todo
+  ProxyConfig.privateKeyProvider.cryptomb.pollDelay: todo
+  ProxyConfig.privateKeyProvider.qat: todo
+  ProxyConfig.privateKeyProvider.qat.fallback: todo
+  ProxyConfig.privateKeyProvider.qat.pollDelay: todo
+  ProxyConfig.proxyAdminPort: todo
+  ProxyConfig.proxyBootstrapTemplatePath: todo
+  ProxyConfig.proxyHeaders.forwardedClientCert: 'ignored on gateways by design: gateways
+    use gatewayTopology.forwardClientCertDetails and fixed client cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=ALWAYS_FORWARD_ONLY: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=APPEND_FORWARD: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=FORWARD_ONLY: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=SANITIZE: 'ignored on gateways by design:
+    gateways use gatewayTopology.forwardClientCertDetails and fixed client cert details
+    (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=SANITIZE_SET: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.forwardedClientCert=UNDEFINED: 'ignored on gateways by
+    design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.metadataExchangeHeaders.mode=UNDEFINED: todo
+  ProxyConfig.proxyHeaders.preserveHttp1HeaderCase: 'not observable black-box: the
+    echo backend (Go net/http) canonicalizes header names'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails: 'ignored on gateways by design:
+    gateways use gatewayTopology.forwardClientCertDetails and fixed client cert details
+    (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.cert: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.chain: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.dns: 'ignored on gateways by
+    design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.subject: 'ignored on gateways
+    by design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyHeaders.setCurrentClientCertDetails.uri: 'ignored on gateways by
+    design: gateways use gatewayTopology.forwardClientCertDetails and fixed client
+    cert details (pilot/pkg/networking/core/gateway.go:738)'
+  ProxyConfig.proxyMetadata: todo
+  ProxyConfig.proxyStatsMatcher: todo
+  ProxyConfig.proxyStatsMatcher.inclusionPrefixes: todo
+  ProxyConfig.proxyStatsMatcher.inclusionRegexps: todo
+  ProxyConfig.proxyStatsMatcher.inclusionSuffixes: todo
+  ProxyConfig.readinessProbe.*: pod-level probe of the proxy container; not proxy
+    feature behavior
+  ProxyConfig.runtimeValues: todo
+  ProxyConfig.serviceCluster: todo
+  ProxyConfig.statNameLength: todo
+  ProxyConfig.statsCompression: todo
+  ProxyConfig.statsdUdpAddress: todo
+  ProxyConfig.statusPort: pod-level health port of the proxy container; not proxy
+    feature behavior
+  ProxyConfig.terminationDrainDuration: todo
+  ProxyConfig.tracing: todo
+  ProxyConfig.tracing.customTags: todo
+  ProxyConfig.tracing.customTags.environment: todo
+  ProxyConfig.tracing.customTags.environment.defaultValue: todo
+  ProxyConfig.tracing.customTags.environment.name: todo
+  ProxyConfig.tracing.customTags.header: todo
+  ProxyConfig.tracing.customTags.header.defaultValue: todo
+  ProxyConfig.tracing.customTags.header.name: todo
+  ProxyConfig.tracing.customTags.literal: todo
+  ProxyConfig.tracing.customTags.literal.value: todo
+  ProxyConfig.tracing.datadog: todo
+  ProxyConfig.tracing.datadog.address: todo
+  ProxyConfig.tracing.enableIstioTags: todo
+  ProxyConfig.tracing.lightstep: todo
+  ProxyConfig.tracing.lightstep.accessToken: todo
+  ProxyConfig.tracing.lightstep.address: todo
+  ProxyConfig.tracing.maxPathTagLength: todo
+  ProxyConfig.tracing.openCensusAgent: todo
+  ProxyConfig.tracing.openCensusAgent.address: todo
+  ProxyConfig.tracing.openCensusAgent.context: todo
+  ProxyConfig.tracing.openCensusAgent.context=B3: todo
+  ProxyConfig.tracing.openCensusAgent.context=CLOUD_TRACE_CONTEXT: todo
+  ProxyConfig.tracing.openCensusAgent.context=GRPC_BIN: todo
+  ProxyConfig.tracing.openCensusAgent.context=W3C_TRACE_CONTEXT: todo
+  ProxyConfig.tracing.sampling: todo
+  ProxyConfig.tracing.stackdriver: todo
+  ProxyConfig.tracing.stackdriver.debug: todo
+  ProxyConfig.tracing.stackdriver.maxNumberOfAnnotations: todo
+  ProxyConfig.tracing.stackdriver.maxNumberOfAttributes: todo
+  ProxyConfig.tracing.stackdriver.maxNumberOfMessageEvents: todo
+  ProxyConfig.tracing.tlsSettings: todo
+  ProxyConfig.tracing.tlsSettings.caCertCredentialName: todo
+  ProxyConfig.tracing.tlsSettings.caCertificates: todo
+  ProxyConfig.tracing.tlsSettings.caCrl: todo
+  ProxyConfig.tracing.tlsSettings.clientCertificate: todo
+  ProxyConfig.tracing.tlsSettings.credentialName: todo
+  ProxyConfig.tracing.tlsSettings.insecureSkipVerify: todo
+  ProxyConfig.tracing.tlsSettings.mode: todo
+  ProxyConfig.tracing.tlsSettings.mode=DISABLE: todo
+  ProxyConfig.tracing.tlsSettings.mode=ISTIO_MUTUAL: todo
+  ProxyConfig.tracing.tlsSettings.mode=MUTUAL: todo
+  ProxyConfig.tracing.tlsSettings.mode=SIMPLE: todo
+  ProxyConfig.tracing.tlsSettings.privateKey: todo
+  ProxyConfig.tracing.tlsSettings.sni: todo
+  ProxyConfig.tracing.tlsSettings.subjectAltNames: todo
+  ProxyConfig.tracing.zipkin: todo
+  ProxyConfig.tracing.zipkin.address: todo
+  ProxyConfig.tracingServiceName: todo
+  ProxyConfig.tracingServiceName=APP_LABEL_AND_NAMESPACE: todo
+  ProxyConfig.tracingServiceName=CANONICAL_NAME_AND_NAMESPACE: todo
+  ProxyConfig.tracingServiceName=CANONICAL_NAME_ONLY: todo
+  RequestAuthentication.jwtRules.jwksUri: todo
+  RequestAuthentication.jwtRules.presence=OPTIONAL: todo
+  RequestAuthentication.jwtRules.timeout: todo
+  RequestAuthentication.targetRef: todo
+  RequestAuthentication.targetRef.group: todo
+  RequestAuthentication.targetRef.kind: todo
+  RequestAuthentication.targetRef.name: todo
+  RequestAuthentication.targetRef.namespace: todo
+  RequestAuthentication.targetRefs.group: todo
+  RequestAuthentication.targetRefs.kind: todo
+  RequestAuthentication.targetRefs.name: todo
+  RequestAuthentication.targetRefs.namespace: todo
+  ServiceEntry.addresses: todo
+  ServiceEntry.endpoints.labels: todo
+  ServiceEntry.endpoints.locality: todo
+  ServiceEntry.endpoints.network: todo
+  ServiceEntry.endpoints.ports: todo
+  ServiceEntry.endpoints.serviceAccount: todo
+  ServiceEntry.endpoints.weight: todo
+  ServiceEntry.exportTo: todo
+  ServiceEntry.resolution=DYNAMIC_DNS: todo
+  ServiceEntry.resolution=NONE: todo
+  ServiceEntry.subjectAltNames: todo
+  ServiceEntry.workloadSelector.labels: todo
+  Sidecar.egress: todo
+  Sidecar.egress.bind: todo
+  Sidecar.egress.captureMode: todo
+  Sidecar.egress.captureMode=DEFAULT: todo
+  Sidecar.egress.captureMode=IPTABLES: todo
+  Sidecar.egress.captureMode=NONE: todo
+  Sidecar.egress.hosts: todo
+  Sidecar.egress.port: todo
+  Sidecar.egress.port.name: todo
+  Sidecar.egress.port.number: todo
+  Sidecar.egress.port.protocol: todo
+  Sidecar.inboundConnectionPool: todo
+  Sidecar.inboundConnectionPool.http: todo
+  Sidecar.inboundConnectionPool.http.h2UpgradePolicy: todo
+  Sidecar.inboundConnectionPool.http.h2UpgradePolicy=DEFAULT: todo
+  Sidecar.inboundConnectionPool.http.h2UpgradePolicy=DO_NOT_UPGRADE: todo
+  Sidecar.inboundConnectionPool.http.h2UpgradePolicy=UPGRADE: todo
+  Sidecar.inboundConnectionPool.http.http1MaxPendingRequests: todo
+  Sidecar.inboundConnectionPool.http.http2KeepAlive: todo
+  Sidecar.inboundConnectionPool.http.http2KeepAlive.interval: todo
+  Sidecar.inboundConnectionPool.http.http2KeepAlive.timeout: todo
+  Sidecar.inboundConnectionPool.http.http2MaxRequests: todo
+  Sidecar.inboundConnectionPool.http.idleTimeout: todo
+  Sidecar.inboundConnectionPool.http.maxConcurrentStreams: todo
+  Sidecar.inboundConnectionPool.http.maxRequestsPerConnection: todo
+  Sidecar.inboundConnectionPool.http.maxRetries: todo
+  Sidecar.inboundConnectionPool.http.useClientProtocol: todo
+  Sidecar.inboundConnectionPool.tcp: todo
+  Sidecar.inboundConnectionPool.tcp.connectTimeout: todo
+  Sidecar.inboundConnectionPool.tcp.idleTimeout: todo
+  Sidecar.inboundConnectionPool.tcp.maxConnectionDuration: todo
+  Sidecar.inboundConnectionPool.tcp.maxConnections: todo
+  Sidecar.inboundConnectionPool.tcp.tcpKeepalive: todo
+  Sidecar.inboundConnectionPool.tcp.tcpKeepalive.interval: todo
+  Sidecar.inboundConnectionPool.tcp.tcpKeepalive.probes: todo
+  Sidecar.inboundConnectionPool.tcp.tcpKeepalive.time: todo
+  Sidecar.ingress: todo
+  Sidecar.ingress.bind: todo
+  Sidecar.ingress.captureMode: todo
+  Sidecar.ingress.captureMode=DEFAULT: todo
+  Sidecar.ingress.captureMode=IPTABLES: todo
+  Sidecar.ingress.captureMode=NONE: todo
+  Sidecar.ingress.connectionPool: todo
+  Sidecar.ingress.connectionPool.http: todo
+  Sidecar.ingress.connectionPool.http.h2UpgradePolicy: todo
+  Sidecar.ingress.connectionPool.http.h2UpgradePolicy=DEFAULT: todo
+  Sidecar.ingress.connectionPool.http.h2UpgradePolicy=DO_NOT_UPGRADE: todo
+  Sidecar.ingress.connectionPool.http.h2UpgradePolicy=UPGRADE: todo
+  Sidecar.ingress.connectionPool.http.http1MaxPendingRequests: todo
+  Sidecar.ingress.connectionPool.http.http2KeepAlive: todo
+  Sidecar.ingress.connectionPool.http.http2KeepAlive.interval: todo
+  Sidecar.ingress.connectionPool.http.http2KeepAlive.timeout: todo
+  Sidecar.ingress.connectionPool.http.http2MaxRequests: todo
+  Sidecar.ingress.connectionPool.http.idleTimeout: todo
+  Sidecar.ingress.connectionPool.http.maxConcurrentStreams: todo
+  Sidecar.ingress.connectionPool.http.maxRequestsPerConnection: todo
+  Sidecar.ingress.connectionPool.http.maxRetries: todo
+  Sidecar.ingress.connectionPool.http.useClientProtocol: todo
+  Sidecar.ingress.connectionPool.tcp: todo
+  Sidecar.ingress.connectionPool.tcp.connectTimeout: todo
+  Sidecar.ingress.connectionPool.tcp.idleTimeout: todo
+  Sidecar.ingress.connectionPool.tcp.maxConnectionDuration: todo
+  Sidecar.ingress.connectionPool.tcp.maxConnections: todo
+  Sidecar.ingress.connectionPool.tcp.tcpKeepalive: todo
+  Sidecar.ingress.connectionPool.tcp.tcpKeepalive.interval: todo
+  Sidecar.ingress.connectionPool.tcp.tcpKeepalive.probes: todo
+  Sidecar.ingress.connectionPool.tcp.tcpKeepalive.time: todo
+  Sidecar.ingress.defaultEndpoint: todo
+  Sidecar.ingress.port: todo
+  Sidecar.ingress.port.name: todo
+  Sidecar.ingress.port.number: todo
+  Sidecar.ingress.port.protocol: todo
+  Sidecar.ingress.tls: todo
+  Sidecar.ingress.tls.alpnProtocols: todo
+  Sidecar.ingress.tls.caCertCredentialName: todo
+  Sidecar.ingress.tls.caCertificates: todo
+  Sidecar.ingress.tls.caCrl: todo
+  Sidecar.ingress.tls.cipherSuites: todo
+  Sidecar.ingress.tls.credentialName: todo
+  Sidecar.ingress.tls.credentialNames: todo
+  Sidecar.ingress.tls.ecdhCurves: todo
+  Sidecar.ingress.tls.httpsRedirect: todo
+  Sidecar.ingress.tls.insecureSkipVerify: todo
+  Sidecar.ingress.tls.maxProtocolVersion: todo
+  Sidecar.ingress.tls.maxProtocolVersion=TLS_AUTO: todo
+  Sidecar.ingress.tls.maxProtocolVersion=TLSV1_0: todo
+  Sidecar.ingress.tls.maxProtocolVersion=TLSV1_1: todo
+  Sidecar.ingress.tls.maxProtocolVersion=TLSV1_2: todo
+  Sidecar.ingress.tls.maxProtocolVersion=TLSV1_3: todo
+  Sidecar.ingress.tls.minProtocolVersion: todo
+  Sidecar.ingress.tls.minProtocolVersion=TLS_AUTO: todo
+  Sidecar.ingress.tls.minProtocolVersion=TLSV1_0: todo
+  Sidecar.ingress.tls.minProtocolVersion=TLSV1_1: todo
+  Sidecar.ingress.tls.minProtocolVersion=TLSV1_2: todo
+  Sidecar.ingress.tls.minProtocolVersion=TLSV1_3: todo
+  Sidecar.ingress.tls.mode: todo
+  Sidecar.ingress.tls.mode=AUTO_PASSTHROUGH: todo
+  Sidecar.ingress.tls.mode=ISTIO_MUTUAL: todo
+  Sidecar.ingress.tls.mode=MUTUAL: todo
+  Sidecar.ingress.tls.mode=OPTIONAL_MUTUAL: todo
+  Sidecar.ingress.tls.mode=PASSTHROUGH: todo
+  Sidecar.ingress.tls.mode=SIMPLE: todo
+  Sidecar.ingress.tls.privateKey: todo
+  Sidecar.ingress.tls.serverCertificate: todo
+  Sidecar.ingress.tls.subjectAltNames: todo
+  Sidecar.ingress.tls.tlsCertificates: todo
+  Sidecar.ingress.tls.tlsCertificates.caCertificates: todo
+  Sidecar.ingress.tls.tlsCertificates.privateKey: todo
+  Sidecar.ingress.tls.tlsCertificates.serverCertificate: todo
+  Sidecar.ingress.tls.verifyCertificateHash: todo
+  Sidecar.ingress.tls.verifyCertificateSpki: todo
+  Sidecar.outboundTrafficPolicy: todo
+  Sidecar.outboundTrafficPolicy.egressProxy: todo
+  Sidecar.outboundTrafficPolicy.egressProxy.host: todo
+  Sidecar.outboundTrafficPolicy.egressProxy.port: todo
+  Sidecar.outboundTrafficPolicy.egressProxy.port.number: todo
+  Sidecar.outboundTrafficPolicy.egressProxy.subset: todo
+  Sidecar.outboundTrafficPolicy.mode: todo
+  Sidecar.outboundTrafficPolicy.mode=ALLOW_ANY: todo
+  Sidecar.outboundTrafficPolicy.mode=REGISTRY_ONLY: todo
+  Sidecar.workloadSelector: todo
+  Sidecar.workloadSelector.labels: todo
+  Telemetry.accessLogging.match: todo
+  Telemetry.accessLogging.match.mode: todo
+  Telemetry.accessLogging.match.mode=CLIENT: todo
+  Telemetry.accessLogging.match.mode=CLIENT_AND_SERVER: todo
+  Telemetry.accessLogging.match.mode=SERVER: todo
+  Telemetry.metrics.overrides.match.customMetric: todo
+  Telemetry.metrics.overrides.match.metric=ALL_METRICS: todo
+  Telemetry.metrics.overrides.match.metric=GRPC_REQUEST_MESSAGES: todo
+  Telemetry.metrics.overrides.match.metric=GRPC_RESPONSE_MESSAGES: todo
+  Telemetry.metrics.overrides.match.metric=REQUEST_DURATION: todo
+  Telemetry.metrics.overrides.match.metric=REQUEST_SIZE: todo
+  Telemetry.metrics.overrides.match.metric=RESPONSE_SIZE: todo
+  Telemetry.metrics.overrides.match.metric=TCP_CLOSED_CONNECTIONS: todo
+  Telemetry.metrics.overrides.match.metric=TCP_OPENED_CONNECTIONS: todo
+  Telemetry.metrics.overrides.match.metric=TCP_RECEIVED_BYTES: todo
+  Telemetry.metrics.overrides.match.metric=TCP_SENT_BYTES: todo
+  Telemetry.metrics.overrides.match.mode: todo
+  Telemetry.metrics.overrides.match.mode=CLIENT: todo
+  Telemetry.metrics.overrides.match.mode=CLIENT_AND_SERVER: todo
+  Telemetry.metrics.overrides.match.mode=SERVER: todo
+  Telemetry.metrics.overrides.tagOverrides.operation=UPSERT: todo
+  Telemetry.metrics.overrides.tagOverrides.value: todo
+  Telemetry.metrics.providers: todo
+  Telemetry.metrics.providers.name: todo
+  Telemetry.metrics.reportingInterval: todo
+  Telemetry.targetRef: todo
+  Telemetry.targetRef.group: todo
+  Telemetry.targetRef.kind: todo
+  Telemetry.targetRef.name: todo
+  Telemetry.targetRef.namespace: todo
+  Telemetry.targetRefs.group: todo
+  Telemetry.targetRefs.kind: todo
+  Telemetry.targetRefs.name: todo
+  Telemetry.targetRefs.namespace: todo
+  Telemetry.tracing: todo
+  Telemetry.tracing.customTags: todo
+  Telemetry.tracing.customTags.environment: todo
+  Telemetry.tracing.customTags.environment.defaultValue: todo
+  Telemetry.tracing.customTags.environment.name: todo
+  Telemetry.tracing.customTags.formatter: todo
+  Telemetry.tracing.customTags.formatter.value: todo
+  Telemetry.tracing.customTags.header: todo
+  Telemetry.tracing.customTags.header.defaultValue: todo
+  Telemetry.tracing.customTags.header.name: todo
+  Telemetry.tracing.customTags.literal: todo
+  Telemetry.tracing.customTags.literal.value: todo
+  Telemetry.tracing.disableContextPropagation: todo
+  Telemetry.tracing.disableSpanReporting: todo
+  Telemetry.tracing.enableIstioTags: todo
+  Telemetry.tracing.match: todo
+  Telemetry.tracing.match.mode: todo
+  Telemetry.tracing.match.mode=CLIENT: todo
+  Telemetry.tracing.match.mode=CLIENT_AND_SERVER: todo
+  Telemetry.tracing.match.mode=SERVER: todo
+  Telemetry.tracing.providers: todo
+  Telemetry.tracing.providers.name: todo
+  Telemetry.tracing.randomSamplingPercentage: todo
+  Telemetry.tracing.useRequestIdForTraceSampling: todo
+  VirtualService.http.corsPolicy.unmatchedPreflights: todo
+  VirtualService.http.corsPolicy.unmatchedPreflights=FORWARD: todo
+  VirtualService.http.corsPolicy.unmatchedPreflights=IGNORE: todo
+  VirtualService.http.fault.abort.grpcStatus: todo
+  VirtualService.http.fault.abort.http2Error: todo
+  VirtualService.http.fault.delay.exponentialDelay: todo
+  VirtualService.http.fault.delay.percentage: todo
+  VirtualService.http.fault.delay.percentage.value: todo
+  VirtualService.http.match.method.prefix: todo
+  VirtualService.http.match.method.regex: todo
+  VirtualService.http.match.name: metadata only (names the match in stats/debug output);
+    no traffic behavior
+  VirtualService.http.match.scheme.prefix: todo
+  VirtualService.http.match.scheme.regex: todo
+  VirtualService.http.match.sourceLabels: todo
+  VirtualService.http.match.sourceNamespace: todo
+  VirtualService.http.match.statPrefix: metadata only (stat name prefix); no traffic
+    behavior
+  VirtualService.http.match.withoutHeaders.prefix: todo
+  VirtualService.http.match.withoutHeaders.regex: todo
+  VirtualService.http.mirror.port: todo
+  VirtualService.http.mirror.port.number: todo
+  VirtualService.http.mirror.subset: todo
+  VirtualService.http.mirrorPercentage.value: todo
+  VirtualService.http.name: metadata only (names routes in stats/debug output); no
+    traffic behavior
+  VirtualService.http.retries.backoff: todo
+  VirtualService.http.retries.retryIgnorePreviousHosts: todo
+  VirtualService.http.retries.retryRemoteLocalities: todo
+  VirtualService.tcp.match.destinationSubnets: todo
+  VirtualService.tcp.match.sourceLabels: todo
+  VirtualService.tcp.match.sourceNamespace: todo
+  VirtualService.tcp.match.sourceSubnet: todo
+  VirtualService.tcp.route.destination.subset: todo
+  VirtualService.tls.match.destinationSubnets: todo
+  VirtualService.tls.match.gateways: todo
+  VirtualService.tls.match.sourceLabels: todo
+  VirtualService.tls.match.sourceNamespace: todo
+  VirtualService.tls.route.destination.subset: todo
+  VirtualService.tls.route.weight: todo
+  WasmPlugin.failStrategy: todo
+  WasmPlugin.failStrategy=FAIL_CLOSE: todo
+  WasmPlugin.failStrategy=FAIL_OPEN: todo
+  WasmPlugin.failStrategy=FAIL_RELOAD: todo
+  WasmPlugin.imagePullPolicy: todo
+  WasmPlugin.imagePullPolicy=Always: todo
+  WasmPlugin.imagePullPolicy=IfNotPresent: todo
+  WasmPlugin.imagePullSecret: todo
+  WasmPlugin.match: todo
+  WasmPlugin.match.mode: todo
+  WasmPlugin.match.mode=CLIENT: todo
+  WasmPlugin.match.mode=CLIENT_AND_SERVER: todo
+  WasmPlugin.match.mode=SERVER: todo
+  WasmPlugin.match.mode=UNDEFINED: todo
+  WasmPlugin.match.ports: todo
+  WasmPlugin.match.ports.number: todo
+  WasmPlugin.phase: todo
+  WasmPlugin.phase=AUTHN: todo
+  WasmPlugin.phase=AUTHZ: todo
+  WasmPlugin.phase=STATS: todo
+  WasmPlugin.pluginConfig: todo
+  WasmPlugin.pluginName: todo
+  WasmPlugin.priority: todo
+  WasmPlugin.selector: todo
+  WasmPlugin.selector.matchLabels: todo
+  WasmPlugin.sha256: todo
+  WasmPlugin.targetRef: todo
+  WasmPlugin.targetRef.group: todo
+  WasmPlugin.targetRef.kind: todo
+  WasmPlugin.targetRef.name: todo
+  WasmPlugin.targetRef.namespace: todo
+  WasmPlugin.targetRefs: todo
+  WasmPlugin.targetRefs.group: todo
+  WasmPlugin.targetRefs.kind: todo
+  WasmPlugin.targetRefs.name: todo
+  WasmPlugin.targetRefs.namespace: todo
+  WasmPlugin.type: todo
+  WasmPlugin.type=HTTP: todo
+  WasmPlugin.type=NETWORK: todo
+  WasmPlugin.url: todo
+  WasmPlugin.verificationKey: todo
+  WasmPlugin.vmConfig: todo
+  WasmPlugin.vmConfig.env: todo
+  WasmPlugin.vmConfig.env.name: todo
+  WasmPlugin.vmConfig.env.value: todo
+  WasmPlugin.vmConfig.env.valueFrom: todo
+  WasmPlugin.vmConfig.env.valueFrom=HOST: todo
+  WasmPlugin.vmConfig.env.valueFrom=INLINE: todo
+  WorkloadEntry.address: todo
+  WorkloadEntry.labels: todo
+  WorkloadEntry.locality: todo
+  WorkloadEntry.network: todo
+  WorkloadEntry.ports: todo
+  WorkloadEntry.serviceAccount: todo
+  WorkloadEntry.weight: todo
+  WorkloadGroup.metadata: todo
+  WorkloadGroup.metadata.annotations: todo
+  WorkloadGroup.metadata.labels: todo
+  WorkloadGroup.probe: todo
+  WorkloadGroup.probe.exec: todo
+  WorkloadGroup.probe.exec.command: todo
+  WorkloadGroup.probe.failureThreshold: todo
+  WorkloadGroup.probe.grpc: todo
+  WorkloadGroup.probe.grpc.port: todo
+  WorkloadGroup.probe.grpc.service: todo
+  WorkloadGroup.probe.httpGet: todo
+  WorkloadGroup.probe.httpGet.host: todo
+  WorkloadGroup.probe.httpGet.httpHeaders: todo
+  WorkloadGroup.probe.httpGet.httpHeaders.name: todo
+  WorkloadGroup.probe.httpGet.httpHeaders.value: todo
+  WorkloadGroup.probe.httpGet.path: todo
+  WorkloadGroup.probe.httpGet.port: todo
+  WorkloadGroup.probe.httpGet.scheme: todo
+  WorkloadGroup.probe.initialDelaySeconds: todo
+  WorkloadGroup.probe.periodSeconds: todo
+  WorkloadGroup.probe.successThreshold: todo
+  WorkloadGroup.probe.tcpSocket: todo
+  WorkloadGroup.probe.tcpSocket.host: todo
+  WorkloadGroup.probe.tcpSocket.port: todo
+  WorkloadGroup.probe.timeoutSeconds: todo
+  WorkloadGroup.template: todo
+  annotation:ambient.istio.io/bypass-inbound-capture: todo
+  annotation:ambient.istio.io/dns-capture: todo
+  annotation:ambient.istio.io/redirection: status written by istio-cni after ambient
+    enrollment ('should not be modified'); the intent is istio.io/dataplane-mode,
+    which is tracked
+  annotation:ambient.istio.io/waypoint-inbound-binding: todo
+  annotation:galley.istio.io/analyze-suppress: istioctl analyze configuration; no
+    effect on proxies
+  annotation:gateway.istio.io/controller-version: internal bookkeeping annotation
+    written by istiod onto Gateways; not user-facing behavior
+  annotation:inject.istio.io/templates: selects the sidecar injection template (istiod
+    injection webhook, installation); changes the pod spec, not proxy features
+  annotation:istio.io/autoRegistrationGroup: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:istio.io/connectedAt: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:istio.io/disconnectedAt: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:istio.io/reroute-virtual-interfaces: todo
+  annotation:istio.io/rev: set automatically by injection to the connected control
+    plane revision; not user configuration
+  annotation:istio.io/use-waypoint-canary-weight: todo
+  annotation:istio.io/workloadController: bookkeeping written by istiod on auto-registered
+    WorkloadEntries; not user configuration and not read by proxies
+  annotation:networking.istio.io/exportTo: todo
+  annotation:networking.istio.io/traffic-distribution: todo
+  annotation:prometheus.istio.io/merge-metrics: todo
+  annotation:proxy.istio.io/overrides: 'internal: records user overrides of the proxy
+    container during injection'
+  annotation:readiness.status.sidecar.istio.io/*: pod-level readiness probe of the
+    proxy container (injection); not proxy feature behavior, like ProxyConfig.readinessProbe
+  annotation:sidecar.istio.io/agentLogLevel: diagnostic log verbosity of pilot-agent;
+    no dataplane behavior
+  annotation:sidecar.istio.io/bootstrapOverride: Envoy-specific (custom Envoy bootstrap
+    file); not a conformance requirement
+  annotation:sidecar.istio.io/componentLogLevel: diagnostic log verbosity of Envoy
+    components (Envoy-specific); no dataplane behavior
+  annotation:sidecar.istio.io/interceptionMode: todo
+  annotation:sidecar.istio.io/logLevel: diagnostic log verbosity of the proxy process;
+    no dataplane behavior
+  annotation:sidecar.istio.io/nativeSidecar: todo
+  annotation:sidecar.istio.io/proxyCPU: proxy container resource request (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyCPULimit: proxy container resource limit (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyImage: proxy container image (injection, installation);
+    selects the implementation, not a feature
+  annotation:sidecar.istio.io/proxyImageType: proxy container image variant (debug/distroless;
+    injection, installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyMemory: proxy container resource request (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/proxyMemoryLimit: proxy container resource limit (injection,
+    installation); no proxy feature behavior
+  annotation:sidecar.istio.io/rewriteAppHTTPProbers: todo
+  annotation:sidecar.istio.io/statsEvictionInterval: todo
+  annotation:sidecar.istio.io/statsFlushInterval: todo
+  annotation:sidecar.istio.io/statsHistogramBins: todo
+  annotation:sidecar.istio.io/statsHistogramBuckets: todo
+  annotation:sidecar.istio.io/status: generated by the injection webhook to record
+    what it injected; not user configuration
+  annotation:sidecar.istio.io/userVolume: extra pod volumes (injection, installation);
+    no proxy feature behavior
+  annotation:sidecar.istio.io/userVolumeMount: extra proxy container volume mounts
+    (injection, installation); no proxy feature behavior
+  annotation:status.sidecar.istio.io/port: pod-level health port of the proxy container
+    (injection); not proxy feature behavior, like ProxyConfig.statusPort
+  annotation:topology.istio.io/controlPlaneClusters: istiod leader election for remote
+    clusters; control plane only
+  annotation:traffic.istio.io/nodeSelector: todo
+  annotation:traffic.sidecar.istio.io/excludeInboundPorts: todo
+  annotation:traffic.sidecar.istio.io/excludeInterfaces: todo
+  annotation:traffic.sidecar.istio.io/excludeOutboundIPRanges: todo
+  annotation:traffic.sidecar.istio.io/excludeOutboundPorts: todo
+  annotation:traffic.sidecar.istio.io/includeInboundPorts: todo
+  annotation:traffic.sidecar.istio.io/includeOutboundIPRanges: todo
+  annotation:traffic.sidecar.istio.io/includeOutboundPorts: todo
+  flag:AMBIENT_ENABLE_BAGGAGE: todo
+  flag:AMBIENT_ENABLE_DRY_RUN_AUTHORIZATION_POLICY: todo
+  flag:AMBIENT_ENABLE_MULTI_NETWORK: todo
+  flag:AMBIENT_ENABLE_MULTI_NETWORK_INGRESS: todo
+  flag:AMBIENT_ENABLE_MULTI_NETWORK_WAYPOINT: todo
+  flag:AMBIENT_ENABLE_STATUS: 'control plane only: writes ambient status conditions
+    on Kubernetes resources'
+  flag:AMBIENT_ENABLE_TLS_PROXY_HTTP_METRICS: todo
+  flag:AMBIENT_SCOPED_ADDRESS_PUSHES: 'control plane only: push scoping optimization;
+    the config proxies converge on is unchanged'
+  flag:BLOCKED_CIDRS_IN_JWKS_URIS: 'control plane only: restricts istiod''s own JWKS
+    fetcher'
+  flag:DEBUG_ENDPOINT_AUTH_ALLOWED_NAMESPACES: 'control plane only: istiod debug endpoint
+    authorization'
+  flag:DISABLE_SHADOW_HOST_SUFFIX: todo
+  flag:DISABLE_TRACK_REMAINING_CB_METRICS: todo
+  flag:ENABLE_100_CONTINUE_HEADERS: todo
+  flag:ENABLE_DEBUG_ENDPOINT_AUTH: 'control plane only: istiod debug endpoint authorization'
+  flag:ENABLE_DEBUG_ON_HTTP: 'control plane only: istiod debug endpoints'
+  flag:ENABLE_ENHANCED_DESTINATIONRULE_MERGE: todo
+  flag:ENABLE_GATEWAY_API_HTTPROUTE_AUTH: todo
+  flag:ENABLE_GATEWAY_API_INFERENCE_EXTENSION: todo
+  flag:ENABLE_GATEWAY_API_MANUAL_DEPLOYMENT: todo
+  flag:ENABLE_HCM_INTERNAL_NETWORKS: todo
+  flag:ENABLE_INGRESS_WAYPOINT_ROUTING: todo
+  flag:ENABLE_LAYERED_WAYPOINT_AUTHORIZATION_POLICIES: todo
+  flag:ENABLE_LAZY_SIDECAR_EVALUATION: 'control plane only: when SidecarScopes are
+    computed, not their content'
+  flag:ENABLE_LOCALITY_WEIGHTED_LB_CONFIG: todo
+  flag:ENABLE_MCS_HOST: todo
+  flag:ENABLE_MULTICLUSTER_HEADLESS: todo
+  flag:ENABLE_NATIVE_SIDECARS: todo
+  flag:ENABLE_SELECTOR_BASED_K8S_GATEWAY_POLICY: todo
+  flag:ENABLE_TLS_ON_SIDECAR_INGRESS: todo
+  flag:ENABLE_WILDCARD_HOST_SERVICE_ENTRIES_FOR_TLS: todo
+  flag:ENABLE_XDS_API_GENERATOR_AUTH: 'control plane only: authorization of MCP-over-xDS
+    config readers, not of proxy config'
+  flag:ISTIO_DELTA_XDS: 'control plane only: xDS transport variant (delta vs state
+    of the world); the config proxies converge on is unchanged'
+  flag:ISTIO_DUAL_STACK: todo
+  flag:ISTIO_ENABLE_IPV4_OUTBOUND_LISTENER_FOR_IPV6_CLUSTERS: todo
+  flag:ISTIO_MULTIROOT_MESH: todo
+  flag:JWKS_RESOLVER_INSECURE_SKIP_VERIFY: 'control plane only: TLS verification of
+    istiod''s own JWKS fetcher'
+  flag:LABEL_CANONICAL_SERVICES_FOR_MESH_EXTERNAL_SERVICE_ENTRIES: todo
+  flag:MAX_CONNECTIONS_PER_SOCKET_EVENT_LOOP: todo
+  flag:MCS_API_GROUP: todo
+  flag:MUTEX_PROFILE_FRACTION: 'control plane only: istiod profiling'
+  flag:PILOT_ALLOW_ANY_DYNAMIC_DNS_MAX_HOSTS: todo
+  flag:PILOT_ALLOW_SIDECAR_SERVICE_INBOUND_LISTENER_MERGE: todo
+  flag:PILOT_AUTO_SEND_UNHEALTHY_ENDPOINTS: todo
+  flag:PILOT_CONVERT_SIDECAR_SCOPE_CONCURRENCY: 'control plane only: istiod computation
+    concurrency'
+  flag:PILOT_DEBOUNCE_AFTER: 'control plane only: push debouncing (timing only)'
+  flag:PILOT_DEBOUNCE_MAX: 'control plane only: push debouncing (timing only)'
+  flag:PILOT_DISABLE_MX_ALPN: todo
+  flag:PILOT_DNS_CARES_UDP_MAX_QUERIES: todo
+  flag:PILOT_DNS_JITTER_DURATION: todo
+  flag:PILOT_DRAINING_LABEL: todo
+  flag:PILOT_ENABLE_ABSOLUTE_FQDN_VHOST_DOMAIN: todo
+  flag:PILOT_ENABLE_AGENTGATEWAY: todo
+  flag:PILOT_ENABLE_ALPN_FILTER: todo
+  flag:PILOT_ENABLE_AMBIENT: todo
+  flag:PILOT_ENABLE_AMBIENT_WAYPOINTS: todo
+  flag:PILOT_ENABLE_CDS_CACHE: 'control plane only: istiod xDS cache; output unchanged'
+  flag:PILOT_ENABLE_DELTA_RDS: 'control plane only: computes RDS pushes incrementally;
+    the route config proxies converge on is unchanged'
+  flag:PILOT_ENABLE_EDS_DEBOUNCE: 'control plane only: push debouncing (timing only)'
+  flag:PILOT_ENABLE_EDS_FOR_HEADLESS_SERVICES: todo
+  flag:PILOT_ENABLE_GATEWAY_API_COPY_LABELS_ANNOTATIONS: todo
+  flag:PILOT_ENABLE_GATEWAY_API_GATEWAYCLASS_CONTROLLER: todo
+  flag:PILOT_ENABLE_GATEWAY_API_STATUS: todo
+  flag:PILOT_ENABLE_HEADLESS_FILTER_CHAIN_LISTENER: todo
+  flag:PILOT_ENABLE_IP_AUTOALLOCATE: todo
+  flag:PILOT_ENABLE_METADATA_EXCHANGE: todo
+  flag:PILOT_ENABLE_MONGO_FILTER: todo
+  flag:PILOT_ENABLE_MULTIPLE_CUSTOM_AUTHZ_PROVIDERS: todo
+  flag:PILOT_ENABLE_MYSQL_FILTER: todo
+  flag:PILOT_ENABLE_PERSISTENT_SESSION_FILTER: todo
+  flag:PILOT_ENABLE_QUIC_LISTENERS: todo
+  flag:PILOT_ENABLE_RDS_CACHE: 'control plane only: istiod xDS cache; output unchanged'
+  flag:PILOT_ENABLE_REDIS_FILTER: todo
+  flag:PILOT_ENABLE_ROUTE_COLLAPSE_OPTIMIZATION: todo
+  flag:PILOT_ENABLE_SENDING_HBONE: todo
+  flag:PILOT_ENABLE_SERVICEENTRY_SELECT_PODS: todo
+  flag:PILOT_ENABLE_SIDECAR_LISTENING_HBONE: todo
+  flag:PILOT_ENABLE_STRICT_GATEWAY_MERGING: todo
+  flag:PILOT_ENABLE_TELEMETRY_LABEL: todo
+  flag:PILOT_ENABLE_WDS_DEBOUNCE: 'control plane only: push debouncing (timing only)'
+  flag:PILOT_ENABLE_WORKLOAD_ENTRY_HEALTHCHECKS: todo
+  flag:PILOT_ENABLE_XDS_CACHE: 'control plane only: istiod xDS cache; output unchanged'
+  flag:PILOT_ENABLE_XDS_IDENTITY_CHECK: 'control plane only: authorizes xDS clients''
+    claimed identity'
+  flag:PILOT_ENDPOINT_TELEMETRY_LABEL: todo
+  flag:PILOT_ENVOY_FILTER_STATS: 'control plane only: istiod metrics about EnvoyFilter
+    application'
+  flag:PILOT_FILTER_GATEWAY_CLUSTER_CONFIG: todo
+  flag:PILOT_GATEWAY_API_CONTROLLER_NAME: todo
+  flag:PILOT_GATEWAY_API_DEFAULT_GATEWAYCLASS_NAME: todo
+  flag:PILOT_GATEWAY_TRANSPORT_SOCKET_CONNECT_TIMEOUT: todo
+  flag:PILOT_HBONE_INITIAL_CONNECTION_WINDOW_SIZE: todo
+  flag:PILOT_HBONE_INITIAL_STREAM_WINDOW_SIZE: todo
+  flag:PILOT_HTTP10: todo
+  flag:PILOT_JWT_ENABLE_REMOTE_JWKS: todo
+  flag:PILOT_JWT_PUB_KEY_REFRESH_INTERVAL: 'control plane only: refresh interval of
+    istiod''s own JWKS cache'
+  flag:PILOT_MAX_REQUESTS_PER_SECOND: 'control plane only: xDS connection rate limit
+    (timing only)'
+  flag:PILOT_MULTI_NETWORK_DISCOVER_GATEWAY_API: todo
+  flag:PILOT_MX_ADDITIONAL_LABELS: todo
+  flag:PILOT_PERSISTENT_SESSION_HEADER_LABEL: todo
+  flag:PILOT_PERSISTENT_SESSION_LABEL: todo
+  flag:PILOT_PREFER_SENDING_HBONE: todo
+  flag:PILOT_PUSH_THROTTLE: 'control plane only: push concurrency (timing only)'
+  flag:PILOT_SCOPE_GATEWAY_TO_NAMESPACE: todo
+  flag:PILOT_SEND_UNHEALTHY_ENDPOINTS: todo
+  flag:PILOT_SIDECAR_PICK_BEST_SERVICE_NAMESPACE: todo
+  flag:PILOT_SIDECAR_USE_REMOTE_ADDRESS: todo
+  flag:PILOT_SKIP_VALIDATE_TRUST_DOMAIN: todo
+  flag:PILOT_UNIFIED_SIDECAR_SCOPE: todo
+  flag:PILOT_XDS_CACHE_INDEX_CLEAR_INTERVAL: 'control plane only: istiod xDS cache;
+    output unchanged'
+  flag:PILOT_XDS_CACHE_SIZE: 'control plane only: istiod xDS cache; output unchanged'
+  flag:PILOT_XDS_CACHE_STATS: 'control plane only: istiod xDS cache metrics'
+  flag:PREFER_DESTINATIONRULE_TLS_FOR_EXTERNAL_SERVICES: todo
+  flag:RESOLVE_HOSTNAME_GATEWAYS: todo
+  flag:UNSAFE_ENABLE_ADMIN_ENDPOINTS: 'control plane only: istiod admin endpoints'
+  flag:UNSAFE_PILOT_ENABLE_RUNTIME_ASSERTIONS: 'control plane only: istiod internal
+    assertions'
+  flag:features.EnableAlphaGatewayAPI: todo
+  flag:features.NativeSidecarModeDisabled: todo
+  flag:features.TraceSampling: todo
+  gateway-api-ext:tls-option:gateway.istio.io/listener-protocol=auto-passthrough: todo
+  gateway-api-ext:tls-option:gateway.istio.io/tls-cipher-suites: todo
+  gateway-api-ext:tls-option:gateway.istio.io/tls-terminate-mode=ISTIO_MUTUAL: todo
+  gateway-api-ext:tls-option:gateway.istio.io/tls-terminate-mode=ISTIO_SIMPLE: todo
+  interaction:ambient.dataplane-mode-precedence: todo
+  interaction:ambient.ingress-use-waypoint: todo
+  interaction:ambient.waypoint-binding-precedence: todo
+  interaction:ambient.waypoint-for: todo
+  interaction:authz.custom-before-deny: todo
+  interaction:authz.dry-run: todo
+  interaction:authz.l7-policy-on-l4-proxy: todo
+  interaction:authz.scope-union: todo
+  interaction:authz.targetref-vs-selector-enforcement-point: todo
+  interaction:destinationrule.lookup-namespace: todo
+  interaction:destinationrule.merge: todo
+  interaction:destinationrule.mesh-default-traffic-policy: todo
+  interaction:gateway.same-port-tls-conflict: todo
+  interaction:gateway.server-merge: todo
+  interaction:gatewayapi.route-vs-virtualservice: todo
+  interaction:locality.distribution: todo
+  interaction:locality.failover: todo
+  interaction:locality.traffic-distribution: todo
+  interaction:outbound-traffic-policy.registry-only: todo
+  interaction:peerauthn.scope-precedence: todo
+  interaction:peerauthn.unset-inherits: todo
+  interaction:protocol.sniffing: todo
+  interaction:requestauthn.scope-union: todo
+  interaction:serviceentry.kubernetes-externalname: todo
+  interaction:serviceentry.same-host-as-service: todo
+  interaction:serviceentry.workload-selector: todo
+  interaction:telemetry.provider-inheritance: todo
+  interaction:telemetry.scope-override: todo
+  interaction:virtualservice.first-match-wins: todo
+  interaction:virtualservice.host-specificity: todo
+  interaction:virtualservice.multiple-for-host: todo
+  interaction:visibility.sidecar-egress-hosts: todo
+  key:gateway.istio.io/controller-version: internal bookkeeping annotation written
+    by istiod onto Gateways; not user-facing behavior
+  label:gateway.istio.io/managed: set by the gateway deployment controller on generated
+    resources to mark ownership; not user configuration
+  label:gateway.networking.k8s.io/gateway-class-name: set by the gateway deployment
+    controller on generated resources; checked by infra.standard-labels on pods, not
+    proxy behavior
+  label:gateway.networking.k8s.io/gateway-name: set by the gateway deployment controller
+    on generated resources; checked by infra.standard-labels on pods, and used by
+    features to select gateway pods
+  label:istio.io/dataplane-mode: todo
+  label:istio.io/ingress-use-waypoint: todo
+  label:istio.io/rev: selects the control plane revision that injects or programs
+    the resource (installation); not proxy behavior
+  label:istio.io/use-waypoint: todo
+  label:istio.io/use-waypoint-canary: todo
+  label:istio.io/use-waypoint-canary-namespace: todo
+  label:istio.io/use-waypoint-namespace: todo
+  label:istio.io/waypoint-for: todo
+  label:networking.istio.io/enable-autoallocate-ip: todo
+  label:networking.istio.io/gatewayPort: todo
+  label:operator.istio.io/*: installation bookkeeping on resources installed by the
+    operator/istioctl; no effect on proxies
+  label:service.istio.io/canonical-name: todo
+  label:service.istio.io/canonical-revision: todo
+  label:service.istio.io/workload-name: todo
+  label:sidecar.istio.io/inject: selects sidecar injection (istiod webhook, installation);
+    the sidecar role deploys injected workloads by construction
+  label:topology.istio.io/cluster: todo
+  label:topology.istio.io/locality: todo
+  label:topology.istio.io/network: todo
+maxRoleGaps:
+  egress: 126
+  node: 78
+  sidecar: 685
+  waypoint: 548
+maxTodo: 1049
+roleScope:
+  AuthorizationPolicy:
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.action:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.action=AUDIT:
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.action=CUSTOM:
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.ipBlocks:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.namespaces:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.notIpBlocks:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.notNamespaces:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.notPrincipals:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.from.source.principals:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.to.operation.notPorts:
+  - node
+  - sidecar
+  - waypoint
+  AuthorizationPolicy.rules.to.operation.ports:
+  - node
+  - sidecar
+  - waypoint
+  DestinationRule:
+  - sidecar
+  - waypoint
+  DestinationRule.trafficPolicy.tls:
+  - egress
+  - sidecar
+  - waypoint
+  Gateway.servers:
+  - egress
+  PeerAuthentication:
+  - node
+  - sidecar
+  RequestAuthentication:
+  - sidecar
+  - waypoint
+  ServiceEntry:
+  - egress
+  - sidecar
+  - waypoint
+  Sidecar:
+  - sidecar
+  Telemetry:
+  - sidecar
+  - waypoint
+  VirtualService.http:
+  - sidecar
+  - waypoint
+  VirtualService.tcp:
+  - egress
+  VirtualService.tls:
+  - egress
+  WasmPlugin:
+  - sidecar
+  - waypoint
+  WorkloadEntry:
+  - node
+  - sidecar
+  - waypoint
+  WorkloadGroup:
+  - node
+  - sidecar
+  - waypoint
+  annotation:ambient.istio.io/*:
+  - node
+  - waypoint
+  annotation:istio.io/reroute-virtual-interfaces:
+  - node
+  - sidecar
+  annotation:istio.io/use-waypoint-canary-weight:
+  - node
+  - waypoint
+  annotation:networking.istio.io/exportTo:
+  - egress
+  - sidecar
+  - waypoint
+  annotation:networking.istio.io/traffic-distribution:
+  - node
+  annotation:prometheus.istio.io/merge-metrics:
+  - sidecar
+  annotation:proxy.istio.io/config:
+  - egress
+  - sidecar
+  - waypoint
+  annotation:sidecar.istio.io/*:
+  - sidecar
+  annotation:traffic.sidecar.istio.io/*:
+  - sidecar
+  label:istio.io/dataplane-mode:
+  - node
+  - waypoint
+  label:istio.io/ingress-use-waypoint:
+  - waypoint
+  label:istio.io/use-waypoint*:
+  - node
+  - waypoint
+  label:istio.io/waypoint-for:
+  - node
+  - waypoint
