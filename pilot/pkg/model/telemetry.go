@@ -283,8 +283,19 @@ func (t *Telemetries) AccessLogging(push *PushContext, proxy *Proxy, class netwo
 		cfgs = append(cfgs, cfg)
 	}
 
-	// Sort the access logs by provider name for deterministic ordering
+	// A Telemetry may disable access logging without naming a provider. mergeLogs then yields no
+	// providers, but the configuration is still explicit: return a disabled entry so callers do
+	// not fall back to meshConfig.accessLogFile.
+	if len(cfgs) == 0 && accessLoggingDisabled(ct.Logging, workloadMode(class)) {
+		cfgs = append(cfgs, LoggingConfig{Disabled: true})
+	}
+
+	// Sort the access logs by provider name for deterministic ordering. The provider-less disabled
+	// entry above sorts first.
 	sort.Slice(cfgs, func(i, j int) bool {
+		if cfgs[i].Provider == nil || cfgs[j].Provider == nil {
+			return cfgs[i].Provider == nil
+		}
 		return cfgs[i].Provider.Name < cfgs[j].Provider.Name
 	})
 
@@ -680,6 +691,24 @@ func mergeLogs(logs []*computedAccessLogging, mesh *meshconfig.MeshConfig, mode 
 	}
 
 	return providers
+}
+
+// accessLoggingDisabled reports whether the applicable access logging configs disable logging
+// without naming a provider. Such a config produces no provider entries in mergeLogs but is an
+// explicit disable, not an absence of Telemetry configuration. Like mergeLogs, logs are ordered
+// from the least to the most specific scope and the most specific provider-less entry wins, so a
+// child scope can re-enable what a parent disabled.
+func accessLoggingDisabled(logs []*computedAccessLogging, mode tpb.WorkloadMode) bool {
+	disabled := false
+	for _, l := range logs {
+		for _, m := range l.Logging {
+			if !matchWorkloadMode(m.GetMatch(), mode) || len(getProviderNames(m.GetProviders())) != 0 {
+				continue
+			}
+			disabled = m.GetDisabled().GetValue()
+		}
+	}
+	return disabled
 }
 
 func matchWorkloadMode(selector *tpb.AccessLogging_LogSelector, mode tpb.WorkloadMode) bool {

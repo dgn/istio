@@ -253,6 +253,14 @@ func TestAccessLogging(t *testing.T) {
 			},
 		},
 	}
+	serverDisabledNoProvider := &tpb.Telemetry{
+		AccessLogging: []*tpb.AccessLogging{
+			{
+				Match:    &tpb.AccessLogging_LogSelector{Mode: tpb.WorkloadMode_SERVER},
+				Disabled: &wrappers.BoolValue{Value: true},
+			},
+		},
+	}
 	nonExistent := &tpb.Telemetry{
 		AccessLogging: []*tpb.AccessLogging{
 			{
@@ -517,6 +525,46 @@ func TestAccessLogging(t *testing.T) {
 			[]string{},
 		},
 		{
+			"client - disabled without provider",
+			[]config.Config{newTelemetry("istio-system", disabled)},
+			networking.ListenerClassSidecarOutbound,
+			sidecar,
+			nil,
+			[]string{"<disabled>"},
+		},
+		{
+			"server - disabled without provider",
+			[]config.Config{newTelemetry("istio-system", serverDisabledNoProvider)},
+			networking.ListenerClassSidecarInbound,
+			sidecar,
+			nil,
+			[]string{"<disabled>"},
+		},
+		{
+			"client - disabled without provider for server only",
+			[]config.Config{newTelemetry("istio-system", serverDisabledNoProvider)},
+			networking.ListenerClassSidecarOutbound,
+			sidecar,
+			nil,
+			[]string{},
+		},
+		{
+			"client - disabled without provider, re-enabled by child",
+			[]config.Config{newTelemetry("istio-system", disabled), newTelemetry("default", empty)},
+			networking.ListenerClassSidecarOutbound,
+			sidecar,
+			nil,
+			[]string{},
+		},
+		{
+			"client - disabled without provider by child",
+			[]config.Config{newTelemetry("istio-system", empty), newTelemetry("default", disabled)},
+			networking.ListenerClassSidecarOutbound,
+			sidecar,
+			nil,
+			[]string{"<disabled>"},
+		},
+		{
 			"client - disabled - enabled",
 			[]config.Config{newTelemetry("istio-system", client), newTelemetry("default", clientDisabled), newTelemetry("default", sidecarClient)},
 			networking.ListenerClassSidecarOutbound,
@@ -703,6 +751,9 @@ func TestAccessLogging(t *testing.T) {
 				got = []string{}
 				for _, p := range cfgs {
 					if p.Disabled {
+						if p.Provider == nil {
+							got = append(got, "<disabled>")
+						}
 						continue
 					}
 					got = append(got, p.Provider.Name)

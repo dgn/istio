@@ -330,6 +330,26 @@ func newTestEnvironment(t *testing.T) *model.Environment {
 		},
 	})
 
+	configStore.Create(config.Config{
+		Meta: config.Meta{
+			Name:             "test-disable-accesslog-no-provider",
+			Namespace:        "default",
+			GroupVersionKind: gvk.Telemetry,
+		},
+		Spec: &tpb.Telemetry{
+			Selector: &v1beta1.WorkloadSelector{
+				MatchLabels: map[string]string{
+					"app": "test-disable-accesslog-no-provider",
+				},
+			},
+			AccessLogging: []*tpb.AccessLogging{
+				{
+					Disabled: wrapperspb.Bool(true),
+				},
+			},
+		},
+	})
+
 	env := model.NewEnvironment()
 	env.ServiceDiscovery = serviceDiscovery
 	env.ConfigStore = configStore
@@ -469,6 +489,19 @@ func TestSetTCPAccessLog(t *testing.T) {
 			class:    networking.ListenerClassSidecarInbound,
 			expected: &tcp.TcpProxy{},
 		},
+		{
+			name: "disable-accesslog-no-provider",
+			push: env.PushContext(),
+			proxy: &model.Proxy{
+				ConfigNamespace: "default",
+				Labels:          map[string]string{"app": "test-disable-accesslog-no-provider"},
+				Metadata:        &model.NodeMetadata{Labels: map[string]string{"app": "test-disable-accesslog-no-provider"}},
+				IstioVersion:    &model.IstioVersion{Major: 1, Minor: 23},
+			},
+			tcp:      &tcp.TcpProxy{},
+			class:    networking.ListenerClassSidecarInbound,
+			expected: &tcp.TcpProxy{},
+		},
 	}
 
 	for _, tc := range cases {
@@ -559,6 +592,19 @@ func TestSetHttpAccessLog(t *testing.T) {
 				ConfigNamespace: "default",
 				Labels:          map[string]string{"app": "test-disable-accesslog"},
 				Metadata:        &model.NodeMetadata{Labels: map[string]string{"app": "test-disable-accesslog"}},
+				IstioVersion:    &model.IstioVersion{Major: 1, Minor: 23},
+			},
+			hcm:      &hcm.HttpConnectionManager{},
+			class:    networking.ListenerClassSidecarInbound,
+			expected: &hcm.HttpConnectionManager{},
+		},
+		{
+			name: "disable-accesslog-no-provider",
+			push: env.PushContext(),
+			proxy: &model.Proxy{
+				ConfigNamespace: "default",
+				Labels:          map[string]string{"app": "test-disable-accesslog-no-provider"},
+				Metadata:        &model.NodeMetadata{Labels: map[string]string{"app": "test-disable-accesslog-no-provider"}},
 				IstioVersion:    &model.IstioVersion{Major: 1, Minor: 23},
 			},
 			hcm:      &hcm.HttpConnectionManager{},
